@@ -1,0 +1,37 @@
+ starting values
+    3.2166825    0.1335105    0.1251695   -0.0024698   -0.0007500    0.1825109
+ *** iteration   1
+  RMS residuals =  4.8539E-01   norm corr =  7.6047E-01
+  new elem values
+    3.2177889    0.1349499    0.1290164   -0.0024633   -0.0007512    0.1850405
+
+ *** iteration   2
+  RMS residuals =  2.2766E+00   norm corr =  5.0314E+00
+  new elem values
+    3.2177100    0.1349371    0.1289722   -0.0024633   -0.0007511    0.1850111
+
+  target function increasing 
+
+ *** iteration   3
+  RMS residuals =  3.4632E-01   norm corr =  7.6750E-04
+  new elem values
+    3.2177100    0.1349371    0.1289722   -0.0024633   -0.0007511    0.1850111
+
+==== OUTLIER REJECTION =======
+Residual norm =  3.46320E-01
+Chi2 threshold =  7.31821E-01
+No. of observations:
+          total     =   15
+          selected  =   15
+          rejected  =    0
+          recovered =    0
+Outlier rejection pass   1 after   3 single differential correction passes.
+There were   0 changes.
+ Entering final convergence loop after  1 outlier rejection loops.
+ *** iteration   1
+  RMS residuals =  3.4632E-01   norm corr =  8.8410E-08
+  new elem values
+    3.2177100    0.1349371    0.1289722   -0.0024633   -0.0007511    0.1850111
+
+ Done. Convergence corrections small after  1 passes.
+

@@ -1,0 +1,34 @@
+Input of observations:
+ rearwo:  15 obs from 1996RO13.rwo
+ mpcin: 15 from 1996RO13.obs
+       15 observations read for object 1996 RO13
+Input of orbital elements:
+     Orbital elements for object 1996 RO13 (with name 1996RO13):
+     (origin: read from file "1996RO13_gauss.oel" at record 6)
+        Semimajor axis     =   3.21668247828536E+00 AU
+        Eccentricity       =   0.183009509865984
+        Inclination        =   0.2957760022262 deg
+        Long. of node      = 253.1074755130432 deg
+        Arg. of pericenter = 153.7393540963382 deg
+        Mean anomaly       = 323.6102720608711 deg
+        Epoch of elements  : MJD   50345.36383972 TDT (Sep 19, 1996,  8.732153 h)
+Differential correction for object 1996 RO13:
+     Starting orbital elements:
+        Semimajor axis     =   3.21668247828536E+00 AU
+        h [e*sin(w)]       =   0.133510540732420
+        k [e*cos(w)]       =   0.125169549870264
+        P [tg(i/2)*sin(N)] =  -0.002469766042410
+        Q [tg(i/2)*cos(N)] =  -0.000750020329009
+        Mean longitude     =  10.4571016702526 deg
+        Epoch of elements  : MJD   50345.36383972 TDT (Sep 19, 1996,  8.732153 h)
+     Corrected orbital elements:
+        Semimajor axis     =   3.21771000275416E+00 AU
+        h [e*sin(w)]       =   0.134937092336238
+        k [e*cos(w)]       =   0.128972223777034
+        P [tg(i/2)*sin(N)] =  -0.002463342750593
+        Q [tg(i/2)*cos(N)] =  -0.000751148181267
+        Mean longitude     =  10.6003525056102 deg
+        Epoch of elements  : MJD   50345.36383972 TDT (Sep 19, 1996,  8.732153 h)
+          Absolute mag. H    =    14.66
+     Residual norm   =  3.463E-01
+     Correction norm =  8.384E-08

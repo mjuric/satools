@@ -1,0 +1,34 @@
+/**
+
+\mainpage Documentation For libpeyton Class Library
+
+\author Mario Juric
+
+\section intro Introduction
+
+libpeyton is a library of routines of use in astrophysical/astronomical
+applications.
+
+\section usage Usage
+
+To link libpeyton with your code, do something along these lines:
+
+\verbatim
+export PEYTON=/u/mjuric/projects/libpeyton
+g++ -o test.x -L$(PEYTON)/lib -lastro test.cpp
+\endverbatim
+
+Various parts of libpeyton need to be linked to other libraries (eg. fourier
+code uses FFTW, FITS code uses CCfits, least squares fitting code uses GSL,
+etc...). If you use any of these functions, the libraries for them are
+already installed in my home directory. Eg., if you use FFT stuff, do
+something along these lines:
+
+\verbatim
+export PEYTON=/u/mjuric/projects/libpeyton
+export LFS=/u/mjuric/lfs/usr/local
+
+g++ -o test.x -I$(LFS)/include -L$(PEYTON)/lib -L$(LFS)/lib -lastro -lfftw test.cpp
+\endverbatim
+
+*/

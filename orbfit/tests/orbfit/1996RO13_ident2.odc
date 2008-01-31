@@ -1,0 +1,51 @@
+ starting values
+    3.2108857    0.1157214    0.1079360   -0.0023913   -0.0005810    0.2264457
+ *** iteration   1
+  RMS residuals =  9.9429E-01   norm corr =  8.2532E-01
+  new elem values
+    3.2109078    0.1156250    0.1062650   -0.0023944   -0.0005938    0.2260848
+
+ *** iteration   2
+  RMS residuals =  1.3760E+00   norm corr =  2.8724E+00
+  new elem values
+    3.2109109    0.1156410    0.1059388   -0.0023950   -0.0005956    0.2260732
+
+  target function increasing 
+
+ *** iteration   3
+  RMS residuals =  9.5149E-01   norm corr =  1.2852E-01
+  new elem values
+    3.2109114    0.1156426    0.1058798   -0.0023951   -0.0005959    0.2260688
+
+ *** iteration   4
+  RMS residuals =  9.5044E-01   norm corr =  5.4199E-03
+  new elem values
+    3.2109116    0.1156429    0.1058691   -0.0023951   -0.0005960    0.2260678
+
+ Entering final convergence loop after  1 outlier rejection loops.
+ *** iteration   1
+  RMS residuals =  9.5044E-01   norm corr =  5.3175E-04
+  new elem values
+    3.2109116    0.1156429    0.1058671   -0.0023951   -0.0005960    0.2260677
+
+ *** iteration   2
+  RMS residuals =  9.5044E-01   norm corr =  8.6989E-05
+  new elem values
+    3.2109116    0.1156429    0.1058668   -0.0023951   -0.0005960    0.2260676
+
+  target function paralyzed 
+
+ *** iteration   3
+  RMS residuals =  9.5044E-01   norm corr =  1.5612E-05
+  new elem values
+    3.2109116    0.1156429    0.1058667   -0.0023951   -0.0005960    0.2260676
+
+  target function paralyzed 
+
+ *** iteration   4
+  RMS residuals =  9.5044E-01   norm corr =  2.8276E-06
+  new elem values
+    3.2109116    0.1156429    0.1058667   -0.0023951   -0.0005960    0.2260676
+
+ Done. Convergence corrections small after  4 passes.
+

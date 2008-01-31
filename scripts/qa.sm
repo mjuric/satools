@@ -1,0 +1,792 @@
+#
+# SM file with SDSS MOC QA macros
+#
+
+rr
+	re qa.sm
+
+rungeoms
+	define odf local
+	define odf "$!data_file"
+
+	if(!$?RUNGEOMETRY) {
+		define RUNGEOMETRY "/home/mjuric/projects/satools/workspace/lib/run_geometry.txt"
+	}
+	data "$!RUNGEOMETRY"
+	read <grun 1 gra 2 gdec 3 gt0 4 gt1 5 gnode 6 ginc 7 gmu0 8 gnu0 9>
+
+	data "$!odf"
+
+geomsbyrun
+	rungeoms
+	
+	vecminmax grun _gmin _gmax
+	foreach 1 <rrun rra rdec rt0 rt1 rnode rinc rmu0 rnu0> {
+		set dimen($1) = $($_gmax+1)
+	}
+	
+	do 1=0,(dimen(grun)-1) {
+		define 3 $(grun[$1])
+		foreach 2 <run ra dec t0 t1 node inc mu0 nu0> {
+			set r$2[$3] = g$2[$1]
+		}
+	}
+
+rungeom 1
+	define i local
+	foreach i <grun gra gdec gt0 gt1 gnode ginc gmu0 gnu0> {
+		set $i local
+	}
+
+	rungeoms
+
+	vecselect "grun gnode ginc gmu0 gnu0 gt0 gt1" - grun == $1
+	set $0 = <1.1 0.0 0.0 0.0 0.0 0.0>
+	set $0[0] = gnode[0]			# node
+	set $0[1] = ginc[0]			# inc
+	set $0[2] = gmu0[0]			# muStart
+	set $0[3] = gmu0[0]+(gt1[0]-gt0[0])*360	# muEnd
+	set $0[4] = gt0[0]			# tstart
+	set $0[5] = gt1[0]			# tend
+
+init 1
+	#
+	# init <runset>
+	#
+	define RUNSET $1
+	define WS "/home/mjuric/projects/satools/workspace"
+	define DATASOURCE out
+
+degsub 2
+	set $0 = $1 > $2 ? $1 - $2 : $1 - $2 + 360
+
+plotall 1
+	erase
+	set stats = loaddata($1)
+	xuplabel "Runset $!RUNSET, Run $!1 [$!(stats[0]) obs, $!(stats[1]) ast, $!(stats[2]) num]"
+	xdownlabel "\raise-2500Source datafile: $!1.$!DATASOURCE" -.1 3
+	if($1 != 0 && '$DATASOURCE'=='sdss') {
+		# velocities
+		set_window 2 2 0 plotstatistic $1 6
+	} else {
+		# H dependence
+		set_window 2 2 0 plotstatistic $1 9
+	}
+	##set_window 2 2 1 plotstatistic $1 2
+	set_window 2 2 1 plotstatistic $1 8
+	set_window 2 2 2 plotstatistic $1 4
+	set_window 2 2 3 plotstatistic $1 7
+
+	set_window
+
+dofigs
+	local define RUNSET adr4slew361
+	!mkdir snaps/qa
+
+	psfile "snaps/qa/dtdist361.ps" erase plotstatistic 0 2
+	psfile "snaps/qa/ddist361.ps" erase plotstatistic 0 5
+	psfile "snaps/qa/munudist361.ps" erase plotstatistic 0 4
+	psfile "snaps/qa/munudist361lg.ps" erase plotstatistic 0 4 30
+	psfile "snaps/qa/qa.361.ps" plotall 0
+
+	define RUNSET adr4slew360
+	psfile "snaps/qa/dtdist360.ps" erase plotstatistic 0 1
+	psfile "snaps/qa/ddist360.ps" erase plotstatistic 0 5
+	psfile "snaps/qa/munudist360.ps" erase plotstatistic 0 4
+	psfile "snaps/qa/munudist360lg.ps" erase plotstatistic 0 4 30
+	psfile "snaps/qa/qa.360.ps" plotall 0
+
+	! gzip -f snaps/qa/*.ps
+
+	define RUNSET "$!RS"
+	device X11
+
+copytoweb
+	! cp -r snaps /tleilax/data/mjuric/www/majuric.org/html/ast/adr4
+
+allrunfigs
+	#
+	# Make statistics figures and thumbnails for all runs, and an
+	# accompanying index.html HTML file
+	#
+	# The output is stored in snaps subdirectory of the current directory
+	#
+	# NOTE!!: adr4 is currently hardcoded
+	#
+	! ./sa_epochs2runlist.pl ../workspace/input/adr4.d/epochs.txt > /tmp/runs.txt
+	data "/tmp/runs.txt"
+	! mkdir -p "snaps/$!RUNSET"
+	! echo "'<h1>Numerated asteroids statistics for runset $!RUNSET</h1>'" > "snaps/$!RUNSET/index.html"
+	read <allruns 1>
+	foreach _run allruns {
+		echo ********************** $_run *****************
+		psfile "snaps/$!RUNSET/$!_run.ps" plotall $_run
+		! convert -resize 154x154 "snaps/$!RUNSET/$!_run.ps" "snaps/$!RUNSET/$!_run.tn.png" 
+		! convert -density 100 "snaps/$!RUNSET/$!_run.ps" "snaps/$!RUNSET/$!_run.png" 
+		! gzip -f "snaps/$!RUNSET/$!_run.ps" &
+		! echo "'<a href=$!_run.png><img src=$!_run.tn.png /></a>'" >> "snaps/$!RUNSET/index.html"
+		#return
+	}
+	device X11
+
+loaddata 12
+	#
+	# loaddata <run> [applyFilters=1]
+	#
+	if(!$?2) { define 2 1\n }
+	
+	load$DATASOURCE""file $1
+
+	set $0 = <0 0 0>
+	define veclist <oid run col field rowc name ast num t ra dec mu nu g r tc rac decc magc vlambda vbeta vlambdac vbetac H V phase l b>
+	eq2gal ra dec l b
+	set $0[0] = dimen(ast)
+
+	if($2) {
+		select - - ast > -1
+		set $0[1] = dimen(ast)
+		if(!dimen(ast)) { return }
+
+		#select - - abs(b) > 25
+		#set yr = atof(substr(name,0,4)) 
+		#select - - yr >= 2006
+		#select - - H > 16
+		#select - - (H*10-int(H*10)) > 0.0001
+
+		select - - num > 0
+		set $0[2] = dimen(ast)
+		if(!dimen(ast)) { return }
+	}
+
+loadoutfile 1
+	local define RUN $1
+
+	if($RUN != 0) {
+		data "$!WS/output/$!RUNSET.d/$!RUN.out"
+		lines 2 10000000
+	} else {
+		# Generated using 'cat *.out | grep -v "^run" > ../adr4.out'
+		# note that it has no header
+		data "$!WS/output/$!RUNSET.out"
+	}
+	#read <run 1 col 2 field 3 rowc 5 ast 7 name 8.s num 9 t 11 ra 12 dec 13 mu 14 nu 15 tc 32 rac 33 decc 34>
+	read <run 1 col 2 field 3 rowc 5 ast 7 name 8.s num 9 t 11 ra 12 dec 13 mu 14 nu 15 tc 32 rac 39 decc 40 magc 35>
+	read <g 18 gErr 19 r 20 rErr 21 vlambda 30 vbeta 31 vlambdac 37 vbetac 38>
+	read <H 43 phase 55>
+	##set g = round(g*100.)/100.
+	##set r = round(r*100.)/100.
+	set V = gr2Vg(g-r) + g
+	set oid = string(run*0) # oids are not defined in .out files
+
+loadsdssfile 1
+	local define RUN $1
+
+	if($RUN != 0) {
+		data "$!WS/output/$!RUNSET.d/$!RUN.sdss"
+	} else {
+		data "$!WS/output/$!RUNSET.sdss"
+	}
+	read <oid 1.s run 2 col 3 field 4 rowc 6 name 36.s num 35 t 8 ra 9 dec 10 rac 40 decc 41 magc 42>
+
+	# Note: these are here just for interface compatibility
+	# with loadoutfile -- use loadoutfile if you're interested in vlambda,vbeta comparisons
+	read <g 22 r 24 vlambda 18 vbeta 19 ident 34>
+	read <V 32 phase 45 H 47>
+	set vlambdac = vlambda
+	set vbetac = vbeta
+
+	set ast = ident ? num : -1
+	set tc = t
+	geomsbyrun
+	set node = rnode[run]
+	set inc = rinc[run]
+	eq2gc ra dec node inc mu nu
+
+gr2Vg 1
+	# convert ugriz g-r to V - g (V == Johnson V)
+	set $0 = 0.0688*$1**3 -0.2056*$1**2 -0.3838*$1 - 0.0534
+
+plotstatistic 23
+	local define RUN $1
+	local define k $2
+	if(!$?3) { define 3 3\n }
+	local define ZOOM $3
+
+	set stats = loaddata($RUN)
+	if(stats[2] == 0) { return }
+
+	if($k == 0) {
+		# t_obscal - t
+		# Compare the observation times (toc) calculated
+		# assuming 360deg/day slew, with the ones actually 
+		# in the input file
+		geomsbyrun
+		set mu0 = rmu0[run]
+		set t0 = rt0[run]
+		set v = t*0 + 1./361
+		set toc = t0 + v*degsub(mu, mu0) - 27.04/(24*3600)
+		# emulate roundoff, as is in input files
+		set toc = round((toc-int(toc))*10**6)/10**6+int(toc)
+		## 
+		set dt = (t - toc)*24*3600
+		vecminmax t tmin tmax
+		set tdel = (t - $tmin)*24
+		limits tdel dt box points tdel dt
+		xlabel t_{exposure} [hrs]
+		ylabel t_{obs} - t_{obscal}
+	}
+
+	if($k == 11) {
+		# t_obscal - t_calculated
+		# Compare observation times (t) calculated
+		# assuming 361deg/day slew, with the calculation times
+		# of asteroids matched to those MOC objects
+		geomsbyrun
+		eq2gc ra dec $(rnode[$RUN]) $(rinc[$RUN]) mu nu
+		set mu0 = rmu0[run]
+		set t0 = rt0[run]
+		set v = t*0 + 1./361
+		set t = t0 + v*degsub(mu, mu0) - 27.04/(24*3600)
+		# emulate roundoff, as is in input files
+		set t = round((t-int(t))*10**6)/10**6+int(t)
+		## note -- this is designed to fall through...
+	}
+
+	if($k == 11 || $k == 2) {
+		# t - t_calculated vs. t map
+		# Compare observation times (t) from the input file
+		# to calculation times of asteroids matched to
+		# respective MOC objects
+		set dt = (t - tc)*24*3600
+		define veclist <run rowc ast t ra dec mu nu tc rac decc dt>
+		#select - - abs(dt) > 1000
+		vecminmax t tmin tmax
+		set tdel = (t - $tmin)*24
+		limits tdel dt box points tdel dt
+		xlabel t_{exposure} [hrs]
+		ylabel t_{obs} - t_{calc}
+	}
+
+	if($k == 3) {
+		# ra/dec residuals map
+		# plot the residuals of observed - calculated
+		# (ra, dec) positions, in dra*cos(dec), ddec plane
+		set dra = (ra - rac)*3600*cos(dec)
+		set ddec = (dec - decc)*3600
+		limits -$ZOOM $ZOOM -$ZOOM $ZOOM
+		vline 0
+		hline 0
+		box points dra ddec
+		xlabel \Delta\alpha \cdot cos\delta  (arcsec)
+		ylabel \Delta\delta  (arcsec)
+	}
+
+	if($k == 4) {
+	# lambda/beta residuals map
+		#    plot the observed: a) calculated residuals of ecliptic coordinates
+		# or plot the observed: b) calculated residuals of (mu, nu) great circle coordinates
+		geomsbyrun
+		if(0) {
+			set node = rnode[run]
+			set inc = rinc[run]
+			eq2gc ra dec node inc mu nu
+			eq2gc rac decc node inc muc nuc
+		} else {
+			eq2ec ra dec mu nu
+			eq2ec rac decc muc nuc
+		}
+		set dra = (mu - muc)*3600
+		set ddec = (nu - nuc)*3600
+		limits -$ZOOM $ZOOM -$ZOOM $ZOOM
+		box
+		local define COLORMAP brainbow
+		local define colcont red
+		if($RUN == 0) {
+			if(0) {
+				pi_binvec img dra ddec .02 .02
+				pi_plot img
+			} else {
+				points dra ddec
+			}
+			contour_dot dra ddec .2 .2 0
+		} else {
+			local define ADDPIX 80
+			#pi_binvec img dra ddec .2 .2
+			#pi_plot img
+			points dra ddec
+			contour_dot dra ddec .2 .2
+		}
+		vline 0\n vline 0 white 2
+		hline 0\n hline 0 white 2
+	
+		expand 1.0001
+
+		stats_med dra median SIQR
+		relocate $(-.9*$ZOOM) $(.9*$ZOOM)
+		putlabel 3 "\lambda_{med}  = $!(sprintf('%.2f',$median)) \pm  $!(sprintf('%.2f',$SIQR))"
+		stats_med ddec median SIQR
+		relocate $(-.9*$ZOOM) $(.8*$ZOOM)
+		putlabel 3 "\beta_{med}  = $!(sprintf('%.2f',$median)) \pm  $!(sprintf('%.2f',$SIQR))"
+
+		xlabel "\Delta \lambda"  (arcsec)
+		ylabel "\Delta \beta"  (arcsec)
+	}
+
+	if($k == 5) {
+		# plot the one-dimensional distribution of 
+		# dist = |obs_(ra,dec) - calc_(ra,dec)|,
+		# Note that this is 1D dist., that is, it was 
+		# divided by the spatial 2*pi*dist factor to compensate for more
+		# phase space at greater d
+		local define bs ($RUN ? .05 : .01)
+		sphericalDist ra dec rac decc dist
+		set b=($bs/2),2.025,$bs set h=histogram(dist:b)/(2*PI*b)/$bs
+		limits b h box histogram b h
+		xlabel d [arcsec]
+		ylabel dN/dd
+	}
+
+	if($k == 6) {
+		# vlambda/vbeta residuals map
+		# plot the observed - calculated residuals of (vlambda, vbeta)
+		set dra = (vlambda - vlambdac) #/ vlambda
+		set ddec = (vbeta - vbetac) #/ vbeta
+		define ZOOM .03
+		limits -$ZOOM $ZOOM -$ZOOM $ZOOM
+		box
+		local define COLORMAP brainbow
+		local define colcont red
+		if($RUN == 0) {
+			if(0) {
+				pi_binvec img dra ddec .0002 .0002
+				pi_plot img
+			} else {
+				points dra ddec
+			}
+			contour_dot dra ddec .002 .002 0
+		} else {
+			local define ADDPIX 80
+			#pi_binvec img dra ddec .2 .2
+			#pi_plot img
+			points dra ddec
+			contour_dot dra ddec .002 .002
+		}
+		vline 0\n vline 0 white 2
+		hline 0\n hline 0 white 2
+	
+		expand 1.0001
+
+		stats_med dra median SIQR
+		relocate $(-.9*$ZOOM) $(.9*$ZOOM)
+		putlabel 3 "\Delta v_{\lambda,med}  = $!(sprintf('%.3f',$median)) \pm  $!(sprintf('%.3f',$SIQR))"
+		stats_med ddec median SIQR
+		relocate $(-.9*$ZOOM) $(.8*$ZOOM)
+		putlabel 3 "\Delta v_{\beta,med}  = $!(sprintf('%.3f',$median)) \pm  $!(sprintf('%.3f',$SIQR))"
+
+		xlabel "\Delta v_\lambda"  (arcsec)
+		ylabel "\Delta v_\beta"  (arcsec)
+	}
+
+	if($k == 7) {
+		# plot the distribution of magnitude residuals
+		set delta = V - magc
+
+		local define bs ($RUN ? .05 : .01)
+		set b=-10,10,$bs set h=histogram(delta:b)
+		limits -.75 1.25 h box histogram b h
+		vline 0 black 2
+		hline 0 black 2
+		xlabel V_{observed} - V_{catalog} (mag)
+		ylabel dN/d\Delta V
+	}
+
+	if($k == 8) {
+		# make the magnitude residuals vs. magnitude plot
+		set delta = V - magc
+		limits 14 22 -.75 1.25
+		box
+		local define colcont red
+		points V delta
+
+		plot_meds V delta .5 14 21
+		hline 0\n hline 0 white 2
+	
+		expand 1.0001
+
+		xlabel "V"  (mag)
+		ylabel V_{observed} - V_{catalog}  (mag)
+	}
+
+	if($k == 9) {
+		# make the magnitude residuals vs. absolute magnitude (H) plot
+		set delta = V - magc
+		limits 7 20 -.75 1.25
+		box
+		local define colcont red
+		points H delta
+
+		plot_meds H delta .5 7 20
+		hline 0\n hline 0 white 2
+	
+		expand 1.0001
+
+		xlabel "H"  (mag)
+		ylabel V_{observed} - V_{catalog}  (mag)
+	}
+
+	if($k == 10) {
+		# make the magnitude residuals vs. phase plot
+		set delta = V - magc
+		limits 0 45 -.75 1.25
+		box
+		local define colcont red
+		points phase delta
+
+		plot_meds phase delta .5 $fx1 $fx2
+		hline 0\n hline 0 white 2
+	
+		expand 1.0001
+
+		xlabel "phase"  (deg)
+		ylabel V_{observed} - V_{catalog}  (mag)
+	}
+
+do_adr4_qa
+	psfile qa.adr4.phase_dV.ps erase plotstatistic 0 10
+
+plot_meds 5
+	# plot medians
+	#
+	# Usage: plot_meds <x> <y> <dx> <x0> <x1>
+	#
+
+	local define _x $1
+	local define _y $2
+	local define _dx $3
+	local define _x0 $4
+	local define _x1 $5
+
+	set dimen(_xxcoord) = 0
+	set dimen(_xxmed) = 0
+	set dimen(_siqr) = 0
+	do 9=$_x0,$_x1,$_dx {
+		set _xx = $2 if($9 < $1 && $1 < $9+$_dx)
+		stats_med _xx _xxmed _siqr
+		define _xxcoord ($9+.5*$_dx)
+		set _xxcoord = _xxcoord concat <$_xxcoord>
+		set _xxmed = _xxmed concat <$_xxmed>
+		set _siqr = _siqr concat <$_siqr>
+
+		echo $_xxcoord $_xxmed $_siqr
+	}
+	##connect _xxcoord _xxmed
+	ctype red
+	error_y _xxcoord _xxmed _siqr
+	ctype yellow expand 1.5
+	ptype 10 3 points _xxcoord _xxmed
+	ctype black
+	ptype 10 0 points _xxcoord _xxmed
+	expand 1. ptype 0 0
+	ctype black
+
+changetimes 34
+	# changetimes(run,t,mu,[deg/day=360])
+	# assuming 360deg/day slew, with the ones actually 
+	# in the input file
+	if(!$?4) { define 4 360\n }
+	geomsbyrun
+	set mu0 = $2*0 + rmu0[$1]
+	set t0 = $2*0 + rt0[$1]
+	set v = $2*0 + 1./$4
+	set $0 = t0 + v*degsub($3, mu0) - 27.04/(24*3600)
+	# emulate roundoff, as is in input files
+	#set $0 = round(($0-int($0))*10**6)/10**6+int($0)
+
+chtimes
+	geomsbyrun
+	data "/home/mjuric/projects/satools/workspace/output/adr4slew361.d/$!XRUN.num"
+	lines 2 1000000
+	set dimen(ra)=0
+	read <desig 1.s time 2 ra 3 dec 4>
+	if(dimen(ra)>0) {
+		eq2gc ra dec $(rnode[$XRUN]) $(rinc[$XRUN]) mu nu
+		set t2 = changetimes($XRUN, time, mu)
+		define print_noheader 1
+		print "../workspace/output/adr4slew361.d/$!XRUN.cnum" '%s %.12f %.10f %.10f\n' <desig t2 ra dec>
+		undef print_noheader
+		set $0 = 1
+	} else {
+		! rm -f "../workspace/output/adr4slew361.d/$!XRUN.cnum"
+		! touch "../workspace/output/adr4slew361.d/$!XRUN.cnum"
+		set $0 = 0
+	}
+
+prepall
+	data "/tmp/runs.txt"
+	read <runss 1>
+	! mkdir -p "snaps/astrometry"
+	! echo "'<h1>Astrometry plots for runset $!RUNSET</h1>'" > "snaps/astrometry/index.html"
+	foreach _run runss {
+		if(prep($_run)) {
+			echo ********************** $_run *****************
+			psfile "snaps/astrometry/$!_run.ps" qt
+			! convert -resize 154x154 "snaps/astrometry/$!_run.ps" "snaps/astrometry/$!_run.tn.png" 
+			! convert -density 100 "snaps/astrometry/$!_run.ps" "snaps/astrometry/$!_run.png" 
+			! gzip -f "snaps/astrometry/$!_run.ps" &
+			! echo "'<a href=$!_run.png><img src=$!_run.tn.png /></a>'" >> "snaps/astrometry/index.html"
+		}
+	}
+
+prep 1
+	define XRUN $1
+	# select numerated
+	! (cd lnk; awk '{ if(\$9 != 0) print \$8, \$11, \$12, \$13 }' $XRUN.out > $XRUN.num)
+	# calculate positions for database MJDs
+	! (cd lnk; awk '{ print \$2, \$1 }' $XRUN.num | tac | head -n -1 | tac | calcpos.x $XRUN NATIVE > $XRUN.calc)
+	# recalculate MJDs
+	set $0 = chtimes()
+	# calculate positions for recalculated MJDs
+	! (cd lnk; awk '{ print \$2, \$1 }' $XRUN.cnum | calcpos.x $XRUN NATIVE > $XRUN.ccalc)
+
+qt
+	erase
+	set_window -3 -3 7\n quicktest 0 ddec
+	set_window -3 -3 6\n quicktest 0 dra
+	ylabel dra [arcsec]
+	set_window -3 -3 4\n quicktest 1 ddec
+	set_window -3 -3 3\n quicktest 1 dra
+	ylabel dra [arcsec]
+	set_window -3 -3 1\n quicktest 0 dt2
+	xlabel ra [deg]
+	set_window -3 -3 0\n quicktest 0 dt2
+	ylabel dt [sec]
+	xlabel ra [deg]
+	set_window
+
+qtest 23
+	#
+	# qtest <run> <y_variable> [x_variable]
+	#
+	if(!$?3) { define 3 ra\n }
+	local define bin 6
+	if('$3' == 't') { define bin 24 \n }
+	if('$3' == 'idx') { define bin 1 \n }
+	loaddata $1
+	select - - abs(dec)<4&&(ra>320||ra<40)
+	#select - - num < 20000
+	select - - rinc[run] == 0
+	#select - - t>53620&&t<53720
+	#select - - t<53670
+	if(0) {
+	set t=t<53350 ? t+270 : t
+	set t=t<53360 ? t+150 : t
+	set t=t<53400 ? t+80 : t
+	set t=t<53100 ? t+280 : t
+	set t=t<53070 ? t+220 : t
+	set t=t<52880 ? t+280 : t
+	set t=t<53100 ? t+50 : t
+	set t=t<52420 ? t+720 : t
+	select - - t < 53720
+	}
+	set idx = t
+	set urun = uniq(run)
+	do 9=0,(dimen(urun)-1) {
+		set idx = run==urun[$9] ? (10*$9+t-int(t)) : idx
+		set idx = run==urun[$9] ? 1*$9 : idx
+	}
+
+	vecminmax t t0 t1
+	set t = (t - $t0)*24
+	set tc = (t - $t0)*24
+	set dt = (t - tc)*3600
+
+	set t2 = (changetimes($XRUN,t,mu,361)-$t0)*24
+	set dt2 = (t - t2)*3600
+
+	set dra = (ra - rac)*3600
+	set ddec = (dec - decc)*3600
+	set dd = (dra**2 + ddec**2)**.5
+
+	vecminmax $3 x0 x1
+	if('$3' == 'ra') {
+		if(abs($x1-360) < 1 && abs($x0) < 1) {
+			set ra = ra > 180 ? ra - 360 : ra
+			vecminmax ra x0 x1
+		}
+	}
+	vecselect "$!3 $!2" - abs($2) < 5
+	limits $x0 $x1 $2
+	limits $x0 $x1 -.95 .95
+	box
+	expand .3 points $3 $2 expand 1.0001
+	hline 0 blue
+	#ylabel $2 [arcsec]
+
+	## calculate medians in bins
+	medians $3 $2 $bin b med siqr n
+	
+	ctype red
+	#connect b med
+	ptype 10 3 points b med
+	set mplus = med+2*siqr connect b mplus
+	set mminus = med-2*siqr connect b mminus
+	ctype black
+	ptype 0 0
+
+	ylabel $2
+	xlabel $3
+
+medians 7
+	local define dx $3
+	define _min local
+	define _max local
+	define b local
+	set _tmp local
+
+	vecminmax $1 _min _max
+	set $4 = 0,$(($_max-$_min)/$dx*10)
+	set $4 = $_min + ($4+0.5)*$dx/10
+	set dimen($5) = dimen($4)
+	set dimen($6) = dimen($4)
+	set dimen($7) = dimen($4)
+	do 9=0,(dimen($4)-1) {
+		define b ($4[$9])
+		set _tmp = $2 if(abs($1 - $b) < $dx*0.5)
+		if(dimen(_tmp) > 0) {
+			stats_med _tmp _med _siqr
+			set $5[$9] = $_med
+			set $6[$9] = $_siqr
+			set $7[$9] = dimen(_tmp)
+		} else {
+			set $4[$9] = -9999
+		}
+	}
+	vecselect "$!4 $!5 $!6 $!7" - $4 != -9999
+
+quicktest 2
+	# awk '{ if($9 != 0) print $8, $9, $11, $12, $13 }' $XRUN.out > $XRUN.num
+	# awk '{ print $2, $1 }' $XRUN.num | tac | head -n -1 | tac | calcpos.x $XRUN NATIVE > $XRUN.calc
+	set dimen(ra) = 0
+	data "/home/mjuric/projects/satools/workspace/output/adr4slew361.d/$!XRUN.num"
+	lines 2 1000000
+	read <desig 1.s time 2 ra 3 dec 4>
+	if(dimen(ra) == 0) { return }
+
+	if($1 == 0) {
+	data "/home/mjuric/projects/satools/workspace/output/adr4slew361.d/$!XRUN.calc"
+	} else {
+	data "/home/mjuric/projects/satools/workspace/output/adr4slew361.d/$!XRUN.ccalc"
+	}
+	read <desigc 2.s timec 1 rac 3 decc 4>
+	vecminmax time t0 t1
+	set time = (time - $t0)*24
+	set timec = (timec - $t0)*24
+	set dt = (time - timec)*3600
+	set t2 = (changetimes($XRUN,time,mu,361)-$t0)*24
+	set dt2 = (time - t2)*3600
+	set dra = (ra - rac)*3600
+	set ddec = (dec - decc)*3600
+	set dd = (dra**2 + ddec**2)**.5
+	vecminmax ra ra0 ra1
+	if(abs($ra1-360) < 1 && abs($ra0) < 1) {
+		set ra = ra > 180 ? ra - 360 : ra
+		vecminmax ra ra0 ra1
+	}
+	vecselect "ra time $!2" - abs($2) < 5
+	limits $ra0 $ra1 $2
+	box
+	expand .3 points ra $2 expand 1.0001
+	hline 0 red
+	#ylabel $2 [arcsec]
+
+loadrawtbl 1
+	local define RUN $1
+
+	data "$!WS/input/$!RUNSET.tbl"
+	read <run 1 rowc 5 ra 12 dec 13 tf 27 >
+	define veclist <run rowc ra dec tf>
+	select - - run == $RUN
+
+	set geom = rungeom($RUN)
+	set mu0 = tf*0 + geom[2]
+	set t0 = tf*0 + geom[4]
+	set node = tf*0 + geom[0]
+	set inc = tf*0 + geom[1]
+
+	eq2gc ra dec node inc mu nu
+	#set v = tf*0 + 1./361.04
+	#set delta = 24*3600*(t0 - tf + v*(degsub(mu, mu0) - 1.075*0.369/3600*rowc))
+	#set dt = (tf - t0) * 24
+	set v = tf*0 + 1./361.
+	set v = tf*0 + 0.997269566 / 360.
+	set delta = 24*3600*(t0 - tf + v*(degsub(mu, mu0) - 0.396/3600*rowc))
+	set dt = (tf - t0) * 24
+
+	erase limits dt delta box points dt delta
+
+load
+	data "$!WS/output/$!RUNSET.sdss"
+	read <t 8 ra 9 dec 10 rac 40 decc 41>
+	define veclist <t ra dec rac decc>
+	select - orig 1
+
+go
+	select orig - rac_orig != 0 && dec_orig != 0
+	if(1) {
+	set dra = (ra - rac)*3600*cos(dec)
+	set ddec = (dec - decc)*3600
+	erase limits dra ddec box points dra ddec
+	}
+
+	if(0) {
+	sphericalDist ra dec rac decc dist
+	set b=0.025,2.025,.05 set h=histogram(dist:b)/(2*PI*b)/.05 erase limits b h box histogram b h
+	xlabel d [arcsec]
+	ylabel dN/dd
+	}
+
+plot_observation 1
+	#
+	# Plot an observation in the context of its run
+	#
+	local define DATASOURCE sdss
+	loaddata 0 0
+	select - 2 oid=='$1'
+
+	plot_run $(run_2[0])
+
+	ptype 10 3
+	ctype red
+	relocate $(ra_2) $(dec_2) dot
+	ctype black ptype 0 0
+
+plot_run 12
+	#
+	# Plot a run
+	#
+	# plot_run <run> [erase?=1]
+	#
+	if(!$?2) { define 2 1 }
+	loaddata $1 0
+
+	set ra = ra > 180 ? ra - 360 : ra
+
+	if($2) {
+		erase
+		limits ra dec
+		box
+
+		xuplabel "Run $!1"
+
+		xlabel RA (deg)
+		ylabel Dec (deg)
+	}
+	ptype 10 3 expand .3
+	points ra dec
+	expand 1.001
+
+durech_qa_figs
+	psfile radec.5759.ps plot_observation sdebe2
+	psfile radec.5836.ps plot_observation sdfdea
+	psfile radec.5770.ps plot_run 5770
+	psfile radec.5744.ps plot_run 5744

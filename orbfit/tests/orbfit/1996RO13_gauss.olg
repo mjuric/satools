@@ -1,0 +1,13 @@
+Input of observations:
+ rearwo:  15 obs from 1996RO13.rwo
+ mpcin: 15 from 1996RO13.obs
+       15 observations read for object 1996 RO13
+Input of orbital elements:
+Preliminary orbit for object 1996 RO13:
+    Trying observations:     1     9    15 (DT=     10.98     16.78 d)
+    RMS check observations:     1 -    15 (DT=     27.75 d)
+        Gauss(1996 RO13): NR=3 NC=1 NK=1 (OK)
+            Gauss(1996 RO13#1): a=   3.2167 e=   0.1830 RMS=  4.74E-01 arcsec
+    IOD(1996 RO13) STAT:     1     1     3     1     1     0     0 SEL:     1     9    15 IR:     1    15 DT:     10.98     16.78     27.75
+    IOD(1996 RO13): solution with Gauss method (no noise): RMS=  4.74E-01 arcsec
+        KepElem(1996 RO13/Gauss):  3.2166825E+00   0.18300951   0.29578 253.10748 153.73935 323.61027 (T= 50345.364)

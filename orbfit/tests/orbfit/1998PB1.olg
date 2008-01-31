@@ -1,0 +1,35 @@
+Input of observations:
+ rearwo:  175 obs from 1998PB1.rwo
+ mpcin: 175 from 1998PB1.obs
+      175 observations read for object 1998PB1
+Input of orbital elements:
+     Orbital elements for object 1998PB1:
+     (origin: read from file "1998PB1.ele" at record 1)
+        Semimajor axis     =   2.02518320000000E+00 AU
+        Eccentricity       =   0.430608900000000
+        Inclination        =   5.9645100000000 deg
+        Long. of node      = 299.9202300000000 deg
+        Arg. of pericenter = 350.0863000000000 deg
+        Mean anomaly       =   9.3114600000000 deg
+        Epoch of elements  : MJD   51040.00000000 TDT (Aug 15, 1998,  0.000000 h)
+Differential correction for object 1998PB1:
+     Starting orbital elements:
+        Semimajor axis     =   2.02518498865149E+00 AU
+        h [e*sin(w)]       =  -0.404623464875897
+        k [e*cos(w)]       =   0.147323619674578
+        P [tg(i/2)*sin(N)] =  -0.045153720309743
+        Q [tg(i/2)*cos(N)] =   0.025985749590014
+        Mean longitude     = 299.4128732996332 deg
+        Epoch of elements  : MJD   51040.27737130 TDT (Aug 15, 1998,  6.656911 h)
+          Absolute mag. H    =    17.00
+     Corrected orbital elements:
+        Semimajor axis     =   2.02867358259899E+00 AU
+        h [e*sin(w)]       =  -0.405452615496457
+        k [e*cos(w)]       =   0.147594387871828
+        P [tg(i/2)*sin(N)] =  -0.045208376969478
+        Q [tg(i/2)*cos(N)] =   0.026006515083734
+        Mean longitude     = 299.3832316038221 deg
+        Epoch of elements  : MJD   51040.27737130 TDT (Aug 15, 1998,  6.656911 h)
+          Absolute mag. H    =    17.45
+     Residual norm   =  6.075E-01
+     Correction norm =  3.181E-07

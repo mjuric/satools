@@ -1,0 +1,8 @@
+catpro.
+	.tref=51075
+	.catnam0='astorb.dat'
+	.catnam1='orbits.dat'
+	.covpro=.false.
+propag.
+	.imet=0
+  

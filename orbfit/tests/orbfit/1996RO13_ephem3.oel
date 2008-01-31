@@ -1,0 +1,9 @@
+format  = 'OEF1.1'       ! file format
+rectype = 'ML'           ! record type (1L/ML)
+refsys  = ECLM J2000     ! default reference system
+END_OF_HEADER
+! Gauss
+1996 RO13
+! Keplerian elements: a, e, i, long. node, arg. peric., mean anomaly
+ KEP   3.21668247828536E+00 0.183009509865984   0.2957760022262 253.1074755130432 153.7393540963382 323.6102720608711
+ MJD     50345.36383972 TDT

@@ -1,0 +1,29 @@
+  - - - - - - - - - - - - - - - - - - - - -
+| sa_identifyRuns.pl adr4 30
+  - - - - - - - - - - - - - - - - - - - - -
+
+	id2.x adr4.d/125 30 adr4.d/125 125 125 CAT
+Loaded cache : /u/mjuric/projects/satools/workspace/tmp/skies/125.cache [51081.255447 MJD/382667 objects]
+Initializing propag library
+STOP **** fszer2: abnormal end ****
+	Radius  : 30"
+	Run     : 125
+	Catalog : /u/mjuric/projects/satools/workspace/tmp/propagated/125.obj
+	Cache   : /u/mjuric/projects/satools/workspace/tmp/skies/125.cache
+	Input   : /u/mjuric/projects/satools/workspace/input/adr4.d/125.data
+	Output  : /u/mjuric/projects/satools/workspace/output/adr4.d/125.out
+	ERROR opening file jpleph
+	-------------
+	id2.x adr4.d/94 30 adr4.d/94 94 94 CAT
+Loaded cache : /u/mjuric/projects/satools/workspace/tmp/skies/94.cache [51075.233315 MJD/382667 objects]
+Initializing propag library
+STOP **** fszer2: abnormal end ****
+	Radius  : 30"
+	Run     : 94
+	Catalog : /u/mjuric/projects/satools/workspace/tmp/propagated/94.obj
+	Cache   : /u/mjuric/projects/satools/workspace/tmp/skies/94.cache
+	Input   : /u/mjuric/projects/satools/workspace/input/adr4.d/94.data
+	Output  : /u/mjuric/projects/satools/workspace/output/adr4.d/94.out
+	ERROR opening file jpleph
+	-------------
+	id2.x adr4.d/756 30 adr4.d/756 756 756 CAT

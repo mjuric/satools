@@ -1,0 +1,34 @@
+Input of observations:
+ rearwo:  30 obs from 1996RO13=1220T-2.rwo
+       30 observations read for object 1996RO13=1220T-2
+Input of orbital elements:
+     Orbital elements for object 1996RO13=1220T-2:
+     (origin: read from file "1996RO13_ident1.oel" at record 50)
+        Semimajor axis     =   3.21088566230868E+00 AU
+        h [e*sin(w)]       =   0.115721449346802
+        k [e*cos(w)]       =   0.107936016977390
+        P [tg(i/2)*sin(N)] =  -0.002391256381661
+        Q [tg(i/2)*cos(N)] =  -0.000581049254476
+        Mean longitude     =  12.9743845163433 deg
+        Epoch of elements  : MJD   46152.87176056 TDT (Mar 28, 1985, 20.922253 h)
+Differential correction for object 1996RO13=1220T-2:
+     Starting orbital elements:
+        Semimajor axis     =   3.21088566230868E+00 AU
+        h [e*sin(w)]       =   0.115721449346802
+        k [e*cos(w)]       =   0.107936016977390
+        P [tg(i/2)*sin(N)] =  -0.002391256381661
+        Q [tg(i/2)*cos(N)] =  -0.000581049254476
+        Mean longitude     =  12.9743845163433 deg
+        Epoch of elements  : MJD   46152.87176056 TDT (Mar 28, 1985, 20.922253 h)
+          Absolute mag. H    =    14.41
+     Corrected orbital elements:
+        Semimajor axis     =   3.21091158030753E+00 AU
+        h [e*sin(w)]       =   0.115642935972675
+        k [e*cos(w)]       =   0.105866708446674
+        P [tg(i/2)*sin(N)] =  -0.002395083483627
+        Q [tg(i/2)*cos(N)] =  -0.000595963849063
+        Mean longitude     =  12.9527217224799 deg
+        Epoch of elements  : MJD   46152.87176056 TDT (Mar 28, 1985, 20.922253 h)
+          Absolute mag. H    =    14.40
+     Residual norm   =  9.504E-01
+     Correction norm =  2.828E-06

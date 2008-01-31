@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE KDevPrjSession>
+<KDevPrjSession>
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:///data/mjuric/projects/satools/src/Makefile" >
+   <View0 line="0" Type="Source" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///data/mjuric/projects/satools/libpeyton/src/asteroids/catalogs/CometCatalog.cpp" >
+   <View0 line="22" Type="Source" />
+  </Doc1>
+ </DocsAndViews>
+ <pluginList>
+  <kdevdebugger>
+   <breakpointList>
+    <breakpoint0 location="/data/mjuric/projects/satools/libpeyton/src/asteroids/catalogs/CometCatalog.cpp:20" type="1" tracingFormatString="" traceFormatStringEnabled="0" condition="" tracingEnabled="0" enabled="1" >
+     <tracedExpressions/>
+    </breakpoint0>
+   </breakpointList>
+  </kdevdebugger>
+  <kdevbookmarks>
+   <bookmarks/>
+  </kdevbookmarks>
+  <kdevvalgrind>
+   <executable path="" params="" />
+   <valgrind path="" params="" />
+   <calltree path="" params="" />
+   <kcachegrind path="" />
+  </kdevvalgrind>
+ </pluginList>
+</KDevPrjSession>

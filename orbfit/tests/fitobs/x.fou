@@ -1,0 +1,18 @@
+  INPUT OF OBSERVATIONAL DATA, ARC 1
+  INPUT OF OBSERVATIONAL DATA, ARC 2
+  INPUT OF ORBITAL ELEMENTS, ARC 1
+    1.4582168    0.1868476   -0.1214486   -0.0782064    0.0535639    2.2979054
+  
+  INPUT OF ORBITAL ELEMENTS, ARC 2
+  PREDICTION OF OBSERVATIONS
+  ARC 1
+  Current epoch value (MJD):  52100.0
+Astrometric Observation Prediction
+For 1997/09/30 11:58:56 (UTC);  50721.49927(MJD)
+Observatory code= 645
+RA= 07:38:27.651 (HH:MM:SS);   114.61521 (deg)
+DEC= +33 49 17.15 (deg min sec);    33.82143 (deg)
+RA/DEC Apparent motion=     153.16     -25.48 (arcsec/hour)
+Earth distance= 1.0284 (AU)
+Solar elongation=  76.97 (deg)
+Apparent magnitude= 12.74

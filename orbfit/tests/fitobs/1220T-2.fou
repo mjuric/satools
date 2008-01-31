@@ -1,0 +1,295 @@
+  INPUT OF OBSERVATIONAL DATA, ARC 1
+ rearwo:  15 obs from obsdata/1220T-2.rwo
+ mpcin: 15 from obsdata/1220T-2.obs
+  INPUT OF OBSERVATIONAL DATA, ARC 2
+ rearwo:  15 obs from obsdata/1996RO13.rwo
+ mpcin: 15 from obsdata/1996RO13.obs
+  INPUT OF ORBITAL ELEMENTS, ARC 1
+    3.2100838    0.1250209    0.1035371   -0.0025007   -0.0007518    1.8262689
+  
+  INPUT OF ORBITAL ELEMENTS, ARC 2
+    3.2100838    0.1250209    0.1035371   -0.0025007   -0.0007518    1.8262689
+  
+  PROPAGATION OF ELEMENTS
+  ARC 1
+  Current epoch value (MJD):  50900.0
+ elements at time  41952.8 (MJD):
+    3.2091465    0.1100540    0.1209122   -0.0022763   -0.0004342    0.2596146
+  332.5664310  143.1082908  259.2001004    0.2655445    0.1634981    3.2091465
+
+  PROPAGATION OF ELEMENTS
+  ARC 2
+  Current epoch value (MJD):  50900.0
+ elements at time  50349.5 (MJD):
+    3.2085288    0.1245456    0.1034826   -0.0025024   -0.0007511    0.1788026
+  319.9672009  156.9839857  253.2934458    0.2993853    0.1619267    3.2085288
+
+  DIFFERENTIAL CORRECTIONS
+  ARC 1
+  FIRST ARC
+ starting values
+    3.2091465    0.1100540    0.1209122   -0.0022763   -0.0004342    0.2596146
+ *** iteration   1
+  RMS residuals =  1.1774E+00   norm corr =  1.8667E+00
+  new elem values
+    3.2125529    0.1120410    0.1152053   -0.0022828   -0.0004013    0.2646886
+
+ *** iteration   2
+  RMS residuals =  5.6810E+00   norm corr =  1.2567E+01
+  new elem values
+    3.2123957    0.1120559    0.1151011   -0.0022828   -0.0004008    0.2647624
+
+  target function increasing 
+
+ *** iteration   3
+  RMS residuals =  8.3023E-01   norm corr =  5.9561E-03
+  new elem values
+    3.2123957    0.1120559    0.1151009   -0.0022828   -0.0004008    0.2647624
+
+==== OUTLIER REJECTION =======
+Residual norm =  8.30234E-01
+Chi2 threshold =  4.53230E+00
+No. of observations:
+          total     =   15
+          selected  =   15
+          rejected  =    0
+          recovered =    0
+Outlier rejection pass   1 after   3 single differential correction passes.
+There were   0 changes.
+ Entering final convergence loop after  1 outlier rejection loops.
+ *** iteration   1
+  RMS residuals =  8.3023E-01   norm corr =  2.5427E-06
+  new elem values
+    3.2123957    0.1120559    0.1151009   -0.0022828   -0.0004008    0.2647624
+
+ Done. Convergence corrections small after  1 passes.
+
+  ARC 2
+  SECOND ARC
+ starting values
+    3.2085288    0.1245456    0.1034826   -0.0025024   -0.0007511    0.1788026
+ *** iteration   1
+  RMS residuals =  1.3452E+00   norm corr =  2.9065E+00
+  new elem values
+    3.2208228    0.1355241    0.1308618   -0.0024630   -0.0007510    0.1987180
+
+ *** iteration   2
+  RMS residuals =  1.2283E+02   norm corr =  2.7465E+02
+  new elem values
+    3.2177215    0.1349482    0.1289770   -0.0024634   -0.0007511    0.1973447
+
+  target function increasing 
+
+ *** iteration   3
+  RMS residuals =  1.0921E+00   norm corr =  2.3159E+00
+  new elem values
+    3.2177013    0.1349402    0.1289693   -0.0024633   -0.0007512    0.1973271
+
+ *** iteration   4
+  RMS residuals =  3.4632E-01   norm corr =  5.0916E-05
+  new elem values
+    3.2177013    0.1349402    0.1289693   -0.0024633   -0.0007512    0.1973271
+
+==== OUTLIER REJECTION =======
+Residual norm =  3.46320E-01
+Chi2 threshold =  7.31135E-01
+No. of observations:
+          total     =   15
+          selected  =   15
+          rejected  =    0
+          recovered =    0
+Outlier rejection pass   1 after   4 single differential correction passes.
+There were   0 changes.
+  FIRST GUESS FOR IDENTIFICATION
+  GUESS FROM LONGITUDE FIT
+ tm = 46151.1
+
+    3.2142474    0.1234981    0.1220351   -0.0023731   -0.0005760    0.2310448
+  
+  DIFFERENTIAL CORRECTIONS
+  BOTH ARCS
+  BOTH ARCS TOGETHER
+ starting values
+    3.2142474    0.1234981    0.1220351   -0.0023731   -0.0005760    0.2310448
+ *** iteration   1
+  RMS residuals =  6.8883E+03   norm corr =  2.1783E+04
+  new elem values
+    3.2108826    0.1082864    0.1380075   -0.0023456   -0.0006632    0.2145265
+
+ *** iteration   2
+  RMS residuals =  2.6974E+02   norm corr =  8.5296E+02
+  new elem values
+    3.2108170    0.1144147    0.1185871   -0.0023735   -0.0005204    0.2203294
+
+ *** iteration   3
+  RMS residuals =  1.1666E+02   norm corr =  3.6890E+02
+  new elem values
+    3.2108619    0.1155061    0.1111532   -0.0023859   -0.0005634    0.2212327
+
+ *** iteration   4
+  RMS residuals =  2.4690E+01   norm corr =  7.7984E+01
+  new elem values
+    3.2108828    0.1156939    0.1088188   -0.0023898   -0.0005759    0.2212870
+
+ *** iteration   5
+  RMS residuals =  2.6593E+00   norm corr =  7.5242E+00
+  new elem values
+    3.2108890    0.1157171    0.1081787   -0.0023908   -0.0005796    0.2212489
+
+ *** iteration   6
+  RMS residuals =  1.1995E+00   norm corr =  5.3735E-01
+  new elem values
+    3.2108907    0.1157201    0.1080040   -0.0023911   -0.0005806    0.2212322
+
+ *** iteration   7
+  RMS residuals =  1.1874E+00   norm corr =  4.2617E-02
+  new elem values
+    3.2108912    0.1157207    0.1079559   -0.0023912   -0.0005809    0.2212271
+
+==== OUTLIER REJECTION =======
+Residual norm =  1.18740E+00
+Chi2 threshold =  2.24934E+00
+No. of observations:
+          total     =   30
+          selected  =   30
+          rejected  =    0
+          recovered =    0
+Outlier rejection pass   1 after   7 single differential correction passes.
+There were   0 changes.
+ Entering final convergence loop after  1 outlier rejection loops.
+ *** iteration   1
+  RMS residuals =  1.1873E+00   norm corr =  4.9906E-03
+  new elem values
+    3.2108913    0.1157208    0.1079427   -0.0023912   -0.0005810    0.2212257
+
+ *** iteration   2
+  RMS residuals =  1.1873E+00   norm corr =  1.0127E-03
+  new elem values
+    3.2108914    0.1157209    0.1079391   -0.0023913   -0.0005810    0.2212253
+
+  target function paralyzed 
+
+ *** iteration   3
+  RMS residuals =  1.1873E+00   norm corr =  2.6566E-04
+  new elem values
+    3.2108914    0.1157209    0.1079381   -0.0023913   -0.0005810    0.2212252
+
+ Done. Convergence corrections small after  3 passes.
+
+ MULTIPLE SOLUTIONS
+ ARC 2
+  Current epoch value (MJD):  50349.5
+
+ WEAK DIRECTION 
+ -0.1471052256586007E+00 -0.2773256716726716E+00 -0.8183026772194509E+00 -0.1231592353516812E-02 -0.1333667857241761E-02 -0.4814851580070089E+00
+
+ WEAK SIGMA   9.2020E-03
+
+  sigma=  1.  in  10 steps
+  alternate solution no.  12
+ iterations  39  RMS=  3.4692E-01 last corr. =  9.8158E-04
+  alternate solution no.  13
+ iterations  49  RMS=  3.4873E-01 last corr. =  9.9007E-04
+  alternate solution no.  14
+ iterations  45  RMS=  3.5171E-01 last corr. =  9.9757E-04
+  alternate solution no.  15
+ iterations  42  RMS=  3.5585E-01 last corr. =  9.9997E-04
+  alternate solution no.  16
+ iterations  40  RMS=  3.6110E-01 last corr. =  9.8937E-04
+  alternate solution no.  17
+ iterations  38  RMS=  3.6742E-01 last corr. =  9.8963E-04
+  alternate solution no.  18
+ iterations  37  RMS=  3.7475E-01 last corr. =  9.7250E-04
+  alternate solution no.  19
+ iterations  35  RMS=  3.8303E-01 last corr. =  9.9570E-04
+  alternate solution no.  20
+ iterations  35  RMS=  3.9221E-01 last corr. =  9.6445E-04
+  alternate solution no.  21
+ iterations  34  RMS=  4.0221E-01 last corr. =  9.6246E-04
+
+ WEAK DIRECTION 
+ -0.1471052256586007E+00 -0.2773256716726716E+00 -0.8183026772194509E+00 -0.1231592353516812E-02 -0.1333667857241761E-02 -0.4814851580070089E+00
+
+ WEAK SIGMA   9.2020E-03
+
+  alternate solution no.  10
+ iterations  17  RMS=  3.4692E-01 last corr. =  9.9537E-04
+  alternate solution no.  9
+ iterations  48  RMS=  3.4872E-01 last corr. =  9.9050E-04
+  alternate solution no.  8
+ iterations  55  RMS=  3.5171E-01 last corr. =  9.9158E-04
+  alternate solution no.  7
+ iterations  64  RMS=  3.5585E-01 last corr. =  9.9731E-04
+  alternate solution no.  6
+ iterations  76  RMS=  3.6110E-01 last corr. =  9.9938E-04
+  alternate solution no.  5
+ iterations  77  RMS=  3.6742E-01 last corr. =  1.2002E-03
+  alternate solution no.  4
+ iterations  77  RMS=  3.7476E-01 last corr. =  1.5500E-03
+  alternate solution no.  3
+ iterations  77  RMS=  3.8306E-01 last corr. =  2.0494E-03
+  alternate solution no.  2
+ iterations  77  RMS=  3.9226E-01 last corr. =  2.7325E-03
+  alternate solution no.  1
+ iterations  77  RMS=  4.0231E-01 last corr. =  3.6537E-03
+ SUMMARY OF MULTIPLE SOLUTIONS
+ no       a      h      k      p      q      lambda
+  1  3.21873574  0.13745206  0.13634814 -0.00245199 -0.00073911  0.20166684
+  2  3.21866097  0.13720460  0.13562364 -0.00245313 -0.00074029  0.20124116
+  3  3.21857984  0.13695637  0.13489642 -0.00245426 -0.00074148  0.20081375
+  4  3.21849235  0.13670735  0.13416635 -0.00245540 -0.00074268  0.20038457
+  5  3.21839849  0.13645750  0.13343334 -0.00245653 -0.00074387  0.19995354
+  6  3.21829825  0.13620679  0.13269726 -0.00245767 -0.00074508  0.19952062
+  7  3.21819164  0.13595518  0.13195794 -0.00245880 -0.00074628  0.19908571
+  8  3.21807864  0.13570271  0.13121549 -0.00245994 -0.00074749  0.19864890
+  9  3.21795925  0.13544936  0.13046982 -0.00246107 -0.00074871  0.19821013
+ 10  3.21783348  0.13519512  0.12972085 -0.00246221 -0.00074993  0.19776938
+ 11  3.21770131  0.13494023  0.12896931 -0.00246334 -0.00075116  0.19732708
+ 12  3.21756274  0.13468424  0.12821348 -0.00246448 -0.00075239  0.19688243
+ 13  3.21741775  0.13442709  0.12745351 -0.00246561 -0.00075363  0.19643533
+ 14  3.21726634  0.13416902  0.12669009 -0.00246675 -0.00075487  0.19598617
+ 15  3.21710850  0.13391001  0.12592314 -0.00246789 -0.00075612  0.19553493
+ 16  3.21694421  0.13365006  0.12515263 -0.00246902 -0.00075737  0.19508158
+ 17  3.21677347  0.13338917  0.12437853 -0.00247016 -0.00075863  0.19462613
+ 18  3.21659628  0.13312733  0.12360078 -0.00247130 -0.00075990  0.19416854
+ 19  3.21641262  0.13286454  0.12281938 -0.00247244 -0.00076117  0.19370882
+ 20  3.21622249  0.13260078  0.12203424 -0.00247357 -0.00076245  0.19324693
+ 21  3.21602588  0.13233607  0.12124538 -0.00247471 -0.00076374  0.19278289
+ no  RMS ,lastcor,  magn,  MOID ,nod+,nod-, sigQ
+    1   4.02310E-01  3.654E-03  14.71  1.60479  2.72535  1.65988  0  1.003
+    2   3.92263E-01  2.733E-03  14.71  1.60696  2.72439  1.66150  0  0.902
+    3   3.83061E-01  2.049E-03  14.70  1.60913  2.72342  1.66312  0  0.802
+    4   3.74761E-01  1.550E-03  14.70  1.61131  2.72243  1.66473  0  0.702
+    5   3.67423E-01  1.200E-03  14.69  1.61348  2.72142  1.66635  0  0.601
+    6   3.61100E-01  9.994E-04  14.69  1.61566  2.72040  1.66796  0  0.501
+    7   3.55846E-01  9.973E-04  14.68  1.61784  2.71937  1.66958  0  0.401
+    8   3.51708E-01  9.916E-04  14.68  1.62002  2.71831  1.67120  0  0.300
+    9   3.48724E-01  9.905E-04  14.67  1.62221  2.71724  1.67281  0  0.200
+   10   3.46922E-01  9.954E-04  14.67  1.62439  2.71616  1.67443  0  0.100
+   11   3.46320E-01  5.092E-05  14.66  1.62658  2.71506  1.67604  0  0.000
+   12   3.46923E-01  9.816E-04  14.66  1.62877  2.71394  1.67766  0  0.100
+   13   3.48727E-01  9.901E-04  14.65  1.63096  2.71280  1.67928  0  0.200
+   14   3.51714E-01  9.976E-04  14.65  1.63316  2.71165  1.68090  0  0.301
+   15   3.55853E-01  1.000E-03  14.64  1.63536  2.71047  1.68252  0  0.401
+   16   3.61104E-01  9.894E-04  14.64  1.63756  2.70929  1.68414  0  0.501
+   17   3.67421E-01  9.896E-04  14.63  1.63977  2.70808  1.68576  0  0.601
+   18   3.74749E-01  9.725E-04  14.63  1.64197  2.70686  1.68739  0  0.701
+   19   3.83030E-01  9.957E-04  14.62  1.64418  2.70562  1.68901  0  0.802
+   20   3.92205E-01  9.644E-04  14.62  1.64639  2.70436  1.69063  0  0.902
+   21   4.02212E-01  9.625E-04  14.61  1.64861  2.70309  1.69226  0  1.002
+  PREDICTION OF OBSERVATIONS
+  BOTH ARCS
+  Current epoch value (MJD):  46151.1
+ no. points  32
+Astrometric Observation Prediction
+For 1996/10/06 03:22:00 (UTC);  50362.14028(MJD)
+Observatory code= 809
+RA= 23:28:09.936 (HH:MM:SS);   352.04140 (deg)
+DEC= -02 57 46.07 (deg min sec);    -2.96280 (deg)
+RA/DEC Apparent motion=     -23.74      -9.96 (arcsec/hour)
+Earth distance= 1.8908 (AU)
+Solar elongation= 158.32 (deg)
+Apparent magnitude= 18.62
+Size and orientation of 1-sigma uncertainty ellipse
+Short axis : Size= 0.333027     (arcsec); Direction=  -0.50771  0.86153
+Long axis : Size= 0.542670     (arcsec); Direction=   0.86153  0.50771

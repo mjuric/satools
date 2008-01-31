@@ -1,0 +1,67 @@
+
+[To obtain a working copy of OrbFit you should do the following
+(this is a sample session, on a LINUX machine):]
+
+
+[To obtain a working copy of OrbFit you should do the following
+(this is a sample session, on an AIX machine):]
+
+% pwd
+/prop/orbfit
+% mkdir orb211
+% cd orb211
+/prop/orbfit/orb211
+% ftp copernico.dm.unipi.it
+Connected to copernico.dm.unipi.it.
+220 copernico.dm.unipi.it FTP server (Version wu-2.4.2-academ[BETA-12](1) Wed Mar 5 12:37:21 EST 1997) ready.
+Name (copernico.dm.unipi.it:milani): anonymous
+331 Guest login ok, send your complete e-mail address as password.
+Password:
+230- Welcome to Copernico !
+230- Dear [unknown] (logged in as ftp),
+230-you are user n. 2 (of 20)
+230-at present (local time Thu Feb 18 18:29:43 1999).
+230- Enjoy this ftp site !
+230-
+230-
+230 Guest login ok, access restrictions apply.
+ftp> cd pub/orbfit
+250-Please read the file README
+250-  it was last modified on Thu Feb 18 18:21:39 1999 - 0 days ago
+250-Please read the file README.unix
+250-  it was last modified on Wed Dec 16 17:10:06 1998 - 64 days ago
+250 CWD command successful.
+ftp> dir       
+200 PORT command successful.
+150 Opening ASCII mode data connection for /bin/ls.
+total 42
+drwxrwxr-x   7 501      501          1024 Feb 18 17:29 .
+dr-xr-sr-x   4 root     ftp          1024 Jan 11 17:55 ..
+-rw-rw-r--   1 501      501           226 Feb 18 17:21 README
+drwxrwxr-x   2 501      501          1024 Dec 16 08:40 documentation
+drwxrwxr-x   3 501      501          1024 Feb 18 17:13 unix
+drwxrwxr-x   3 501      501          1024 Feb 18 17:12 windows
+226 Transfer complete.
+ftp> cd unix
+250 CWD command successful.
+ftp> dir
+200 PORT command successful.
+150 Opening ASCII mode data connection for /bin/ls.
+total 442
+drwxrwxr-x   3 501      501          1024 Feb 18 17:13 .
+drwxrwxr-x   7 501      501          1024 Feb 18 17:29 ..
+-rw-r--r--   1 501      501        445477 Feb 18 16:48 OrbFit2.1.1.tar.gz
+drwxrwxr-x   2 501      501          1024 Feb 18 17:12 jpleph
+226 Transfer complete.
+ftp> binary
+200 Type set to I.
+ftp> get OrbFit2.1.1.tar.gz
+200 PORT command successful.
+150 Opening BINARY mode data connection for OrbFit2.1.1.tar.gz (445477 bytes).
+226 Transfer complete.
+445477 bytes received in 0.4883 seconds (890.9 Kbytes/s)
+ftp> quit
+221 Goodbye.
+
+[Note: transfer rate will be much slower from your site. Now goto
+README.compile]

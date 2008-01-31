@@ -1,0 +1,26 @@
+This is a preliminary version of a public domain interactive main program. 
+The program FITOBS provides the following functions:
+
+     +   'input of observational data=',
+     +   'input of orbital elements=',
+     +   'single arc differential corrections=',
+     +   'twoarc differential corrections=',
+     +   'state propagation=',
+     +   'predictions of observations=',
+     +   'multiple solutions=',
+     +   'status=',
+     +   'date conversion=',
+
+and has a simple menu driven interface.
+
+Other functions can be added later, with the goal of providing an
+interactive (and hopefully user-friendly) interface capable of the
+full range of OrbFit funtions.
+
+Version 1.4.12
+A. Milani, December 5, 1997
+
+
+
+
+

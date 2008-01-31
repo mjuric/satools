@@ -1,0 +1,17 @@
+ starting values
+    3.2177100    0.1349371    0.1289722   -0.0024633   -0.0007511    0.1850111
+ *** iteration   1
+  RMS residuals =  3.4632E-01   norm corr =  2.0412E-09
+  new elem values
+    3.2177100    0.1349371    0.1289722   -0.0024633   -0.0007511    0.1850111
+
+==== OUTLIER REJECTION =======
+Residual norm =  3.46320E-01
+Chi2 threshold =  7.31136E-01
+No. of observations:
+          total     =   15
+          selected  =   15
+          rejected  =    0
+          recovered =    0
+Outlier rejection pass   1 after   1 single differential correction passes.
+There were   0 changes.

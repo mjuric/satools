@@ -1,0 +1,34 @@
+DISTRIBUTION 2.2 (November 2000)
+
+Main improvements with respect to 2.1.1 are:
+
+1) More robust programming, due to tests on different machines
+
+2) the modified target plane is now rotated to have a reference system
+   very close to the one of Opik b-plane
+
+3) the multiple solution algorithm has been upgraded, and is now very stable
+   (it is being used to compute hundreds of thousands alternate orbits). 
+
+4) the ra15v bug has finally been found, and the error messages from that routine have 
+   disappeared. In practice this means that the sofware is now stable
+   even under extremely usntable situations.
+
+
+
+PATCHES TO DISTRIBUTION 2.2
+
+[these files should be included in every patch, to make sure the patch
+itself is well defined:]
+
+./patchlist           
+./dellst
+./doc/README.patches
+./Makefile
+./doc/README.workinprog
+./src/vers.h
+./notar
+
+Patch 2.2.1
+
+

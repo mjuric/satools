@@ -1,0 +1,39 @@
+- magnitude and velocity cuts thrown out of out2sdss.cpp
+- velocity sanity check thrown out of cleanup.cpp
+- setting velocity to 9.9999 if >=10 added to sarecord.cpp to prevent record
+length overflows
+- added to cleanup.cpp time correction to correct time for each object, instead
+of having rowc=0 time of the current frame (THIS BREAK COMPATIBILITY WITH
+ADR1 !!)
+
+----- Apr27 03 -----
+- Addedd dbconvert(from, to) function to identrecord.cpp to convert between
+binary and ascii databases
+- Added existence check to sa_createCaches - if a cache file exists, it
+won't try to recalculate it (beware: if the file is damaged, the script WILL
+NOT detect that)
+- Written wrapper tool to call dbconvert() for converting between binary and
+ascii databases, oiddbconvert.x
+
+----- Apr28 03 -----
+- Parallelized createcache - createcache2.x is the parallelized version. The
+scripts do not yet call it automatically. It uses RemoteInstance mechanism.
+Should investigate why it takes almost as long to calculate the skies as to
+propagate the catalogs
+
+----- TODO -----
+- incorporate createcache2.x in sa_createCaches.pl script
+- ask ZI to ask Steve to NFS-mount his directories
+
+----- ADR2 issues -----
+  +++ outstanding
+  - breaking compatibility by correcting mjd field to show actual time
+  - turns out that phi catalog field is also time dependent and was slightly
+off due to time bug
+  - ADR runlist seems to be screwed up (some older runs missing). Sent
+e-mail to Zeljko about this.
+
+  +++ fixed
+  - check the TAI-UT issue [FIXED - just changed the last digit to 2004,
+    because no new leap seconds were introduced]
+    http://hpiers.obspm.fr/eoppc/bul/bulc/bulletinc.dat
