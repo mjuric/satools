@@ -55,7 +55,7 @@
           kuord(i)=kuorl
           ktyp=krtyp(i)
           IF(ktyp.LE.0.OR.ktyp.GT.5) THEN
-              WRITE(*,100) key(1:lk),ktyp
+              WRITE(0,100) key(1:lk),ktyp
               STOP '**** getkv: internal error (02) ****'
           END IF
           found=.true.

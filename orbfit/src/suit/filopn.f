@@ -30,7 +30,7 @@
       INQUIRE(FILE=name,OPENED=opnd)
       IF(opnd) THEN
           ll=lench(name)
-          WRITE(*,102) name(1:ll)
+          WRITE(0,102) name(1:ll)
           STOP '**** filopn: abnormal end ****'
       END IF
  102  FORMAT(' **** filopn: internal error (01) ****'/
@@ -55,7 +55,7 @@
  3    CONTINUE
       ll=lench(name)
       ls=lench(status)
-      WRITE(*,101) name(1:ll),status(1:ls)
+      WRITE(0,101) name(1:ll),status(1:ls)
  101  FORMAT(' **** filopn: cannot OPEN file "',A,'" (status=',A,
      +       ') ****')
       STOP '**** filopn: abnormal end ****'

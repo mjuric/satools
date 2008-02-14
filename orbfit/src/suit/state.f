@@ -143,7 +143,7 @@ c        call fszer1(nrecl,ksize,nrfile,namfil)
          call fszer2(nrecl,ksize,nrfile,namfil)
 c        call fszer3(nrecl,ksize,nrfile,namfil)
 
-      if(nrecl .eq. 0) write(*,*)'  ***** fszer is not working *****'
+      if(nrecl .eq. 0) write(0,*)'  ***** fszer is not working *****'
 
 c ************************************************************************
 c ************************************************************************
@@ -252,13 +252,13 @@ c
 c
       return
 c
-  98  write(*,198)et2(1)+et2(2),ss(1),ss(2)
+  98  write(0,198)et2(1)+et2(2),ss(1),ss(2)
  198  format(' ***  requested jed,',f12.2,
      * ' not within ephemeris limits,',2f12.2,'  ***')
 c
       return
 c
-   99 write(*,'(2f12.2,a80)')
+   99 write(0,'(2f12.2,a80)')
      & et2,'error return in state'
 c
       stop

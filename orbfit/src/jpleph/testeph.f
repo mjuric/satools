@@ -98,7 +98,7 @@ C
                                                                                 
 C      Write a fingerprint to the screen.                                       
                                                                                 
-       WRITE(*,*) ' JPL TEST-EPHEMERIS program. ' //                            
+       WRITE(0,*) ' JPL TEST-EPHEMERIS program. ' //                            
      .            ' Last modified July 1997.'                                   
                                                                                 
 C      Print the ephemeris constants.                                           
@@ -113,10 +113,10 @@ C     Skip the file header comments.
    1  READ(*,'(a3)')ALF3                                                        
       IF(ALF3 .NE. 'EOT') GO TO 1                                               
                                                                                 
-      WRITE(*,*)                                                                
+      WRITE(0,*)                                                                
      . '  line -- jed --   t#   c#   x#   --- jpl value ---'//                  
      . '   --- user value --    -- difference --'                               
-      WRITE(*,*)                                                                
+      WRITE(0,*)                                                                
                                                                                 
 C     Read a value from the test case; skip if not within the time-range        
 C     of the present version of the ephemeris                                   
@@ -142,13 +142,13 @@ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       DEL=DABS(R(NCOORD)-XI)/(DABS(R(NCOORD))+DABS(XI))                         
       LINE=LINE+1                                                               
                                                                                 
-      IF ( MOD(LINE,npt) .EQ. 0 )  WRITE(*,200)                                 
+      IF ( MOD(LINE,npt) .EQ. 0 )  WRITE(0,200)                                 
      . LINE,ET,NTARG,NCTR,NCOORD,XI,R(NCOORD),DEL                               
  200  FORMAT(I6,F10.1,3I5,3F20.13)                                              
                                                                                 
 C  Print out WARNING if difference greater than tolerance.                      
 C                                                                               
-      IF (DEL .GE. 1.D-13) WRITE(*,201)                                         
+      IF (DEL .GE. 1.D-13) WRITE(0,201)                                         
      . LINE,ET,NTARG,NCTR,NCOORD,XI,R(NCOORD),DEL                               
  201  FORMAT(/ '*****  WARNING : next difference >= 1.D-13  *****'//            
      . I6,F10.1,3I3,3F20.13/' ')                                                
@@ -207,7 +207,7 @@ C   FIND THE RECORD SIZE USING THE INQUIRE STATEMENT
                                                                                 
 C IF 'INQUIRE' DOES NOT WORK, USUALLY IRECSZ WILL BE LEFT AT 0                  
                                                                                 
-      IF(IRECSZ .LE. 0) write(*,*)                                              
+      IF(IRECSZ .LE. 0) write(0,*)                                              
      . ' INQUIRE STATEMENT PROBABLY DID NOT WORK'                               
                                                                                 
       KSIZE=IRECSZ/NRECL                                                        
@@ -850,7 +850,7 @@ C        CALL FSIZER1(NRECL,KSIZE,NRFILE,NAMFIL)
         CALL FSIZER2(NRECL,KSIZE,NRFILE,NAMFIL)                                
 C        CALL FSIZER3(NRECL,KSIZE,NRFILE,NAMFIL)                                
                                                                                 
-      IF(NRECL .EQ. 0) WRITE(*,*)'  ***** FSIZER IS NOT WORKING *****'          
+      IF(NRECL .EQ. 0) WRITE(0,*)'  ***** FSIZER IS NOT WORKING *****'          
                                                                                 
 C ************************************************************************      
 C ************************************************************************      
@@ -953,13 +953,13 @@ C       GET LIBRATIONS IF REQUESTED (AND IF ON FILE)
                                                                                 
       RETURN                                                                    
                                                                                 
-  98  WRITE(*,198)ET2(1)+ET2(2),SS(1),SS(2)                                     
+  98  WRITE(0,198)ET2(1)+ET2(2),SS(1),SS(2)                                     
  198  format(' ***  Requested JED,',f12.2,                                      
      * ' not within ephemeris limits,',2f12.2,'  ***')                          
                                                                                 
       stop                                                                      
                                                                                 
-   99 WRITE(*,'(2F12.2,A80)')ET2,'ERROR RETURN IN STATE'                        
+   99 WRITE(0,'(2F12.2,A80)')ET2,'ERROR RETURN IN STATE'                        
                                                                                 
       STOP                                                                      
                                                                                 

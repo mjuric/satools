@@ -113,7 +113,7 @@
       STOP '**** itaiut: input file is empty ****'
 
  20   CONTINUE
-      WRITE(*,101) mjdc,file(1:lf),mjdv(1),mjdv(n)-1
+      WRITE(0,101) mjdc,file(1:lf),mjdv(1),mjdv(n)-1
  101  FORMAT(' **** itaiut: mjdc out of range ****'/
      +       '      Cannot compute TAI-UTC at MJD =',i6/
      +       '      File "',a,'" starts at MJD =',i6/
@@ -123,7 +123,7 @@
  30   CONTINUE
       nw=nw+1
       IF(nw.GT.nwmax) RETURN
-      WRITE(*,102) mjdc,file(1:lf),mjdv(1),mjdv(n)-1
+      WRITE(0,102) mjdc,file(1:lf),mjdv(1),mjdv(n)-1
  102  FORMAT(' WARNING (itaiut): MJD =',I6,
      +       ' is outside the range of data'/
      +       ' contained in file "',A,'" (from',I6,' to',I6,')')

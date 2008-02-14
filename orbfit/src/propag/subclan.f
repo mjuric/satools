@@ -96,7 +96,7 @@ c right hand side at target (to obtain xpla)
       ide=0
       CALL force(xast,xast(nvar2+1),tcl0,dery,nvar2,idc,xpla)
       IF(idc.ne.iplam)THEN
-         WRITE(*,*)' fclan: ???? idc=',idc,' iplam=',iplam
+         WRITE(0,*)' fclan: ???? idc=',idc,' iplam=',iplam
       ENDIF
 c relative coordinates
       DO i=1,3
@@ -127,10 +127,10 @@ c output the data on the target plane ellipse
          WRITE(iunaxe,171)sig
          WRITE(iunaxe,172)axes
       ELSE
-         WRITE(*,171)sig
+         WRITE(0,171)sig
          WRITE(iunaxe,171)sig
  171     FORMAT(' semiaxes of target ellipse: lengths ',1p,2d14.5)
-         WRITE(*,172)axes
+         WRITE(0,172)axes
          WRITE(iunaxe,172)axes
  172     FORMAT(' directions ',2f10.6/12x,2f10.6)
       ENDIF
@@ -185,7 +185,7 @@ c end interface
       DOUBLE PRECISION tpth,gtp(2,2),dxxde(3,6)
       INTEGER i,ii,jj
       CALL mulmav (vt3,3,3,dx,3,xx)
-      IF(.not.batchcl)WRITE(*,*)' distance from target plane=',xx(1)
+      IF(.not.batchcl)WRITE(0,*)' distance from target plane=',xx(1)
       CALL mulmav (vt3,3,3,dv,3,vv)
       DO i=1,3
         DO ii=1,6
@@ -202,11 +202,11 @@ c end interface
       tpr=sqrt(tpc(1)**2+tpc(2)**2)
       tpth=atan2(tpc(2),tpc(1))
       IF(.not.batchcl)THEN
-         WRITE(*,170) tpc,tpr,tpth
+         WRITE(0,170) tpc,tpr,tpth
  170     FORMAT('MTP coordinates ',2f12.8,' dist ',f12.8,' angle ',f8.4)
-         WRITE(*,*)' partial derivatives'
-         WRITE(*,171) (dtpcde(1,jj),jj=1,6)
-         WRITE(*,171) (dtpcde(2,jj),jj=1,6)
+         WRITE(0,*)' partial derivatives'
+         WRITE(0,171) (dtpcde(1,jj),jj=1,6)
+         WRITE(0,171) (dtpcde(2,jj),jj=1,6)
  171  FORMAT(6(f12.5,2x))
       ENDIF
 c ========================================================
@@ -237,20 +237,20 @@ c arrays of close approach data and controls
 c display list of current close approaches
       error=.false.
       IF(iplam.eq.0)THEN
-         WRITE(*,*)' no close approaches found'
+         WRITE(0,*)' no close approaches found'
 c error flag
          error=.true.
          RETURN
       ELSEIF(iplam.gt.0)THEN
          IF(.not.batchcl.or.njc.gt.1)THEN
-            WRITE(*,*)' close approaches to planet ',iplam
-            WRITE(*,*)' time(MJD), min.dis.(AU), normal to MTP'
+            WRITE(0,*)' close approaches to planet ',iplam
+            WRITE(0,*)' time(MJD), min.dis.(AU), normal to MTP'
             DO  j=1,njc
-               WRITE(*,*)tcla(j),rmin(j),(vmtp(i,j),i=1,3)
+               WRITE(0,*)tcla(j),rmin(j),(vmtp(i,j),i=1,3)
             ENDDO
          ENDIF
       ELSE
-         WRITE(*,*)' mtpsel: this should not happen, iplam=',iplam
+         WRITE(0,*)' mtpsel: this should not happen, iplam=',iplam
          error=.true.
          RETURN
       ENDIF
@@ -258,22 +258,22 @@ c =================================================================
 c select modified target plane
       IF(njc.eq.1)THEN
          IF(.not.batchcl)THEN
- 60         WRITE(*,*)' select the target plane: 1=yes 0=quit'
+ 60         WRITE(0,*)' select the target plane: 1=yes 0=quit'
             READ(*,*)jtsel 
             IF(jtsel.lt.0.or.jtsel.gt.1)GOTO 60
             IF(jtsel.eq.0)THEN
                  error=.true.
                  RETURN
             ENDIF
-            WRITE(*,*)
+            WRITE(0,*)
          ELSE
             jtsel=1
          ENDIF
       ELSEIF(njc.gt.1)THEN
          IF(.not.batchcl)THEN
- 61         WRITE(*,*)' WARNING: close approach analysis might'
-            WRITE(*,*)' not work when there are multiple minima; anyway'
-            WRITE(*,*)' select one of the target planes jtsel=1,',njc
+ 61         WRITE(0,*)' WARNING: close approach analysis might'
+            WRITE(0,*)' not work when there are multiple minima; anyway'
+            WRITE(0,*)' select one of the target planes jtsel=1,',njc
             READ(*,*)jtsel
 c           IF(jtsel.eq.0)RETURN
             IF(jtsel.lt.0.or.jtsel.gt.njc)GOTO 61
@@ -283,7 +283,7 @@ c in batch mode multiple minima imply failure
             RETURN
          ENDIF
       ELSEIF(njc.le.0)THEN
-         WRITE(*,*)' mtpsel: this should not happen; no close app'
+         WRITE(0,*)' mtpsel: this should not happen; no close app'
          error=.true.
          RETURN
       ENDIF
@@ -331,6 +331,6 @@ c past close approaches
          tcl1=tcl0+delt
          tcl2=tcl0-delt
       ENDIF
-c      WRITE(*,*)tc,tcl0,tcl2
+c      WRITE(0,*)tc,tcl0,tcl2
       RETURN
       END

@@ -2,6 +2,8 @@
 #define _astro_bowellcatalog_h
 
 #include <astro/asteroids/catalog.h>
+#include <map>
+#include <string>
 
 namespace peyton {
 namespace asteroids {
@@ -12,6 +14,8 @@ protected:
 	int recordCnt;
 	virtual bool openCatalog(const char *filename, const char *mode);
 	FILE *fp;
+
+	std::map<std::string, int> name2id;
 
 	friend class Catalog;
 public:

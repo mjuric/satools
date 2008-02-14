@@ -97,7 +97,7 @@
                       CALL norprs(nore1,de,6,nore2,error)
                       IF(error) THEN
                           ln=lench(name1)
-                          WRITE(*,120) file(1:lf),name1(1:ln)
+                          WRITE(0,120) file(1:lf),name1(1:ln)
                           defnor=.false.
                       END IF
                   END IF
@@ -117,7 +117,7 @@
                       CALL norprs(nore2,de,6,nore(1,1,k),error)
                       IF(error) THEN
                           ln=lench(name1)
-                          WRITE(*,120) file(1:lf),name1(1:ln)
+                          WRITE(0,120) file(1:lf),name1(1:ln)
                           defnor=.false.
                       END IF
                   END IF

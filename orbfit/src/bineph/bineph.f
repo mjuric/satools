@@ -22,12 +22,12 @@
       INTEGER lench
       EXTERNAL lench
 
-      WRITE(*,110)
+      WRITE(0,110)
  110  FORMAT(' Run name =')
       READ(*,100) run
  100  FORMAT(A)
       lr=lench(run)
-      WRITE(*,111) run(1:lr)
+      WRITE(0,111) run(1:lr)
  111  FORMAT(' Run name = ',A)
 
 * Input of options
@@ -39,7 +39,7 @@
           CALL rdnam(unit)
           CALL filclo(unit,' ')
       ELSE
-          WRITE(*,210)
+          WRITE(0,210)
           STOP '**** bineph: abnormal end ****'
       END IF
  210  FORMAT(' ERROR: no default option file (bineph.def) found')

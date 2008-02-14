@@ -47,7 +47,7 @@
           IF(nkls1.LE.0) STOP '**** rdkls1: internal error (01) ****'
           IF(nkls.LE.0) STOP '**** rdkls1: internal error (01) ****'
           IF(keytyp(nkls).NE.3) THEN
-              WRITE(*,103) kr
+              WRITE(0,103) kr
               STOP '**** rdkls1: abnormal end ****'
           END IF
           ns2it=ns2it+1
@@ -99,7 +99,7 @@
           IF(nospli) STOP '**** rdkls1: internal error (04) ****'
           ktyp=kt
       ELSE
-          WRITE(*,101) ni,kr
+          WRITE(0,101) ni,kr
           STOP '**** rdkls1: abnormal end ****'
       END IF
  101  FORMAT(' **** rdkls1: ERROR:',i3,' items at line',i5,' ****')
@@ -107,7 +107,7 @@
 * Handling of default category
       IF(ni.EQ.1) THEN
           IF(key1(lk:lk).NE.'.') THEN
-              WRITE(*,102) kr
+              WRITE(0,102) kr
               STOP '**** rdkls1: abnormal end ****'
           END IF
           ldc=lk-1
@@ -126,7 +126,7 @@
 * Look if the key is already present in the namelist
       DO 3 i=1,nkls
       IF(key1(1:lk).EQ.keylst(i)) THEN
-          WRITE(*,110) key1(1:lk),kr
+          WRITE(0,110) key1(1:lk),kr
           STOP '**** rdkls1: abnormal end ****'
       END IF
  3    CONTINUE
@@ -154,7 +154,7 @@
           keytyp(nkls)=6
       ELSE
           lkt=lench(ktyp)
-          WRITE(*,111) ktyp(1:lkt),kr
+          WRITE(0,111) ktyp(1:lkt),kr
           STOP '**** rdkls1: abnormal end ****'
       END IF
  111  FORMAT(' **** rdkls1: unknown key type ****'/

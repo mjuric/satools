@@ -28,7 +28,7 @@
       IF(iun.LT.iunf1.OR.iun.GT.iunf2)
      +          STOP '**** filclo: internal error (02) ****'
       IF(.NOT.allunt(iun)) THEN
-          WRITE(*,200) iun
+          WRITE(0,200) iun
           STOP
       END IF
  200  FORMAT(' **** filclo: unit',i4,' is not opened ****')

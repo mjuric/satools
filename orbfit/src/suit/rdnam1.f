@@ -106,7 +106,7 @@
       END IF
       IF(key1(1:1).EQ.'.') THEN
           IF(ldc.LE.0) THEN
-              WRITE(*,101) key1(1:lk),infile(1:lf),kr
+              WRITE(0,101) key1(1:lk),infile(1:lf),kr
               STOP '**** rdnam1: abnormal end ****'
           END IF
           keyt=defcat(1:ldc)//key1(1:lk)
@@ -122,14 +122,14 @@
       IF(ip1.EQ.0) THEN
           ip2=INDEX(key1,')')
           IF(ip2.NE.0) THEN
-              WRITE(*,102) key1(1:lk),infile(1:lf),kr
+              WRITE(0,102) key1(1:lk),infile(1:lf),kr
               STOP '**** rdnam1: abnormal end ****'
           END IF
       ELSE
           key2=key1(ip1+1:)
           lk2=lench(key2)
           IF(lk2.LE.0.OR.key2(lk2:lk2).NE.')') THEN
-              WRITE(*,102) key1(1:lk),infile(1:lf),kr
+              WRITE(0,102) key1(1:lk),infile(1:lf),kr
               STOP '**** rdnam1: abnormal end ****'
           END IF
       END IF
@@ -163,7 +163,7 @@
 
 * Error messages
  21   CONTINUE
-      WRITE(*,106) infile(1:lf),kr
+      WRITE(0,106) infile(1:lf),kr
  106  FORMAT(' ERROR: illegal "INPUT:" statement'/
      +       '        (file "',a,'", record',i4,')')
       STOP '**** rdnam1: abnormal end ****'

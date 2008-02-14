@@ -27,21 +27,21 @@ c
          read(iabe,201,err=202,end=202)masbep(ia),string
          call rmsp(string,ls)
          IF(ls.eq.ln.and.nam1(1:ln).eq.string(1:ls))THEN
-            WRITE(*,*)' self perturbation of ',nam1(1:ln),' avoided'         
+            WRITE(0,*)' self perturbation of ',nam1(1:ln),' avoided'         
             found=.true.
          ELSE
             iat=iat+1
             astid(iat)=ia
-c           write(*,*) string(1:ls),' with mass OK'
+c           write(0,*) string(1:ls),' with mass OK'
          ENDIF
       enddo
       iatrue=iat
-c     write(*,*)' iatrue ',iatrue, astid
+c     write(0,*)' iatrue ',iatrue, astid
       goto 203
  201  FORMAT(1P,E18.10,1X,A)
- 202  WRITE(*,*)'selpert: too many asteroids requested, iast=',iast
+ 202  WRITE(0,*)'selpert: too many asteroids requested, iast=',iast
       iast=ia-1
-      WRITE(*,*)'selpert: asteroids available ',iast
+      WRITE(0,*)'selpert: asteroids available ',iast
  203  call filclo(iabe,' ')
       RETURN
       END
@@ -54,19 +54,19 @@ c     write(*,*)' iatrue ',iatrue, astid
       CALL selpert(nam0,found0)
       CALL selpert(namp,foundp)
       IF(found0.and.foundp)THEN
-         WRITE(*,*)' please do not try to identify ',nam0,' with ', namp
-         WRITE(*,*)' All perturbations by massive asteroids disabled'
+         WRITE(0,*)' please do not try to identify ',nam0,' with ', namp
+         WRITE(0,*)' All perturbations by massive asteroids disabled'
          nfound=2
          iast=0
       ELSEIF(found0)THEN
-         WRITE(*,*)' you should not do identification with an'
-         WRITE(*,*)' asteroid with mass, such as ',nam0
-         WRITE(*,*)' perturbations by ',nam0,' disabled'
+         WRITE(0,*)' you should not do identification with an'
+         WRITE(0,*)' asteroid with mass, such as ',nam0
+         WRITE(0,*)' perturbations by ',nam0,' disabled'
          nfound=1
       ELSEIF(foundp)THEN
-         WRITE(*,*)' you should not do identification with an'
-         WRITE(*,*)' asteroid with mass, such as ',namp
-         WRITE(*,*)' perturbations by ',namp,' disabled'
+         WRITE(0,*)' you should not do identification with an'
+         WRITE(0,*)' asteroid with mass, such as ',namp
+         WRITE(0,*)' perturbations by ',namp,' disabled'
          nfound=1
       ELSE
          nfound=0

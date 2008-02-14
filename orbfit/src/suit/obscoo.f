@@ -91,8 +91,8 @@
 
       if(idobs.lt.ns1.or.idobs.gt.ns2)THEN
 
-         WRITE(*,*) ' **** obscoo: IDOBS outside allowed range ****'
-         WRITE(*,*)' idobs=',idobs
+         WRITE(0,*) ' **** obscoo: IDOBS outside allowed range ****'
+         WRITE(0,*)' idobs=',idobs
          STOP
       endif
       if(loaded(idobs)) then
@@ -101,7 +101,7 @@
           enddo
           name=namev(idobs)
       else
-          write(*,101)idobs
+          write(0,101)idobs
  101      format(' obscoo: observatory',i4,
      +       ' is not listed in file "OBSCODE.dat"')
 c          stop ' **** obscoo: abnormal end ****'

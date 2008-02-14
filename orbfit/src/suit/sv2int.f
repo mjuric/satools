@@ -66,7 +66,7 @@
       lf=lench(file)
       IF(.NOT.found) THEN
           IF(reqrd) THEN
-              WRITE(*,100) ck(1:lt),vartyp(1:lz)
+              WRITE(0,100) ck(1:lt),vartyp(1:lz)
               fail1=.true.
               fail=.true.
               ivk=0
@@ -74,7 +74,7 @@
           RETURN
       END IF
       IF(ktyp1.NE.ktyp0) THEN
-          WRITE(*,106) ck(1:lt),ktyp0,ktyp1
+          WRITE(0,106) ck(1:lt),ktyp0,ktyp1
           STOP '**** sv2int: abnormal end ****'
       END IF
  100  FORMAT(' ERROR: Missing definition of keyword "',a,'" (type: ',
@@ -105,7 +105,7 @@
       RETURN
  3    CONTINUE
 
-      WRITE(*,103) ck(1:lt),vartyp(1:lz),kr,file(1:lf),v(1:lv1)
+      WRITE(0,103) ck(1:lt),vartyp(1:lz),kr,file(1:lf),v(1:lv1)
  103  FORMAT(' ERROR: unexpected value of keyword "',a,'" (type: ',
      +       a,')'/8x,'(record',i4,' in file "',a,'")'/
      +       8x,'Present value: ''',a,''''/
@@ -113,7 +113,7 @@
       DO 4 k=1,ns2i(i)
       kk=k+ipos2i(i)
       lv2=lench(vallst(kk))
-      WRITE(*,102) vallst(kk)(1:lv2)
+      WRITE(0,102) vallst(kk)(1:lv2)
  102  FORMAT(13x,'''',a,'''')
  4    CONTINUE
 
@@ -123,7 +123,7 @@
 
 * Error message
  1    CONTINUE
-      WRITE(*,101) ck(1:lt),vartyp(1:lz),kr,file(1:lf)
+      WRITE(0,101) ck(1:lt),vartyp(1:lz),kr,file(1:lf)
  101  FORMAT(' ERROR: Abnormal definition of keyword "',a,'" (type: ',
      +       a,')'/8x,'(record',i4,' in file "',a,'")')
       fail1=.true.

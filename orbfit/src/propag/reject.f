@@ -85,7 +85,7 @@ c fudge factor, stuck loops
 *     Next set minobs
       minobs=nint(0.5d0*minobs)
       IF(nobs.le.minobs)THEN
-         WRITE(*,*)'No autorejection with only ',nobs,' observations.'
+         WRITE(0,*)'No autorejection with only ',nobs,' observations.'
          nmod=0
          RETURN
       ENDIF
@@ -94,7 +94,7 @@ c fudge factor, stuck loops
       nsel=0
       iun=abs(unilog)
       WRITE(iun,300) csinor
-      IF(log) WRITE(*,300) csinor
+      IF(log) WRITE(0,300) csinor
  300  FORMAT('==== OUTLIER REJECTION ======='/
      +        'Residual norm =',1P,E13.5,0P)
       DO 1 iob=1,nobs
@@ -182,13 +182,13 @@ c only first component to be used
             wrr=1.d0/covr
             x2(iob)=csi(ipa)*wrr*csi(ipa)
          ELSE
-            WRITE(*,*)'reject: this should not happen ',
+            WRITE(0,*)'reject: this should not happen ',
      +           w(ipa),' ',w(ipd)
             STOP
          ENDIF
          IF (x2(iob).lt.0.d0)THEN
             WRITE(ierrou,*) 'WARNING: reject.f, x2=',x2(iob)
-            WRITE(*,*) 'WARNING: reject.f, x2=',x2(iob)
+            WRITE(0,*) 'WARNING: reject.f, x2=',x2(iob)
             numerr=numerr+1
             x2(iob)=0.d0
          ENDIF
@@ -205,15 +205,15 @@ c only first component to be used
 
 *     For <=18 obs. or for inf. loop -> reject one at a time
       IF(nsel .le. minobs*6) THEN
-         IF(log) WRITE(*,*) 'Rejecting no more than one.'
+         IF(log) WRITE(0,*) 'Rejecting no more than one.'
       ELSEIF(nit.ge.4) THEN
-         IF(log) WRITE(*,*) 'Trying to get unstuck.'
+         IF(log) WRITE(0,*) 'Trying to get unstuck.'
       ELSE
          x2max=x2max*x2frac
       ENDIF
       iun=abs(unilog)
       WRITE(iun,302) x2max
-      IF(log) WRITE(*,302) x2max
+      IF(log) WRITE(0,302) x2max
  302  FORMAT('Chi2 threshold =',1P,E13.5)
 c This is a "fudge" factor to make it more difficult to reject when 
 c there are very few observations. If there are more than ~50 than 
@@ -227,7 +227,7 @@ c this has little effect.
                call mjddat(mjd(iob),iday,imonth,iyear,hour)
                write(date,'(i4,a1,i2.2,a1,f8.5)')
      +              iyear,'/',imonth,'/',iday+hour/24d0
-               write(*,*) 'Recover: ',date,x2(iob)
+               write(0,*) 'Recover: ',date,x2(iob)
                sel(iob)=1
                nrec=nrec+1
             END IF
@@ -237,10 +237,10 @@ c check to see if this is the only remaining obs in an opposition
                call mjddat(mjd(iob),iday,imonth,iyear,hour)
                write(date,'(i4,a1,i2.2,a1,f8.5)')
      +              iyear,'/',imonth,'/',iday+hour/24d0
-               write(*,*) 'Reject : ',date,x2(iob)
+               write(0,*) 'Reject : ',date,x2(iob)
                if(entopp(iob,sel,mjd,nobs))then
                   if(rejopp)then
-                     write(*,*)
+                     write(0,*)
      +                '*** WARNING: Rejecting last obs. in opp. Date:',
      +                  date
                      write(ierrou,*)
@@ -249,7 +249,7 @@ c check to see if this is the only remaining obs in an opposition
                      sel(iob)=0
                      nrej=nrej+1                     
                   else
-                     write(*,*)
+                     write(0,*)
      +            '*** WARNING: Did not reject last obs. in opp. Date:',
      +                    date
                      write(ierrou,*)
@@ -267,7 +267,7 @@ c check to see if this is the only remaining obs in an opposition
  301  FORMAT(I5,1P,E13.5,0P,2I3)
       iun=abs(unilog)
       WRITE(iun,303) nobs,nsel,nrej,nrec
-      IF(log) WRITE(*,303) nobs,nsel,nrej,nrec
+      IF(log) WRITE(0,303) nobs,nsel,nrej,nrec
  303  FORMAT('No. of observations:'/
      +       10X,'total     =',I5/
      +       10X,'selected  =',I5/

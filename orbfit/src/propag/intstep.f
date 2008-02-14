@@ -61,7 +61,7 @@ c compute intermediate point (first guess)
         DO j=1,6
            eq12(j)=eq0(j)+wdir(j)*sdir*hh*0.5d0
         ENDDO 
-c       write(*,*)'eq12, iter.0 ',(eq12(j),j=1,3)
+c       write(0,*)'eq12, iter.0 ',(eq12(j),j=1,3)
 c before running differential corrections, tests that orbit is still elliptic
         e12=sqrt(eq12(2)**2+eq12(3)**2)
         IF(e12.gt.0.99d0.or.eq12(1).le.0.d0)THEN
@@ -80,7 +80,7 @@ c compute vectorfield at intermediate point
            itmax=0
            CALL whicor(0,icor,ncor,inew)
 c compute covariance and residual norm
-c          write(*,*)mc,iobs(1),ioco(1)
+c          write(0,*)mc,iobs(1),ioco(1)
            CALL difcor(mc,wc,sel,tc,iobs,tauc,ioco,eq12,alc,dec,
      +     icor,inew,iun,delcr,
      +     eq12,g12,c12,csino12,delno12,csi,x2,succ)
@@ -97,13 +97,13 @@ c recompute intermediate point
            DO j=1,6
               eq12(j)=eq0(j)+wdir12(j)*sdir12*hh*0.5d0
            ENDDO 
-c          write(*,*)'weak sigma, iter, eq12',sdir12,it,(eq12(j),j=1,3)
+c          write(0,*)'weak sigma, iter, eq12',sdir12,it,(eq12(j),j=1,3)
 c before a new iteration, tests that orbit is still elliptic
            e12=sqrt(eq12(2)**2+eq12(3)**2)
            IF(e12.gt.0.99d0.or.eq12(1).le.0.d0)THEN
               fail=.true.
               call vcopy(6,eq12,eq1)
-c               write(*,*)'intstep: fail at iteration ',it,fail
+c               write(0,*)'intstep: fail at iteration ',it,fail
               RETURN
            ELSEIF(bizarre(eq12))THEN
               fail=.true.
@@ -119,10 +119,10 @@ c convergence control
               ang=0.d0
            ENDIF
            dsi=abs(sdirst-sdir12)/sdirst
-c          WRITE(*,*)' intstep: it, ang, dsi, sdir12,sdirst ',
+c          WRITE(0,*)' intstep: it, ang, dsi, sdir12,sdirst ',
 c    +          it,ang,dsi,sdir12,sdirst
            IF(ang.lt.eps.and.dsi.lt.eps)THEN
-c             WRITE(*,*)' intstep: it, ang, dsir ',it,ang,dsi
+c             WRITE(0,*)' intstep: it, ang, dsir ',it,ang,dsi
 c convergence achieved
               GOTO 2
            ENDIF
@@ -130,8 +130,8 @@ c convergence achieved
            sdirst=sdir12           
         ENDDO
 c convergence failed
-c       WRITE(*,*)' intstep: failed convergence, it, ang, dsig'
-c       WRITE(*,*)it-1,ang,(sdir12-sdirst)/sdirst
+c       WRITE(0,*)' intstep: failed convergence, it, ang, dsig'
+c       WRITE(0,*)it-1,ang,(sdir12-sdirst)/sdirst
         fail=.true.
         call vcopy(6,eq12,eq1)
         RETURN
@@ -152,10 +152,10 @@ c before a new iteration, tests that orbit is still elliptic
         ENDIF
 c but we go on
       ELSE
-         WRITE(*,*)' intstep: not invented yet, imint=',imint
+         WRITE(0,*)' intstep: not invented yet, imint=',imint
          STOP
       ENDIF
-c     write(*,*)'intstep: at exit ',fail, (eq1(j),j=1,3)
+c     write(0,*)'intstep: at exit ',fail, (eq1(j),j=1,3)
       RETURN
       END
 

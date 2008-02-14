@@ -115,7 +115,7 @@
       STOP '**** deltt: no DATA found in input file ****'
 
  12   CONTINUE
-      WRITE(*,101) tjm,file(1:lf),tv(1),tv(n)
+      WRITE(0,101) tjm,file(1:lf),tv(1),tv(n)
  101  FORMAT(' **** deltt: TJM out of range ****'/
      +       ' Cannot compute ET-UT at TJM =',F11.3/
      +       ' File "',A,'" starts at TJM =',F11.3/
@@ -125,7 +125,7 @@
   30  CONTINUE
       nw=nw+1
       IF(nw.GT.nwmax) RETURN
-      WRITE(*,102) tjm,file(1:lf),tv(1),tv(n)
+      WRITE(0,102) tjm,file(1:lf),tv(1),tv(n)
  102  FORMAT(' WARNING (deltt): TJM =',F11.3,
      +       ' is outside the range of data'/
      +       ' contained in file "',A,'" (from',F11.3,' to',F11.3,')')

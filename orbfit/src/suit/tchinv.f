@@ -12,7 +12,7 @@ c end interface
 c matrix factorized by Tcholesky method: 
       call tchol(cinv,n,n,indp,err)
       if(indp.ne.0)then
-         write(*,*)' indp=',indp,' in tchol'
+         write(0,*)' indp=',indp,' in tchol'
       endif
 c ===========================================================
 c Control of conditioning number and inversion of matrix
@@ -27,7 +27,7 @@ c Control of conditioning number and inversion of matrix
         endif
  19   continue
       cond=(omax/omin)**2
-      write(*,111)n,n,cond
+      write(0,111)n,n,cond
  111  format(' Conditioning of ',i2,'x',i2,'matrix=',d12.4)
 c ===========================================================
 c inversion

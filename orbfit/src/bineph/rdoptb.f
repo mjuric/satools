@@ -72,11 +72,11 @@
       DO 11 i2=i1+1,nbm
       IF(astnam(i1).EQ.astnam(i2)) THEN
           IF(first) THEN
-              WRITE(*,104)
+              WRITE(0,104)
               first=.false.
           END IF
           ln=lench(astnam(i2))
-          WRITE(*,103) astnam(i2)(1:ln)
+          WRITE(0,103) astnam(i2)(1:ln)
           fail=.true.
       END IF
  104  FORMAT(' ERROR: the following objects are included more than',
@@ -109,11 +109,11 @@
           nbl=nbl+1
           IF(nbl.EQ.1) THEN
               t0=t0t
-              WRITE(*,100) t0
+              WRITE(0,100) t0
           ELSEIF(ABS(t0-t0t).GT.1.d-6) THEN
               ln=lench(name1)
               lf=lench(incfil(i))
-              WRITE(*,101) name1(1:ln),incfil(i)(1:lf),kr,t0t
+              WRITE(0,101) name1(1:ln),incfil(i)(1:lf),kr,t0t
               STOP '**** rdoptb: abnormal end ****'
           END IF
           IF(nbl.EQ.nbm) THEN
@@ -130,13 +130,13 @@
  6    CONTINUE
       CALL clorbf
  4    CONTINUE
-      WRITE(*,102)
+      WRITE(0,102)
  102  FORMAT(' ERROR: no initial conditions found for the following',
      +       ' objects:')
       DO 9 i=1,nbm
       IF(.NOT.loaded(i)) THEN
           ln=lench(astnam(i))
-          WRITE(*,103) astnam(i)(1:ln)
+          WRITE(0,103) astnam(i)(1:ln)
       END IF
  9    CONTINUE
       STOP '**** rdoptb: abnormal end ****'

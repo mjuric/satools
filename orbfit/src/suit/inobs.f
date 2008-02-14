@@ -88,20 +88,20 @@ c existence of .rwo, .obs, .rad
       INQUIRE(file=file(1:lfile)//'.rad',exist=rad)
 c For now we will not do radar only orbits
       IF(.not.rwo .and. .not. mpc)THEN
-         WRITE(*,*)'You must provide either a .obs or .rwo file',
+         WRITE(0,*)'You must provide either a .obs or .rwo file',
      +        'in directory ',obsdir
          obs0=.false.
          RETURN
       ENDIF
 c select operations mode
       IF(.not.rwo)THEN
-         WRITE(*,*) 'No .rwo file, so reading .obs and/or .rad files.'
+         WRITE(0,*) 'No .rwo file, so reading .obs and/or .rad files.'
 c there is no .rwo, so read .obs and/or .rad
          IF(mpc)THEN
 c Input of astrometric observations from a file (MPC format)
             CALL mpcin(mpc,file(1:lfile)//'.obs',objid,iobs,tau,tut,
      +           aln,den,idsta,acct,acca,accd,smag,m,nlef)
-            WRITE(*,*)'mpcin: ',m,' obs in ',file(1:lfile)//'.obs'
+            WRITE(0,*)'mpcin: ',m,' obs in ',file(1:lfile)//'.obs'
             WRITE(iun20,*)'mpcin: ',m,' obs in ',file(1:lfile)//'.obs'
          ENDIF
 c read radar jpl data
@@ -127,7 +127,7 @@ c output data for possible manual fixing: create weights file
          change=.true.
 c select between update and overwrite of .rwo
       ELSEIF(precob)THEN
-         WRITE(*,*)file(1:lfile),
+         WRITE(0,*)file(1:lfile),
      +        '.rwo found but ALL obs will come from .obs/.rad files.'
 c give the precedence to the observation files .obs and .rad 
 c with respect to .rwo, which is overwritten
@@ -135,7 +135,7 @@ c with respect to .rwo, which is overwritten
 c Input of astrometric observations from a file (MPC format)
             CALL mpcin(mpc,file(1:lfile)//'.obs',objid,iobs,tau,tut,
      +           aln,den,idsta,acct,acca,accd,smag,m,nlef)
-            WRITE(*,*)'mpcin: ',m,' obs in ',file(1:lfile)//'.obs'
+            WRITE(0,*)'mpcin: ',m,' obs in ',file(1:lfile)//'.obs'
             WRITE(iun20,*)'mpcin: ',m,' obs in ',file(1:lfile)//'.obs'
          ELSE
             m=0
@@ -171,25 +171,25 @@ c recover informations from .rwo (weights, selection flags)
      +           objidt,iobst,tutt,idstat,
      +           alnt,rmsat,dent,rmsdt,smagt,rmsmagt,selt,mt,change)
          IF(change)THEN
-            WRITE(*,*)'There are new/changed obs. New numobs=',m
+            WRITE(0,*)'There are new/changed obs. New numobs=',m
 c output updated .rwo file, if there are new observations (erasing residuals)
             CALL wrirms(file(1:lfile)//'.rwo',objid,iobs,tut,idsta,
      +           aln,rmsa,den,rmsd,smag,rmsmag,sel,m)
          ELSE
-            WRITE(*,*)'There are no updates in .obs or .rad files.'
+            WRITE(0,*)'There are no updates in .obs or .rad files.'
          ENDIF
       ELSE
 c give the precedence to .rwo, the .obs and .rad files are intended
 c as additional observations only; data in .rwo are not erased, can only be
 c changed
 c read .rwo, and store data in final array
-         WRITE(*,*)'Using .rwo file, but checking .obs,.rad for update.'
+         WRITE(0,*)'Using .rwo file, but checking .obs,.rad for update.'
          CALL rearwo(file(1:lfile)//'.rwo',
      +     objid,iobs,tau,tut,idsta,
      +     aln,rmsa,resa,den,rmsd,resd,
      +     smag,rmsmag,resmag,
      +     sel,chi2,m,nlef)
-         WRITE(*,*)'rearwo: ',m,' obs from  ',file(1:lfile)//'.rwo'
+         WRITE(0,*)'rearwo: ',m,' obs from  ',file(1:lfile)//'.rwo'
          WRITE(iun20,*)'rearwo: ',m,' obs from ',file(1:lfile)//'.rwo'
          IF(m.eq.0)THEN
             obs0=.false.
@@ -203,10 +203,10 @@ c Input of astrometric observations into temporary from a file (MPC format)
      +           objidt,iobst,taut,tutt,
      +           alnt,dent,idstat,acct,acca,accd,smagt,mt,nobx)
             IF(.not.mpc)THEN
-               WRITE(*,*) file(1:lfile)//'.obs is possibly corrupt. ',
+               WRITE(0,*) file(1:lfile)//'.obs is possibly corrupt. ',
      +              'Not using any data from this file.'
             ELSE
-               WRITE(*,*)'mpcin:',mt,' obs from  ',file(1:lfile)//'.obs'
+               WRITE(0,*)'mpcin:',mt,' obs from  ',file(1:lfile)//'.obs'
                WRITE(iun20,*)'mpcin:',mt,' from ',file(1:lfile)//'.obs'
             ENDIF
          ENDIF
@@ -218,10 +218,10 @@ c read radar jpl data
      +           dent(mt+1),idstat(mt+1),acct(mt+1),acca(mt+1),
      +           accd(mt+1),smagt(mt+1),mr,nlefm)
             IF(.not.rad)THEN
-               WRITE(*,*) file(1:lfile)//'.rad is possibly corrupt. ',
+               WRITE(0,*) file(1:lfile)//'.rad is possibly corrupt. ',
      +              'Not using any data from this file.'
             ELSE
-c               WRITE(*,*)'mpcin:',mr,' obs from  ',file(1:lfile)//'.rad'
+c               WRITE(0,*)'mpcin:',mr,' obs from  ',file(1:lfile)//'.rad'
 c               WRITE(iun20,*)'mpcin:',mr,' obs  ',file(1:lfile)//'.rad'
                mt=mr+mt
             ENDIF
@@ -239,13 +239,13 @@ c find weights for these; a priori RMS of astrometric observations
      +           alnt,rmsat,dent,rmsdt,smagt,rmsmagt,mt,
      +           nlef,mnew,change)
             IF(change)THEN
-               WRITE(*,*)'There are new/changed obs. New numobs=',mnew
+               WRITE(0,*)'There are new/changed obs. New numobs=',mnew
 c output updated .rwo file, if there are new observations (erasing residuals)
                CALL wrirms(file(1:lfile)//'.rwo',objid,iobs,tut,idsta,
      +              aln,rmsa,den,rmsd,smag,rmsmag,sel,mnew)
                m=mnew
             ELSE
-               WRITE(*,*)'There are no updates in .obs or .rad files.'
+               WRITE(0,*)'There are no updates in .obs or .rad files.'
             ENDIF
          else
 c check for new weights anyway???

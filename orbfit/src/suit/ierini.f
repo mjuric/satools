@@ -96,7 +96,7 @@
       nu=nlpler-2*(nvpler+nspler)
       na=nspler+nu
       IF(na.LT.1) THEN
-          WRITE(*,220) na
+          WRITE(0,220) na
           STOP '**** ierini: abnormal end ****'
       END IF
  220  FORMAT('ERROR: bad parameter definition (IERS.eopc04.)'/
@@ -153,13 +153,13 @@
       IF(month.LE.0) GOTO 20
       mjdc=NINT(tjm1(day,month,year,0.D0))
       IF(mjdc.NE.mjd) THEN
-          WRITE(*,203) mjdc,mjd
+          WRITE(0,203) mjdc,mjd
           GOTO 20
       END IF
  203  FORMAT('ERROR: inconsistent MJD:',2I8)
       IF(niers.GT.ne1) THEN
           IF(mjd-mjdp.NE.1) THEN
-              WRITE(*,202) mjd,mjdp
+              WRITE(0,202) mjd,mjdp
               GOTO 20
           END IF
       END IF
@@ -212,7 +212,7 @@
 
       IF(niers.LE.0) STOP '**** ierini: empty EOPC04 files ****'
       niers1=niers
-      WRITE(*,201) niers,mjd1,mjd2
+      WRITE(0,201) niers,mjd1,mjd2
  201  FORMAT('Reading IERS time series:'/
      +       '        EOPC04 data:',I6,' points (from MJD=',
      +       I5,' to MJD=',I5,')')
@@ -337,7 +337,7 @@
 
 * Error termination
  20   CONTINUE
-      WRITE(*,200) file(1:lf),nr
+      WRITE(0,200) file(1:lf),nr
  200  FORMAT('ERROR in reading file "',A,'" at record ',I5)
       STOP '**** ierini: abnormal end ****'
 

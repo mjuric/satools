@@ -102,7 +102,7 @@ c Date
 
  10   CONTINUE
       IF(error) THEN
-          WRITE(*,101) errcod
+          WRITE(0,101) errcod
           tdt=0
           alpha=0
           delta=0

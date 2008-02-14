@@ -110,7 +110,7 @@ c Read astrometry observation
             chi2(n)=chi**2
             GOTO 12
  11         WRITE(ierrou,*)'rearwo: error in chi ',chistr
-            WRITE(*,*)'rearwo: error in chi ',chistr
+            WRITE(0,*)'rearwo: error in chi ',chistr
             chi2(n)=0.d0
             numerr=numerr+1
  12         CONTINUE
@@ -150,7 +150,7 @@ c Read radar observation
      +           1X,I3.3,1X,I3.3,f9.2,2X,I1,3x)
             obscod(n)=iotr*10000+iore
             chi2(n)=chi**2
-c           WRITE(*,102) objid(n),year,month,iday,ihour,imin,isec,
+c           WRITE(0,102) objid(n),year,month,iday,ihour,imin,isec,
 c    +           rstri,vstri,
 c    +           iotr,iore,chi,sel(n)
 c convert time
@@ -192,15 +192,15 @@ c surface bounce correction required
             IF(obstyp.eq.'r')iobs(n)=iobs(n)+100
          ELSE
 c           Skip record if unknown type          
-            WRITE(*,*) 'Unknown obs type ',obstyp,' at line ',
+            WRITE(0,*) 'Unknown obs type ',obstyp,' at line ',
      +           i,' in ',file
          ENDIF
 c spaghetti code: only go to 10 on error, else skip line 10.
          GOTO 1
  10      WRITE(ierrou,*) 'ERROR while reading line ',i,' of ',file
          WRITE(ierrou,*) 'skipping record: ',rec
-         WRITE(*,*) 'ERROR while reading line ',i,' of ',file
-         WRITE(*,*) 'skipping record: ',rec
+         WRITE(0,*) 'ERROR while reading line ',i,' of ',file
+         WRITE(0,*) 'skipping record: ',rec
          n=n-1
          numerr=numerr+1
  1    ENDDO

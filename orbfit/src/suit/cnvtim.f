@@ -61,12 +61,12 @@
 * Check on timescales
       if(eqsc.ne.'UT1'.and.eqsc.ne.'TDT'.and.eqsc.ne.'TAI'.and.
      .        eqsc.ne.'UTC') then
-          write(*,103) scale1
+          write(0,103) scale1
           stop ' **** cnvtim: abnormal end ****'
       end if
       if(eqsc2.ne.'UT1'.and.eqsc2.ne.'TDT'.and.eqsc2.ne.'TAI'.and.
      .        eqsc2.ne.'UTC') then
-          write(*,103) scale2
+          write(0,103) scale2
           stop ' **** cnvtim: abnormal end ****'
       end if
  103  format(' **** cnvtim: unsupported timescale "',a,'" ****')
@@ -111,7 +111,7 @@
  3            call timnf(mjdt,sect,'UT1')
               nit=nit+1
               if(nit.gt.nitmax)then
-                  write(*,100) mjd1,sec1,scale1
+                  write(0,100) mjd1,sec1,scale1
                   stop' **** cnvtim: abnormal end ****'
               endif
 *   c) try to find the starting value of TDT from the approximate
@@ -156,7 +156,7 @@
  2            call timnf(mjdt,sect,'UTC')
               nit=nit+1
               if(nit.gt.nitmax)then
-                  write(*,101) mjd1,sec1,scale1
+                  write(0,101) mjd1,sec1,scale1
                   stop' **** cnvtim: abnormal end ****'
               end if
 *   c) try to find the starting value of TAI from the approximate
@@ -188,7 +188,7 @@
           eqsc='TAI'
 
       else
-          write(*,102) eqsc
+          write(0,102) eqsc
           stop ' **** cnvtim: abnormal end ****'
       endif
 

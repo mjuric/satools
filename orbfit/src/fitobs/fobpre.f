@@ -102,9 +102,9 @@ c check availability of JPL ephemerides and ET-UT table for entire time span
          CALL chetim(t1,t2,ok)
          IF(.not.ok)RETURN
          IF(nint(abs(t2-t1)/dt).gt.500)THEN
-            write(*,*)' Too many ephemerides points:',
+            write(0,*)' Too many ephemerides points:',
      +           nint(abs(t2-t1)/dt)
-            write(*,*)'Select a time interval and span to ',
+            write(0,*)'Select a time interval and span to ',
      +           'ensure that there are fewer than 500 points.'
          ELSE
 c open ephemerides file in current directory
@@ -116,7 +116,7 @@ c open ephemerides file in current directory
             CALL ephemc(iuneph,'EQU',t0,eq0,g0,.true.,t1,t2,
      +           dt,mass,h0,gmag,ids,scale,fields)
             CALL filclo(iuneph,' ')
-            WRITE(*,*)' Generated ephemeris in file: ',file(1:ln)
+            WRITE(0,*)' Generated ephemeris in file: ',file(1:ln)
          ENDIF
 c =====================================================================      
          ELSEIF(icov.eq.3.or.icov.eq.4)THEN
@@ -132,7 +132,7 @@ c compute prediction, boundary
          CALL outobc(iun20,iob1,ids,tut,alpha,delta,hmagn,adot,ddot,
      +     elo,dis,icov,gamad,sig,axes)
          IF(npo1.le.0)THEN
-            WRITE(*,*)'fobpre: no elliptic orbits ',npo1
+            WRITE(0,*)'fobpre: no elliptic orbits ',npo1
             RETURN
          ENDIF
          IF(ibv.eq.1)THEN

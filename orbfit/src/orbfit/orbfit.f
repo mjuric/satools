@@ -68,12 +68,12 @@ c modification to select preliminary orbit method
       opdif=.true.
       opele=.true.
 
-      WRITE(*,110)
+      WRITE(0,110)
  110  FORMAT(' Run name =')
       READ(*,100) run
  100  FORMAT(A)
       lr=lench(run)
-      WRITE(*,111) run(1:lr)
+      WRITE(0,111) run(1:lr)
  111  FORMAT(' Run name = ',A)
 
       file=run(1:lr)//'.olg'
@@ -92,7 +92,7 @@ c modification to select preliminary orbit method
           CALL rdnam(unit)
           CALL filclo(unit,' ')
       ELSE
-          WRITE(*,210)
+          WRITE(0,210)
       END IF
  210  FORMAT(' WARNING: no default option file (orbfit.def) found')
       optfil=run(1:lr)//'.oop'
@@ -103,7 +103,7 @@ c modification to select preliminary orbit method
           CALL filclo(unit,' ')
       ELSE
           lf=lench(optfil)
-          WRITE(*,211) optfil(1:lf)
+          WRITE(0,211) optfil(1:lf)
       END IF
  211  FORMAT(' WARNING: no run-specific option file (',A,') found')
 

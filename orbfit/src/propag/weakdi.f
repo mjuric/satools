@@ -27,11 +27,11 @@ c eigenvalues
           call tee(iun8,'WEAK DIRECTION =')
           write(iun8,109) (wdir(i),i=1,6)
  109      format(6e24.16)
-          write(*,110) (wdir(i),i=1,6)
+          write(0,110) (wdir(i),i=1,6)
  110      format(1p,6e12.4)
           write(iun8,*)
           write(iun8,111) sdir
-          write(*,111) sdir
+          write(0,111) sdir
  111      format(' WEAK SIGMA ',1p,e12.4)
           write(iun8,*)
       endif

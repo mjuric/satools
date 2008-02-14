@@ -67,7 +67,7 @@ c check data set first
          IF(iobs(i)/1000.eq.2)THEN
             radar=.true.
          ELSEIF(iobs(i)/1000.ne.1)THEN
-            WRITE(*,*)'wrirwg: obs.type ',iobs(i),' unknown, rec.no=',i
+            WRITE(0,*)'wrirwg: obs.type ',iobs(i),' unknown, rec.no=',i
             STOP
          ENDIF
       ENDDO

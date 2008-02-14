@@ -109,20 +109,20 @@ c JPL Earth vector at observation time
 c =====================================================================
 c Check if time and/or elements changed: we could not need to compute 
 c initial conditions for the asteroid
-c     WRITE(*,*)t0,t1,t2,restar
+c     WRITE(0,*)t0,t1,t2,restar
       if(t0.ne.t0s.or.easts(1).ne.east(1).or.easts(2).ne.east(2).
      +   or.easts(3).ne.east(3).or.easts(4).ne.east(4).
      +   or.easts(5).ne.east(5).or.easts(6).ne.east(6)
      +   .or.abs(t2-t1).gt.abs(t2-t0).or.restar
      +   )then
-c     WRITE(*,*)east
+c     WRITE(0,*)east
 
 *  new arc; propin needs to be informed
          nfl=0
 c also cloapp needs to be informed
          clost=.true.
          CALL clotest(t0,east,iplam,texit)  
-         IF(iplam.ne.0)WRITE(*,*)'initial close app. with plan. ',iplam 
+         IF(iplam.ne.0)WRITE(0,*)'initial close app. with plan. ',iplam 
 c =====================================================================
 c Compute asteroid cartesian elements at time $t0$
          call prop2b(t0,east,t0,xast,gms,1,dx0de,ddxde)

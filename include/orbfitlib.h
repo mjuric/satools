@@ -38,17 +38,17 @@ extern "C" void rmodel_(char *run,
 						int run_size
 						);
 extern "C" void preobs_(char *coo,
-						double &t0,
-						int &code,
-						double &t1,
-						double east0[],
-						int &iobs,
+						const double &t0,
+						const int &code,
+						const double &t1,
+						const double east0[],
+						int const &iobs,
 
 						double &x,
 						double &y,
 
-						double &h,
-						double &g,
+						const double &h,
+						const double &g,
 						
 						double &hmagn,
 						int coo_size
@@ -57,17 +57,17 @@ extern "C" void proele_(char *coo, double &t0, double *east0, double &t1, double
 
 // helper FORTRAN routines
 extern "C" void preobs2_(char *coo,
-						double &t0,
-						int &code,
-						double &t1,
-						double east0[],
-						int &iobs,
+						const double &t0,
+						const int &code,
+						const double &t1,
+						const double east0[],
+						const int &iobs,
 
 						double &x,
 						double &y,
 
-						double &h,
-						double &g,
+						const double &h,
+						const double &g,
 						
 						double &hmagn,
 						int coo_size

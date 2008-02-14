@@ -130,7 +130,7 @@ c Initialisation with starting value for elements
       ENDDO
       iun=abs(iunf)
       IF(iunf.gt.0)THEN
-         write(*,220) eq
+         write(0,220) eq
          write(iun,220) eq
  220     format(' starting values'/6f13.7)
       ENDIF
@@ -168,7 +168,7 @@ c and no failure possible
             IF(matonly)THEN
                succ=.true.
                IF(iunf.gt.0)THEN
-                  write(*,*)'One pass only. No corrections.'
+                  write(0,*)'One pass only. No corrections.'
                   write(iun,*)
      +                 'One pass only. No corrections applied.'
                ENDIF
@@ -177,7 +177,7 @@ c and no failure possible
 c control against hyperbolic and bizarre orbits
             IF(bizarre(eq))THEN
                ecc=sqrt(eq(2)**2+eq(3)**2)
-               write(*,*)' bizarre; e=',ecc,' a=',eq(1)
+               write(0,*)' bizarre; e=',ecc,' a=',eq(1)
                write(iun,*)' bizarre; e=',ecc,' a=',eq(1)
                succ=.false.
 c     return saved rms
@@ -186,7 +186,7 @@ c     return saved rms
             endif
 c norm of the correction: the zeros DO not matter!
             IF(iunf.gt.0)THEN
-               write(*,200)it,csinor,delnor,eq
+               write(0,200)it,csinor,delnor,eq
                write(iun,200)it,csinor,delnor,eq
  200          format(' *** iteration ',i3/,'  RMS residuals =',1p,d12.4,
      +           '   norm corr =',d12.4/,'  new elem values'/0p,6f13.7/)
@@ -201,17 +201,17 @@ c Small corrections to elements?
 c Target function increasing/paralyzed?
             IF(csinor.gt.csino1*1.1d0)THEN
                itg=itg+1
-               IF(iunf.gt.0)write(*,*)' target function increasing '
+               IF(iunf.gt.0)write(0,*)' target function increasing '
                IF(iunf.gt.0)write(iun,*)' target function increasing '
-               write(*,*)
+               write(0,*)
                write(iun,*)
                succ=.false.
             ELSEIF(csinor.gt.csino1*divrat)THEN
                itg=itg+1
                IF(iunf.gt.0)THEN
-                  write(*,*)' target function paralyzed '
+                  write(0,*)' target function paralyzed '
                   write(iun,*)' target function paralyzed '
-                  write(*,*)
+                  write(0,*)
                   write(iun,*)
                ENDIF
                succ=.true.
@@ -229,7 +229,7 @@ c +++++++++++++++++++++ End Inner Loop +++++++++++++++++++++++++++++
          ENDDO
          succ=.false.
          IF(iunf.gt.0)THEN
-            write(*,*)' too many iterations'
+            write(0,*)' too many iterations'
             write(iun,*)' too many iterations'
          ENDIF
 c           Must get computed orbit and selection flags to agree:
@@ -240,7 +240,7 @@ c           Must get computed orbit and selection flags to agree:
 c ================== AUTOMATIC OUTLIER REJECTION =====================
  77      CONTINUE
          IF(autrej)THEN
-         IF(iunf.gt.0)write(*,*)'REJECTING...'
+         IF(iunf.gt.0)write(0,*)'REJECTING...'
 c call with -iun to avoid logging rejection stats
             CALL reject(iunf,csinor,sels,csi,tsort,x2s,ws,m,
      +        gamma,icor,nmod)
@@ -255,7 +255,7 @@ c update weight vector with zeros for rejected obs
                 ENDIF
             ENDDO
             IF(iunf.gt.0)THEN
-               write(*,201)itrej,it,nmod
+               write(0,201)itrej,it,nmod
                write(iun,201)itrej,it,nmod
  201           format('Outlier rejection pass ',i3,
      +         ' after ',i3,' single differential correction passes.'/
@@ -276,10 +276,10 @@ c ====================================================================
 c ================== BEGIN FINAL LOOP ================================
 c ====================================================================
  75   CONTINUE
-c      WRITE(*,*)delnor,delcr,succ
+c      WRITE(0,*)delnor,delcr,succ
       IF(delnor.gt.delcr)THEN
          IF(iunf.gt.0)THEN
-            write(*,*)'Final convergence loop after ',
+            write(0,*)'Final convergence loop after ',
      +           itrej,' outlier rejection loops.'
             write(iun,*)'Entering final convergence loop after ',
      +           itrej,' outlier rejection loops.'
@@ -293,7 +293,7 @@ c ================== single iteration ==================================
 c control against hyperbolic and bizarre orbits
             IF(bizarre(eq))THEN
                ecc=sqrt(eq(2)**2+eq(3)**2)
-               write(*,*)' bizarre; e=',ecc,' a=',eq(1)
+               write(0,*)' bizarre; e=',ecc,' a=',eq(1)
                write(iun,*)' bizarre; e=',ecc,' a=',eq(1)
                succ=.false.
 c cleanup the chi2
@@ -304,19 +304,19 @@ c the residuals of the first iteration will be passed up
                RETURN
             ENDIF
 c norm of the correction: the zeros DO not matter!
-            write(*,200)it,csinor,delnor,eq
+            write(0,200)it,csinor,delnor,eq
             write(iun,200)it,csinor,delnor,eq
 c ====== DECISION # 2 ===============================================
 c Check if we need another iteration
 c Small corrections to elements?
             IF(delnor.lt.delcr)THEN
                IF(iunf.gt.0)THEN
-                  write(*,*)  
+                  write(0,*)  
      +                 'Done. Convergence corrections small after ',
      +                 it,' passes.'
                write(iun,*)'Done. Convergence corrections small after ',
      +              it,' passes.'
-                  write(*,*)
+                  write(0,*)
                   write(iun,*)
                ENDIF
                succ=.true.
@@ -326,18 +326,18 @@ c     Target function increasing/paralyzed?
             IF(csinor.gt.csino1*1.1d0)THEN
                itg=itg+1
                IF(iunf.gt.0)THEN
-                  write(*,*)' target function increasing '
+                  write(0,*)' target function increasing '
                   write(iun,*)' target function increasing '
-                  write(*,*)
+                  write(0,*)
                   write(iun,*)
                ENDIF
                succ=.false.
             ELSEIF(csinor.gt.csino1*divrat)THEN
                itg=itg+1
                IF(iunf.gt.0)THEN
-                  write(*,*)' target function paralyzed '
+                  write(0,*)' target function paralyzed '
                   write(iun,*)' target function paralyzed '
-                  write(*,*)
+                  write(0,*)
                   write(iun,*)
                ENDIF
                succ=.true.
@@ -345,7 +345,7 @@ c     Target function increasing/paralyzed?
                itg=0
             ENDIF
             IF(itg.gt.itgmax)THEN
-               IF(iunf.gt.0)write(*,*) 
+               IF(iunf.gt.0)write(0,*) 
      +              'Done. Target funct. not decreasing after ',
      +              it,' passes.'
                write(iun,*)'Done. Target funct. not decreasing after ',
@@ -356,7 +356,7 @@ c     Target function increasing/paralyzed?
 c ====================== END FINAL LOOP =============================
          ENDDO
          succ=.false.
-         IF(iunf.gt.0)write(*,*)' too many iterations'
+         IF(iunf.gt.0)write(0,*)' too many iterations'
          write(iun,*)' too many iterations'
       ENDIF
 c ====================== CLEAN UP AND RETURN ========================

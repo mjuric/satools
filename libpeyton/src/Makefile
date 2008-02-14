@@ -14,7 +14,7 @@
 #
 
 .cpp.o:
-	$(CXX) -O3 -g -fPIC -D_GNU_SOURCE -I../include $(FITSFLAGS) -c $*.cpp -o $*.o
+	$(CXX) -O0 -g -fPIC -D_GNU_SOURCE -I../include $(FITSFLAGS) -c $*.cpp -o $*.o
 
 all: ../lib/libastro.a
 parallel: ../lib/libparallel.a

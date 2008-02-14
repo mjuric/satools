@@ -137,7 +137,7 @@ c  transition matrix stm0 has to be used: stmout=stm*stm0
                 return
              ELSE
 c write message
-                WRITE(*,*)'end close approach to planet',idc,tcur
+                WRITE(0,*)'end close approach to planet',idc,tcur
 c propagation has been interrupted because of a close approach
                 CALL vawrxv(y1,y1(nvar2+1),stm,nvar2)
                 CALL mulmat(stm,6,6,stm0,6,6,stmout)
@@ -181,10 +181,10 @@ c  inizializzazioni per il multistep
 *******************************************************
 c  controllo direzione del tempo
       if((t2-t1)*h.lt.0.d0) then
-          write(*,999)t1,t2,h
+          write(0,999)t1,t2,h
  999      format('propin: from t1=',1p,f12.4,' to t2=',f12.4,
      $         ' with step h=',d12.4)
-          write(*,*)'propin: this should not happen'
+          write(0,*)'propin: this should not happen'
           STOP
 c          h=-h
       endif

@@ -22,7 +22,7 @@ c==== end interface
       l2=lench(astnam)
       l3=lench(suffix)
       IF(l1+l2+l3+2.gt.200)THEN
-         WRITE(*,*) 'filnam: Filename too long:',
+         WRITE(0,*) 'filnam: Filename too long:',
      +        eledir(1:l1),dircha,astnam(1:l2),'.',suffix(1:l3)
          STOP
       ENDIF
@@ -30,7 +30,7 @@ c==== end interface
       CALL rmsp(tmpstr,le)
       file=tmpstr(1:le)
       IF(le.gt.ldir-4)THEN
-         WRITE(*,*)'filnam: possible file name truncation',astnam,file
+         WRITE(0,*)'filnam: possible file name truncation',astnam,file
       ENDIF
       RETURN
       END

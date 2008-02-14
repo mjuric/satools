@@ -14,7 +14,7 @@ c for the space spanned by the 2 columns of a
       logical ize
 c dimension check
       if(n.gt.nx)then
-         write(*,*)'n =',n,' larger than nx=',nx,' in graha'
+         write(0,*)'n =',n,' larger than nx=',nx,' in graha'
          stop
       endif 
 c selection of the control for "zero" vectors
@@ -22,7 +22,7 @@ c selection of the control for "zero" vectors
       cc2=sqrt(prscag(n,a(1,2),a(1,2)))
       epsi=1.d-12*min(cc1,cc2)
       if(epsi.eq.0.d0)then
-         write(*,*)' a has rank zero'
+         write(0,*)' a has rank zero'
 c        stop
       endif
 c start by orthonormalisation of the space spanned by the columns of a
@@ -30,7 +30,7 @@ c
 c V1 is the versor of A1
       call versor(n,a(1,1),epsi,v(1,1),vl,ize)
       if(ize)then
-         write(*,*)' first vector of a is too small'
+         write(0,*)' first vector of a is too small'
 c        stop
       endif 
 c the following vectors are obtained
@@ -39,7 +39,7 @@ c by removing the components along the previous ones
       call lincog(n,a(1,2),1.d0,v(1,1),cc,v(1,2))
       call versor(n,v(1,2),epsi,v(1,2),vl,ize)
       if(ize)then
-         write(*,*)' a has practically rank one'
+         write(0,*)' a has practically rank one'
 c        stop
       endif
 c we now use the vectors of the canonic basis to supplement the span of A1,A2
@@ -73,7 +73,7 @@ c the new versor is a good one
  1    continue
  2    continue
       if(jok.lt.n-2)then
-         write(*,*)' something went wrong, jok=',jok
+         write(0,*)' something went wrong, jok=',jok
       endif
       return
       end

@@ -86,7 +86,7 @@ c eigenvalues, eigenvectors
       ELSEIF(eltype.EQ.'EQU') THEN
           cnv(6)=degrad
           IF(elem(6).lt.0.d0)THEN
-             WRITE(*,*) ' wromlr: negative mean anomaly', elem(6)*cnv(6)
+             WRITE(0,*) ' wromlr: negative mean anomaly', elem(6)*cnv(6)
              elem(6)=elem(6)+dpig
           ENDIF
           WRITE(unit,203) comcha
@@ -127,8 +127,8 @@ c eigenvalues
             IF(eigval(i).gt.0.d0)THEN
                eigval(i)=sqrt(eigval(i))
             ELSE
-               WRITE(*,*)'wromlr: zero/negative eigenvalue', eigval(i)
-               WRITE(*,*) '  for asteroid ',name(l1:ln)
+               WRITE(0,*)'wromlr: zero/negative eigenvalue', eigval(i)
+               WRITE(0,*) '  for asteroid ',name(l1:ln)
                eigval(i)=-sqrt(-eigval(i))
             ENDIF
           ENDDO

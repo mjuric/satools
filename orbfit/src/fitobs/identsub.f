@@ -58,7 +58,7 @@ c  identification according to inclination (only)
       CALL astid2(ci1,eq0(4),ceq0red,ci2,eqp(4),
      +       pq,d2,da2,detc2,icode)
       if(icode.eq.0)then
-         write(*,*)' icode=',icode
+         write(0,*)' icode=',icode
          d2=0.d0
          da2=0.d0
       endif
@@ -70,14 +70,14 @@ c compute C1^55,C2^55
          enddo
        enddo
        call qrinv5(gamma55,c15,ier15,det15,aval15)
-       write(*,*)aval15(1),aval15(5)/aval15(1)
+       write(0,*)aval15(1),aval15(5)/aval15(1)
        do i=1,5
          do j=1,5
              gamma55(i,j)=g2(i,j)
          enddo
        enddo
        call qrinv5(gamma55,c25,ier25,det25,aval25)
-       write(*,*)aval25(1),aval25(5)/aval25(1)
+       write(0,*)aval25(1),aval25(5)/aval25(1)
 c now take mean 
         pl=primea(eq0(6),eqp(6))
 c now tests difference
@@ -157,7 +157,7 @@ c     f=2.0d0/(2.d0*mall)
       CALL astid2(ci1,eq0(4),ceq0red,ci2,eqp(4),
      +       pq,d2,da2,detc2,icode)
       if(icode.eq.0)then
-         write(*,*)' icode=',icode
+         write(0,*)' icode=',icode
          d2=0.d0
          da2=0.d0
       endif
@@ -293,7 +293,7 @@ c  increase of target function
           ddel=2.d0*(deltaq-deltalt)/(deltaq+deltalt)
           delcr=1.d-1
 c          if(abs(ddel).gt.delcr)then
-c             write(*,*)'deltaq not consistent',ddel,nam1,nam2
+c             write(0,*)'deltaq not consistent',ddel,nam1,nam2
 c          endif
       return
       end
@@ -499,7 +499,7 @@ c ***********************************
      +          (eq1(4)-eq2(4))**2+(eq1(5)-eq2(5))**2+
      +          ((eq1(1)-eq2(1))/(eq1(1)+eq2(1)))**2
       else
-         write(*,*) 'Error in dimension num'
+         write(0,*) 'Error in dimension num'
          stop
       endif
       return

@@ -68,14 +68,14 @@ C
                                                                                 
                                                                                 
       if(nrecl .eq. 0) then                                                     
-      write(*,*)'*** ERROR: User did not set NRECL ***'                         
+      write(0,*)'*** ERROR: User did not set NRECL ***'                         
       stop                                                                      
       endif                                                                     
                                                                                 
                                                                                 
 C      Write a fingerprint to the screen.                                       
                                                                                 
-       WRITE(*,*) ' JPL ASCII-TO-DIRECT-I/O program. ' //                       
+       WRITE(0,*) ' JPL ASCII-TO-DIRECT-I/O program. ' //                       
      .            ' Last modified 31-Mar-1993.'                                 
                                                                                 
                                                                                 
@@ -99,7 +99,7 @@ C
        ENDIF                                                                    
                                                                                 
        READ (*,'(14A6)')    TTL                                                 
-       WRITE(*,'(/(14A6))') TTL                                                 
+       WRITE(0,'(/(14A6))') TTL                                                 
                                                                                 
                                                                                 
 C                                                                               
@@ -160,7 +160,7 @@ C
        ENDIF                                                                    
                                                                                 
        READ (*,'(13I6)')   ((IPT(I,J),J=1,12),LPT(I),I=1,3)                     
-       WRITE(*,'(/(3I5))') IPT, LPT                                             
+       WRITE(0,'(/(3I5))') IPT, LPT                                             
                                                                                 
                                                                                 
 C                                                                               

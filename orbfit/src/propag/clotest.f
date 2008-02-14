@@ -31,8 +31,8 @@ c distance
      +      (xea(3)-xast(3))**2)
 c test
       IF(dist.le.dmin(3))THEN
-c        WRITE(*,*)' clotest: warning! close approach to Earth'
-c        WRITE(*,*)' at the initial epoch, dist=',dist
+c        WRITE(0,*)' clotest: warning! close approach to Earth'
+c        WRITE(0,*)' at the initial epoch, dist=',dist
          iplanet=3
          texit=20.d0
       ELSE

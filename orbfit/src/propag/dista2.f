@@ -36,22 +36,22 @@ c store elements in common
         eqp(i)=eq1(i)
       ENDDO
       IF(incl.ge.incmin)THEN
-         WRITE(*,*)' inclination', incl,incmin
+         WRITE(0,*)' inclination', incl,incmin
       ELSE
 c other guess is
       ENDIF 
 c first guess is mutual node 1
       f=f0
       fp=f1
-      write(*,*)' first node at ',f,fp
+      write(0,*)' first node at ',f,fp
       dist1=dmin(f,fp,iconv)
-      write(*,*)' first node at ',f,fp,dist1
+      write(0,*)' first node at ',f,fp,dist1
 c second guess is mutual node 2
       f=f0+pig
       fp=f1+pig
-      write(*,*)' second node at ',f,fp
+      write(0,*)' second node at ',f,fp
       dist2=dmin(f,fp,iconv)
-      write(*,*)' second node at ',f,fp,dist2
+      write(0,*)' second node at ',f,fp,dist2
       dista=min(dist1,dist2)
 c third guess is
       RETURN
@@ -78,11 +78,11 @@ c first guess is given; stay on both sides.
       up1=princ(up-deltau)
       x2=princ(u+deltau)
       up2=princ(up+deltau)      
-      write(*,*)x1,x2,deltau
+      write(0,*)x1,x2,deltau
 
       f1=(dfals(x1,up1,icon1)-dfals(x1-dd,up1,icon1p))/dd
       f2=(dfals(x2,up2,icon2)-dfals(x2-dd,up2,icon2p))/dd
-c     write(*,*)x1,x2,f1,f2
+c     write(0,*)x1,x2,f1,f2
 c regula falsi
       do 1 icon=1,nmax
          if(abs(f1-f2).lt.eps)then
@@ -99,12 +99,12 @@ c recomputation of derivative of distance
          up=primea(up1,up2)
          dmin=dfals(x,up,iconv)
          f=(dmin-dfals(x-dd,up,iconvp))/dd
-         write(*,*)icon,x1,x2,x,f1,f2,f,dmin
+         write(0,*)icon,x1,x2,x,f1,f2,f,dmin
 c test 
          if(abs(f).lt.eps)then
 c convergence
             u=x
-            write(*,*)' convergent at ',u,up,dmin
+            write(0,*)' convergent at ',u,up,dmin
             return
 c if there is only one change of sign, chose the two with oppos. sign
          elseif(f1*f.lt.0.d0.and.f2*f.gt.0.d0)then
@@ -126,7 +126,7 @@ c otherwise, continue with f and the lower value
  1    continue
 c  non convergent case: give a value anyway
       u=x
-      write(*,*)' divergent at ', u,up,dmin
+      write(0,*)' divergent at ', u,up,dmin
       icon=-1
       return
       end
@@ -166,11 +166,11 @@ c regula falsi
          x=princ(x)
          dfals=dis(uu,x)
          f=(dfals-dis(uu,x-dd))/dd
-c         write(*,*)x1,x2,x,f1,f2,f,dfals
+c         write(0,*)x1,x2,x,f1,f2,f,dfals
          if(abs(f).lt.eps)then
 c convergence
             up=x
-            write(*,*)' convp ',uu,up,dfals,f
+            write(0,*)' convp ',uu,up,dfals,f
             return
 c if there is only one change of sign, chose the two with oppos. sign
          elseif(f1*f.lt.0.d0.and.f2*f.gt.0.d0)then
@@ -191,7 +191,7 @@ c otherwise, continue with f and the lower value
          endif
  1    continue
 c  non convergent case: give a value anywa
-      write(*,111)iconv,x,f,dfals
+      write(0,111)iconv,x,f,dfals
  111  format('divergence, iter=',i2,' x=',f12.7,' f=',1p,d12.4,0p,
      +       ' distance=',f10.7)
       up=x

@@ -26,7 +26,7 @@
       IF(na.LE.nx) RETURN
 
       ll=lench(name)
-      WRITE(*,100) name(1:ll),na
+      WRITE(0,100) name(1:ll),na
  100  FORMAT(' **** Insufficient PARAMETER definition ****'/
      +       ' **** Please set ',a,' >=',i7,' ****')
 

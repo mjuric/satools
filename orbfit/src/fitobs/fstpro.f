@@ -45,8 +45,8 @@ c check availability of required data
 c =====================================================================
 c check availability of JPL ephemrides
          IF(tr.lt.tejpl1.or.tr.gt.tejpl2)THEN
-            WRITE(*,*)' JPL ephemrides not available for tr=',tr
-            WRITE(*,*)' but only for interval ',tejpl1,tejpl2
+            WRITE(0,*)' JPL ephemrides not available for tr=',tr
+            WRITE(0,*)' but only for interval ',tejpl1,tejpl2
             ok=.false.
             RETURN
          ENDIF
@@ -65,17 +65,17 @@ c output
 c =====================================================================
       IF(.not.batch)THEN
          WRITE(iun20,223) tr
-         WRITE(*,223) tr
+         WRITE(0,223) tr
  223     FORMAT(' elements at time ',f8.1,' (MJD):')
-         WRITE(*,105) eq1
+         WRITE(0,105) eq1
          WRITE(iun20,105) eq1
          CALL coocha(eq1,'EQU',gms,ekr,'KEP',enne)
          DO  ii=3,6
             ekr(ii)=ekr(ii)*degrad
          ENDDO
-         WRITE(*,105)ekr
+         WRITE(0,105)ekr
          WRITE(iun20,105)(ekr(j),j=6,1,-1)
-         WRITE(*,*)
+         WRITE(0,*)
          WRITE(iun20,*)
  105     FORMAT(6f13.7)
          IF(icov.eq.2)THEN

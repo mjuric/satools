@@ -67,7 +67,7 @@
       CALL mpcpds(objnam(k),nmpc(k),error)
       IF(error) THEN
           ln=lench(objnam(k))
-          WRITE(*,110) objnam(k)(1:ln)
+          WRITE(0,110) objnam(k)(1:ln)
       END IF
  110  FORMAT('rdmpca: cannot understand asteroid code "',A,'"')
  10   CONTINUE
@@ -91,7 +91,7 @@
           eltype(k)='KEP'
           CALL mpcdat(ep5,telem(k),error)
           IF(error) THEN
-              WRITE(*,111) nr,filnam(1:lf)
+              WRITE(0,111) nr,filnam(1:lf)
               STOP '**** rdmpca: abnormal end ****'
           END IF
           elem(1,k)=el1(6)

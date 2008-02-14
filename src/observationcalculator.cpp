@@ -1,7 +1,10 @@
 #include <astro/system/preferences.h>
 #include <astro/system/log.h>
+#include <astro/coordinates.h>
+#include <astro/util.h>
 #include <iostream>
 #include <iomanip>
+#include <astro/skypoint.h>
 
 #include "orbfitlib.h"
 
@@ -10,6 +13,8 @@
 using namespace peyton;
 using namespace peyton::system;
 using namespace peyton::asteroids;
+using namespace peyton::coordinates;
+using namespace peyton::sdss;
 
 using namespace std;
 
@@ -25,7 +30,63 @@ inline Radians angle_sub(Radians x2, Radians x1)
 	return x1 > x2 ? x1 - x2 : x1 - x2 + 2.*ctn::pi;
 }
 
-int ObservationCalculator::calculateObservation(Observation &obs, MJD time, Asteroid &obj, const int flags, const int calcFlags)
+int ObservationCalculator::calculateObservationsTDI(std::vector<Observation> &obsv, const std::vector<Asteroid> &obj, const RunGeometry &geom, const int flags, const int calcFlags)
+{
+	obsv.resize(obj.size());
+	FOR(0, obsv.size())
+	{
+		calculateObservationTDI(obsv[i], obj[i], geom, flags, calcFlags);
+	}
+	return 0;
+}
+
+int ObservationCalculator::calculateObservationTDI(Observation &o, const Asteroid &obj, const RunGeometry &geom, const int flags, const int calcFlags)
+{
+	const int maxiter = 10;
+	MJD d0 = geom.tstart - 4./24.;
+
+	// calculate position at the time of TDI scan start (0th approximation)
+	calculateObservation(o, geom.tstart, obj, ObsFlags::pos, calcFlags);
+	coordinates::equgcs(geom.node, geom.inc, o.ra, o.dec, o.ra, o.dec);
+	o.t0 = geom.tstart;
+
+	// iterative refinement for TDI
+	int j;
+	SkyPoint old;
+	for(j = 0; j != maxiter; j++)
+	{
+		old = SkyPoint(o.ra, o.dec);
+
+		// deal with compact (ra, dec) coordinate system
+		Radians len = o.ra > geom.muStart ? o.ra - geom.muStart : o.ra + ctn::pi2 - geom.muStart;
+		o.t0 = geom.tstart + len/(ctn::pi2*1.00273791);
+
+		while(o.t0 > d0 + 1) o.t0 -= 1;
+		while(o.t0 < d0 ) o.t0 += 1;
+
+		// new approximation
+		calculateObservation(o, o.t0, obj, ObsFlags::pos, calcFlags);
+		coordinates::equgcs(geom.node, geom.inc, o.ra, o.dec, o.ra, o.dec);
+
+		// check convergence
+		double dist = old.distance(SkyPoint(o.ra, o.dec));
+		if(dist < 0.01*ctn::s2r) break;
+	}
+
+	// final calculation, with requested flags
+	calculateObservation(o, o.t0, obj, flags, calcFlags);
+
+	if(j == maxiter && (fabs(o.t0 - d0) > 0.04 && fabs(o.t0 - d0) < 0.96)) {
+		// didn't converge - sound a warning
+		fprintf(stderr, "A TDI position calculation didn't converge [id=%d, name=%s, raOld=%f, ra=%f, dec=%f]\n", o.id, o.name, old.ra/ctn::d2r, o.ra/ctn::d2r, o.dec/ctn::d2r);
+		fprintf(stderr, "t0,t1=%f,%f,%f iter=%d, t=%f, name=%s, muOld=%f, mu=%f, nu=%f]\n", geom.tstart, geom.tend, o.t0-d0, j, o.t0, o.name, old.ra/ctn::d2r, o.ra/ctn::d2r, o.dec/ctn::d2r);
+		return -1;
+	}
+
+	return 0;
+}
+
+int ObservationCalculator::calculateObservation(Observation &obs, MJD time, const Asteroid &obj, const int flags, const int calcFlags)
 {
 	// prepare the output observation record
 	strcpy(obs.name, obj.name);

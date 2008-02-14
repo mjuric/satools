@@ -45,7 +45,7 @@ c first compute nominal prediction
       CALL proele('EQU',tc,eqm(1,imi0),t1,eq1)
       CALL preobs('EQU',t1,ids,t1,eq1,iobs,alpha,delta,hmu(imi0),gmag
      + ,amagn(imi0))
-      WRITE(*,*)' nominal solution '
+      WRITE(0,*)' nominal solution '
       CALL outobc(iun20,iobs,ids,tut1,alpha,delta,amagn(imi0),adot,ddot,
      +     elo,dis,icov,gamad,sig,axes)
       alm(imi0)=0.d0
@@ -62,7 +62,7 @@ c loop on existing multiple solutions: first forward, then backward
          disv(i)=dis
          adotv(i)=adot
          ddotv(i)=ddot
-         WRITE(*,*)' alternate obs.no. ',i
+         WRITE(0,*)' alternate obs.no. ',i
          CALL outobc(iun20,iobs,ids,tut1,alm(i),dem(i),amagn(i),
      +     adot,ddot,elo,dis,icov,gamad,sig,axes)
          alm(i)=alm(i)-alpha
@@ -83,7 +83,7 @@ c update revolution counter
          disv(i)=dis
          adotv(i)=adot
          ddotv(i)=ddot
-         WRITE(*,*)' alternate obs.no. ',i
+         WRITE(0,*)' alternate obs.no. ',i
          CALL outobc(iun20,iobs,ids,tut1,alm(i),dem(i),amagn(i),
      +     adot,ddot,elo,dis,icov,gamad,sig,axes)
          alm(i)=alm(i)-alpha

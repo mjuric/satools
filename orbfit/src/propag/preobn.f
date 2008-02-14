@@ -110,7 +110,7 @@ c   static memory not required
 c****************
 c =====================================================================
       if(iob1/1000.eq.2.and.inl.eq.2)then
-         WRITE(*,*)' preobn: mixing of radar and two-body '//
+         WRITE(0,*)' preobn: mixing of radar and two-body '//
      +        'approximation not permitted'
          RETURN      
       endif
@@ -127,7 +127,7 @@ c compute normal and covariance matrix for equinoctal elements
       CALL mulmat(tmp,6,6,dedeq,6,6,ceq)
 c =====================================================================
 c compute observation; derivatives (of order 1) required            
-c     write(*,*)'preobn calls alfdel', t0,t1
+c     write(0,*)'preobn calls alfdel', t0,t1
       if(iob1/1000.eq.1)then
          CALL alfdel (eq,t0,t1,idsta,alpha,delta,daddet(1,1),
      +        daddet(1,2),1,twobo,ddade,dddde)
@@ -135,7 +135,7 @@ c     write(*,*)'preobn calls alfdel', t0,t1
          CALL rrdot (eq,iob1,t0,t1,idsta,alpha,delta,daddet(1,1),
      +        daddet(1,2),1,twobo)
       ELSE
-         WRITE(*,*)' preobn: this observation type not supported ',iob1
+         WRITE(0,*)' preobn: this observation type not supported ',iob1
          RETURN           
       ENDIF
 c store true apparent motion, etc.
@@ -233,7 +233,7 @@ c other prediction data stored in common
 c compute apparent magnitude at time of observation
            hmagv(n)=appmag(h,g,dsun,dis,pha)
         ELSE
-           WRITE(*,*)' preobn: this we have not invented yet ', inl
+           WRITE(0,*)' preobn: this we have not invented yet ', inl
            RETURN           
         ENDIF
 c keep count of lost revolutions
@@ -244,9 +244,9 @@ c keep count of lost revolutions
         ENDIF
 c temporary output
         if(iob1/1000.eq.1)then
-           write(*,*)n,', RA/DEC (deg)',al(n)*degrad,de(n)*degrad,ng
+           write(0,*)n,', RA/DEC (deg)',al(n)*degrad,de(n)*degrad,ng
         elseif(iob1/1000.eq.2)then
-           write(*,*)n,', R/RDOT (km,km/day)',al(n)*au,de(n)*au,ng
+           write(0,*)n,', R/RDOT (km,km/day)',al(n)*au,de(n)*au,ng
         endif
  7    continue
 c =====================================================================
@@ -254,7 +254,7 @@ c ensure that LOV is consistent with nominal point
 c first find midpoint of LOV, assume npo is even
       if(ibv.eq.2)then
          nrev=nint((al(npo/2)+al(npo/2+1))/2.d0/dpig)
-         write(*,*)'debug: nrev:',nrev
+         write(0,*)'debug: nrev:',nrev
          if(nrev.ne.0)then
             do n=1,npo1
                al(n)=al(n)-nrev*dpig

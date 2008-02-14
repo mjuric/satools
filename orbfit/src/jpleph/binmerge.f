@@ -72,32 +72,32 @@ c *************************************************************
                                                                                 
 c  *****  Check for allowable time-spans  *****                                 
                                                                                 
-      if(ss1(1) .ge. ss2(2))write(*,'(a50)')                                    
+      if(ss1(1) .ge. ss2(2))write(0,'(a50)')                                    
      * 'time-spans reversed: switch assignments?'                               
                                                                                 
-      if(ss1(2) .lt. ss2(1)) write(*,'(a50)')                                   
+      if(ss1(2) .lt. ss2(1)) write(0,'(a50)')                                   
      * 'time-spans neither abut nor overlap'                                    
                                                                                 
                                                                                 
 c  *****  Check for matching ephemerides  *****                                 
                                                                                 
-      if (numde1 .ne. numde2) write(*,'(a50)')'NUMDE''s differ'                 
+      if (numde1 .ne. numde2) write(0,'(a50)')'NUMDE''s differ'                 
                                                                                 
-      if (ncon1 .ne. ncon2) write(*,'(a50)')'NCON''s differ'                    
+      if (ncon1 .ne. ncon2) write(0,'(a50)')'NCON''s differ'                    
                                                                                 
-      if (au1 .ne. au2) write(*,'(a50)')'AU''s differ'                          
+      if (au1 .ne. au2) write(0,'(a50)')'AU''s differ'                          
                                                                                 
-      if (emrat1 .ne. emrat2) write(*,'(a50)')'EMRAT''s differ'                 
+      if (emrat1 .ne. emrat2) write(0,'(a50)')'EMRAT''s differ'                 
                                                                                 
       do i=1,ncon1                                                              
-      if (cval1(i) .ne. cval2(i)) write(*,'(a50)')'CVAL''s differ'              
-      if (cnam1(i) .ne. cnam2(i)) write(*,'(a50)')'CNAM''s differ'              
+      if (cval1(i) .ne. cval2(i)) write(0,'(a50)')'CVAL''s differ'              
+      if (cnam1(i) .ne. cnam2(i)) write(0,'(a50)')'CNAM''s differ'              
       enddo                                                                     
                                                                                 
       do i=1,12                                                                 
       do j=1,3                                                                  
-      if (ipt1(i,j) .ne. ipt2(i,j)) write(*,'(a50)')'IPT''s differ'             
-      if (lpt1(j) .ne. lpt2(j)) write(*,'(a50)')'LPT''s differ'                 
+      if (ipt1(i,j) .ne. ipt2(i,j)) write(0,'(a50)')'IPT''s differ'             
+      if (lpt1(j) .ne. lpt2(j)) write(0,'(a50)')'LPT''s differ'                 
       enddo                                                                     
       enddo                                                                     
                                                                                 
@@ -133,7 +133,7 @@ c  *****  Combine and Write initial header info  *****
    5  nrec=nrec+1                                                               
       READ(nfil,REC=NREC,END=6,ERR=98)(DATA(K),K=1,NDATA)                       
       if(data(1) .lt. dz) go to 5                                               
-      if(data(1) .gt. dz) write(*,'(a50)')'non-matching dates'                  
+      if(data(1) .gt. dz) write(0,'(a50)')'non-matching dates'                  
       dz=data(2)                                                                
                                                                                 
       nrp=nrp+1                                                                 
@@ -149,10 +149,10 @@ c  *****  Combine and Write initial header info  *****
                                                                                 
       stop                                                                      
                                                                                 
-  98  write(*,'(/a18,i3)')'read error on unit',nfil                             
+  98  write(0,'(/a18,i3)')'read error on unit',nfil                             
       stop                                                                      
                                                                                 
-  99  write(*,                                                                  
+  99  write(0,                                                                  
      *  '(/''write error on output tape, nrec='',i6)')nrp                       
       stop                                                                      
                                                                                 

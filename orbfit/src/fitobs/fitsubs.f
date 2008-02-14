@@ -7,10 +7,10 @@ c interrogation routine for inew, icor
       integer iansw,inew,ncor,icor(6),inter,i
 c Choose method (NOW FIXED AT PSEUDO-NEWTON)
       inew=2
-c60   write(*,*)' 1=true Newton 2=pseudo Newton'
+c60   write(0,*)' 1=true Newton 2=pseudo Newton'
 c     read(*,*)inew
 c     if(inew.ne.1.and.inew.ne.2)then
-c           write(*,*)'This we have not invented yet'
+c           write(0,*)'This we have not invented yet'
 c           goto 60
 c     endif
 c interactive/automatic default version
@@ -26,7 +26,7 @@ c
 c Component of orbital element vector that need to be corrected
          ncor=0
          do 63 i=1,6
-           write(*,*)'Element:  ',i,   ' 1=correct, 0=no'
+           write(0,*)'Element:  ',i,   ' 1=correct, 0=no'
            read(*,*) iansw
            if(iansw.ne.0)then
               ncor=ncor+1
@@ -58,7 +58,7 @@ c ===================================================================
          write(iun20,222) t
          ok=.true.
       else
-         write(*,*)' initial conditions not available'
+         write(0,*)' initial conditions not available'
          ok=.false.
       endif
 c ===================================================================
@@ -67,7 +67,7 @@ c it needs to be available for the initial time
 c ===================================================================
       if(icov.gt.1)then
          if(.not.cov)then
-            write(*,*)' initial covariance not available'
+            write(0,*)' initial covariance not available'
             ok=.false.
          elseif(iun8.gt.0)THEN
             write(iun8,*)
@@ -88,11 +88,11 @@ c ===================================================================
          if(obs)then
             ok=.true. 
          else
-            write(*,*)'missing observations for this arc'
+            write(0,*)'missing observations for this arc'
             ok=.false.
          endif
       else
-         write(*,*)'missing initial conditions for this arc'
+         write(0,*)'missing initial conditions for this arc'
          ok=.false.
       endif
       return
@@ -112,17 +112,17 @@ c ======== time spans for JPL data etc. =========
 c ==================================================================
 c check availability of JPL ephemerides
       if(t1.lt.tejpl1.or.t2.gt.tejpl2)then
-         write(*,*)' JPL epehemerides not available for =',t1,t2
-         write(*,*)' but only for interval ',tejpl1,tejpl2
+         write(0,*)' JPL epehemerides not available for =',t1,t2
+         write(0,*)' but only for interval ',tejpl1,tejpl2
          ok=.false.
       endif
 c ===================================================================
 c check availability of ET-UT table
       if(t1.lt.temut1.or.t2.gt.temut2)then
-         write(*,*)' ET-UT not available for ',t1,t2
-         write(*,*)' but only for interval ',temut1,temut2
+         write(0,*)' ET-UT not available for ',t1,t2
+         write(0,*)' but only for interval ',temut1,temut2
          if(temute) then
-             write(*,*)' however, extrapolation will be used'
+             write(0,*)' however, extrapolation will be used'
          else
              ok=.false.
          endif
@@ -141,13 +141,13 @@ c times in various formats used internally
       CHARACTER*3 scale
       INTEGER mjd,mjdtdt
       DOUBLE PRECISION sec,sectdt
-      WRITE(*,*)' Initial time (MJD UTC)?'
+      WRITE(0,*)' Initial time (MJD UTC)?'
       READ(*,*)tut1
-      WRITE(*,*)' Final time (MJD UTC)?'
+      WRITE(0,*)' Final time (MJD UTC)?'
       READ(*,*)tut2
-      WRITE(*,*)' Time interval (days)?'
+      WRITE(0,*)' Time interval (days)?'
       READ(*,*)dt
-      WRITE(*,*)' Observatory code?'
+      WRITE(0,*)' Observatory code?'
       READ(*,*)idsta
       scale='UTC'
 c =========== TIME CONVERSION ================
@@ -187,7 +187,7 @@ c time conversion
       DOUBLE PRECISION sec1,sec2
 c ===================================================================
       if(mall.lt.m)then
-         write(*,*)'asstim: this should not happen, m,mall ',m,mall
+         write(0,*)'asstim: this should not happen, m,mall ',m,mall
          mp=0
       else
          mp=mall-m
@@ -195,17 +195,17 @@ c ===================================================================
 c assign observation time
       if(icov.eq.4)then
 c compare confidence boundary with observations
- 184     write(*,*)' observed arcs: from, to, no. obs'
-         write(*,182)tau(1),tau(m),m
+ 184     write(0,*)' observed arcs: from, to, no. obs'
+         write(0,182)tau(1),tau(m),m
  182     format('arc 1: ',2f8.1,i6)
          IF(mall.gt.m)THEN
-            write(*,183)tau(m+1),tau(mall),mp
+            write(0,183)tau(m+1),tau(mall),mp
  183        format('arc 2: ',2f8.1,i6)
          ENDIF
-         write(*,*)' observation number?   '
+         write(0,*)' observation number?   '
          read(*,*)im
          if(im.lt.0.or.im.gt.mall)then
-            write(*,*)' observation no. im=',im,' not available'
+            write(0,*)' observation no. im=',im,' not available'
             goto 184
          endif
          t1=tau(im)
@@ -216,23 +216,23 @@ c compare confidence boundary with observations
 c dummy obs. number (not used, to avoid out of bounds)
          im=1
 c assign arbitrary time
-         write(*,*)' give time of prediction (MJD)   '
+         write(0,*)' give time of prediction (MJD)   '
          read(*,*)t1
 c universal time of the required observation 
          mjd1=intlo(t1)
          sec1=(t1-float(mjd1))*86400.d0
          CALL cnvtim(mjd1,sec1,'TDT',mjd2,sec2,'UTC')
          tut1=sec2/86400.d0+float(mjd2)
-c         write(*,*)t1,tut1
+c         write(0,*)t1,tut1
 c assign observation type
-c185     write(*,*)' observation type 1=RA,DEC  9=proper motion?'
- 185     write(*,*)' observation type 1=RA,DEC 2=radar 4=proper motion?'
+c185     write(0,*)' observation type 1=RA,DEC  9=proper motion?'
+ 185     write(0,*)' observation type 1=RA,DEC 2=radar 4=proper motion?'
          read(*,*)iob1
          IF(iob1.ne.1.and.iob1.ne.2.and.iob1.ne.4)GOTO 185
          iob1=iob1*1000            
 c assign observatory code
-         write(*,*)
-         write(*,*)' observatory code (geocenter=500)?   '
+         write(0,*)
+         write(0,*)' observatory code (geocenter=500)?   '
          read(*,*) ids
 c secret nationalistic feature
          if(ids.lt.0)then
@@ -252,20 +252,20 @@ c ===================================================================
       IMPLICIT NONE
       INTEGER npox,npo,ibv,iun20
       DOUBLE PRECISION sigma
-      WRITE(*,*)' How many sigmas?   '
+      WRITE(0,*)' How many sigmas?   '
       READ(*,*) sigma
- 1    WRITE(*,*)' 1=confidence boundary 2=line of max variation 0=auto'
+ 1    WRITE(0,*)' 1=confidence boundary 2=line of max variation 0=auto'
       READ(*,*) ibv
       IF(ibv.ne.1.and.ibv.ne.2.and.ibv.ne.0)THEN
-         WRITE(*,*)' option not understood ',ibv
+         WRITE(0,*)' option not understood ',ibv
          GOTO 1
       ENDIF
-      WRITE(*,*)' how many points (even, please)?   '
+      WRITE(0,*)' how many points (even, please)?   '
       READ(*,*) npo
       IF(npo+2.gt.npox)THEN
-         WRITE(*,*)' npo=',npo,' too large for npox=',npox
+         WRITE(0,*)' npo=',npo,' too large for npox=',npox
          npo=npox-2
-         WRITE(*,*)' used npox-2'
+         WRITE(0,*)' used npox-2'
       ENDIF
       WRITE(iun20,*)'no. points ',npo     
       RETURN

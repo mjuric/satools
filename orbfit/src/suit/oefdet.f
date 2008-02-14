@@ -171,7 +171,7 @@ c Format 5 (BAC)
 
       IF(form.EQ.' ') THEN
           lf=lench(filnam)
-          WRITE(*,200) filnam(1:lf)
+          WRITE(0,200) filnam(1:lf)
       END IF
  200  FORMAT('ERROR: format auto-detection failed for file "',A,'":'/
      +       '       please specify format explicitly')

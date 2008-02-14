@@ -130,7 +130,7 @@ c Initialisation with starting value for elements
 c ====================================================================
       iun=abs(iunf)
       if(iunf.gt.0)then
-         write(*,220) eq
+         write(0,220) eq
          write(iun,220) eq
  220     format(' starting values'/6f13.7)
       endif
@@ -159,7 +159,7 @@ c  compute magnitude difference (apparent minus absolute)
                CALL rrdot(eq,iobsrt(j),t0,tauj,iocj,alj,dej,dade,ddde,
      +              ider,twobo)
             ELSE
-               WRITE(*,*)'difvin: iobs= ',iobsrt(j), ' not known'
+               WRITE(0,*)'difvin: iobs= ',iobsrt(j), ' not known'
                STOP
             ENDIF
             restar=.false.
@@ -203,7 +203,7 @@ c unsort dmagn
 c norm of the correction: the zeros do not matter!
          delnor=snorm(deqv,c,6,6)
          if(iunf.gt.0)then
-            write(*,200)it,csinor,delnor,eq
+            write(0,200)it,csinor,delnor,eq
             write(iun,200)it,csinor,delnor,eq
  200        format(' *** iteration ',i3,' RMS residuals =',1p,d12.4,
      +        '   norm corr =',d12.4,'  new elem values:'/0p,6f13.7/)
@@ -211,7 +211,7 @@ c norm of the correction: the zeros do not matter!
 c control against hyperbolic and bizarre orbits
          IF(bizarre(eq))THEN
             ecc=sqrt(eq(2)**2+eq(3)**2)
-            write(*,*)' bizarre; e=',ecc,' a=',eq(1)
+            write(0,*)' bizarre; e=',ecc,' a=',eq(1)
             write(iun,*)' bizarre; e=',ecc,' a=',eq(1)
             succ=.false.
             return
@@ -219,7 +219,7 @@ c control against hyperbolic and bizarre orbits
 c Check if we need another iteration
          if(delnor.lt.delcr)then
             if(iunf.gt.0)then
-               write(*,*)' convergence corrections small'
+               write(0,*)' convergence corrections small'
                write(iun,*)' convergence corrections small'
             endif
             succ=.true.
@@ -229,14 +229,14 @@ c Check if we need another iteration
             if(csinor.gt.csino1*1.1d0)then
                itg=itg+1
                if(iunf.gt.0)then
-                  write(*,*)' target function increasing '
+                  write(0,*)' target function increasing '
                   write(iun,*)' target function increasing '
                endif
                succ=.false.
             elseif(csinor.gt.csino1*divrat)then
                succ=.true.
                if(iunf.gt.0)then
-                  write(*,*)' target function paralyzed '
+                  write(0,*)' target function paralyzed '
                   write(iun,*)' target function paralyzed '
                endif
                itg=itg+1
@@ -249,7 +249,7 @@ c Check if we need another iteration
  60   continue
       succ=.false.
  70   continue
-      IF(.not.succ) WRITE(*,*)' non convergent ',it,itg
+      IF(.not.succ) WRITE(0,*)' non convergent ',it,itg
 c ====================== stop iterations ======================
 c Output: residuals at convergence
 c     if(iunf.gt.0)then
@@ -282,7 +282,7 @@ c apply scaling to both covariance and normal matrix
          ENDDO
       ENDDO
 c Convergence control: norm of the residuals
-      write(*,201)it,csinor,delnor
+      write(0,201)it,csinor,delnor
       write(iun,201)it,csinor,delnor
  201  format(' iterations ',i3,'  RMS=',1p,d12.4,' last corr. =',d12.4)
 c =====================

@@ -19,8 +19,8 @@
       save
       data start/.true./
       if(start)then
-          write(*,*)' **** ERROR IN SUBROUTINE FORCE:'
-          write(*,*)' **** CALLING FORCE WITHOUT INIZIALIZATION'
+          write(0,*)' **** ERROR IN SUBROUTINE FORCE:'
+          write(0,*)' **** CALLING FORCE WITHOUT INIZIALIZATION'
           stop
       end if
 *

@@ -141,13 +141,13 @@
       END IF
       CALL solv8(coef,roots,nroots)
       IF(debug) THEN
-         WRITE(*,520)
-         WRITE(*,521) (i,coef(i),i=0,8)
-         WRITE(*,513) 2
+         WRITE(0,520)
+         WRITE(0,521) (i,coef(i),i=0,8)
+         WRITE(0,513) 2
          IF(nroots.LE.0) THEN
-             WRITE(*,524)
+             WRITE(0,524)
          ELSE
-             WRITE(*,514)(i,roots(i),i=1,nroots)
+             WRITE(0,514)(i,roots(i),i=1,nroots)
          END IF
       END IF
  520  FORMAT(12X,'Coefficients of 8-th degree polynomial:')
@@ -203,11 +203,11 @@
 
       it=0
       IF(debug) THEN
-          WRITE(*,525) ir
+          WRITE(0,525) ir
           IF(eltyp.EQ.'KEP') THEN
-              WRITE(*,535) 'a',vekp(1),vekp(2)
+              WRITE(0,535) 'a',vekp(1),vekp(2)
           ELSEIF(eltyp.EQ.'COM') THEN
-              WRITE(*,535) 'q',vekp(1),vekp(2)
+              WRITE(0,535) 'q',vekp(1),vekp(2)
           ELSE
               STOP '**** gaussn: internal error (02) ****'
           END IF
@@ -256,7 +256,7 @@
  65   CONTINUE
       CALL matin(sinv,det,3,0,3,ising,1)
       IF(ising.NE.0) THEN
-          IF(debug) WRITE(*,541) it
+          IF(debug) WRITE(0,541) it
           GOTO 20
       END IF
  541  FORMAT(16X,'ROOT DISCARDED: singular S matrix at iteration',I3)
@@ -291,7 +291,7 @@
 
 * Check for anomalous orbits
       IF(vekp(2).GT.eccmax) THEN
-          IF(debug) WRITE(*,542) vekp(2),it
+          IF(debug) WRITE(0,542) vekp(2),it
           GOTO 20
       END IF
  542  FORMAT(16X,'ROOT DISCARDED: ecc =',1P,E12.4,0P,' at iteration',I3)
@@ -299,7 +299,7 @@
 * Convergency control
       IF(err.LE.errmax) GOTO 26
       IF(it.LE.itmax) GOTO 30
-      IF(debug) WRITE(*,543)
+      IF(debug) WRITE(0,543)
  543  FORMAT(16X,'WARNING: iterations not converging')
 
 * Final orbit
@@ -312,9 +312,9 @@
       t0(nsol)=tis2
       IF(debug) THEN
           IF(eltyp.EQ.'KEP') THEN
-              WRITE(*,544) 'a',vekp(1),vekp(2),it
+              WRITE(0,544) 'a',vekp(1),vekp(2),it
           ELSE
-              WRITE(*,544) 'q',vekp(1),vekp(2),it
+              WRITE(0,544) 'q',vekp(1),vekp(2),it
           END IF
       END IF
  544  FORMAT(16X,'Final orbit:       ',A,' =',F10.5,';  ecc =',F10.5,

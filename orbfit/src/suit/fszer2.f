@@ -111,7 +111,7 @@ c  find the number of ephemeris coefficients from the pointers
 
  10   continue
       lf=lench(namfil)
-      WRITE(*,100) namfil(1:lf)
+      WRITE(0,100) namfil(1:lf)
  100  FORMAT('ERROR opening file ',A)
       STOP '**** fszer2: abnormal end ****'
 

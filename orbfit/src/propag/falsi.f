@@ -33,14 +33,14 @@ c initialisation at the beginning of each close approach
          tt1=t
          r1=vsize(x)
          rdot1=prscal(x,v)/r1    
-C        WRITE(*,*) ' close approach to planet ',ordnam(iplam)
-C        WRITE(*,*) ' beginning t,r,rdot=',tt1,r1,rdot1
+C        WRITE(0,*) ' close approach to planet ',ordnam(iplam)
+C        WRITE(0,*) ' beginning t,r,rdot=',tt1,r1,rdot1
 C        WRITE(iuncla,*) ' close approach to planet ',ordnam(iplam)
 C        WRITE(iuncla,*) ' beginning t,r,rdot=',tt1,r1,rdot1
          IF(mtpon.and.iplam.eq.ipla0)THEN
             z1=prscal(tpnor,x)
             zdot1=prscal(tpnor,v)
-c           WRITE(*,*) ' z,zdot=',z1,zdot1
+c           WRITE(0,*) ' z,zdot=',z1,zdot1
 c           WRITE(iuncla,*) ' z,zdot=',z1,zdot1
          ENDIF
          RETURN
@@ -49,23 +49,23 @@ c compute r, rdot
       r2=vsize(x)
       rdot2=prscal(x,v)/r2
       tt2=t
-c     write(*,*)tt2,r2,rdot2
+c     write(0,*)tt2,r2,rdot2
       IF(tt2.gt.tt1)THEN
          di=1.d0
       ELSEIF(tt2.lt.tt1)THEN
          di=-1.d0
       ELSE
-         write(*,*)' falsi: zero step'
-         write(*,*)tt1,tt2,x,v,xpla
+         write(0,*)' falsi: zero step'
+         write(0,*)tt1,tt2,x,v,xpla
       ENDIF
-c     write(*,*)rdot1,rdot2
+c     write(0,*)rdot1,rdot2
       IF(abs(rdot2).lt.eprdot)THEN
          CALL strclo(ordnam(iplam),t,x,v,jc,r2,rdot2)
          rdot2=0.d0
       ELSEIF(rdot1*di.lt.0.d0.and.rdot2*di.gt.0.d0)THEN
          t1=tt1
          t2=tt2
-*        WRITE(*,*) ' r. f. begins, t,r,rdot=',t1,r1,rdot1,t2,r2,rdot2
+*        WRITE(0,*) ' r. f. begins, t,r,rdot=',t1,r1,rdot1,t2,r2,rdot2
 *        WRITE(iuncla,*) ' r. f. begins ',t1,r1,rdot1,t2,r2,rdot2
          dt=-rdot2*(t1-t2)/(rdot1-rdot2)
          tt=dt+t2
@@ -97,7 +97,7 @@ c           IF(abs(rdot0).lt.eprdot)THEN
            dt=-rdot2*(t1-t2)/(rdot1-rdot2)
            tt=dt+t2
            hh=tt-t
-C         WRITE(*,111)t1,r1,rdot1,t2,r2,rdot2,dt,tt
+C         WRITE(0,111)t1,r1,rdot1,t2,r2,rdot2,dt,tt
  111     format(8(1x,f16.9))
          ENDDO
 c failed convergence
@@ -113,14 +113,14 @@ c other regula falsi for cross section
       IF(mtpon.and.iplam.eq.ipla0)THEN
          z2=prscal(tpnor,x)
          zdot2=prscal(tpnor,v)
-c        write(*,*)z1,zdot1,z2,zdot2
+c        write(0,*)z1,zdot1,z2,zdot2
          IF(abs(z2).lt.epsmtp)THEN
             CALL strmtp(t,x,v,jt,z2,zdot2)
             z2=0.d0
          ELSEIF(z1*di.lt.0.d0.and.z2*di.gt.0.d0)THEN
             t1=tt1
             t2=tt2
-c      WRITE(*,*) ' r. f. begins, t,z,zdot=',t1,z1,zdot1,t2,z2,zdot2
+c      WRITE(0,*) ' r. f. begins, t,z,zdot=',t1,z1,zdot1,t2,z2,zdot2
 c      WRITE(iuncla,*) ' r. f. mtp begins ',t1,z1,zdot1,t2,z2,zdot2
             dt=-z2*(tt1-tt2)/(z1-z2)
             tt=dt+t2
@@ -151,13 +151,13 @@ c planetocentric position
               dt=-z2*(t1-t2)/(z1-z2)
               tt=dt+t2
               hh=tt-t
-c           write(*,*)t1,z1,zdot1
-c           write(*,*)t2,z2,zdot2,dt,tt,di,it
+c           write(0,*)t1,z1,zdot1
+c           write(0,*)t2,z2,zdot2,dt,tt,di,it
             ENDDO
 c failed convergence
-            WRITE(*,*)' falsi: failed mtp convergence'
-            WRITE(*,*)t1,z1,zdot1
-            WRITE(*,*)t2,z2,zdot2,dt,tt,di,itmax
+            WRITE(0,*)' falsi: failed mtp convergence'
+            WRITE(0,*)t1,z1,zdot1
+            WRITE(0,*)t2,z2,zdot2,dt,tt,di,itmax
          ENDIF
       ENDIF
  3    CONTINUE
@@ -186,7 +186,7 @@ c common data on close appr.
 c store close approach point
       jt=jt+1
       IF(jt.gt.njtx)THEN
-          WRITE(*,*)' strmtp: jt>njtx ',jt,njtx
+          WRITE(0,*)' strmtp: jt>njtx ',jt,njtx
           STOP
       ENDIF
       ttar(jt)=tcur
@@ -194,8 +194,8 @@ c store close approach point
         xtp(i,jt)=x(i)
         vtp(i,jt)=v(i)
       ENDDO
-c     WRITE(*,*) ' target plane at time, distance, zdot'
-c     WRITE(*,*) tcur, z, zdot
+c     WRITE(0,*) ' target plane at time, distance, zdot'
+c     WRITE(0,*) tcur, z, zdot
       WRITE(iuncla,*) ' target plane at time, distance, rdot'
       WRITE(iuncla,*) tcur, z, zdot
       WRITE(iuncla,*) ' relative position and velocity'
@@ -225,7 +225,7 @@ c common data on close appr.
 c store close approach point
       jc=jc+1
       IF(jc.gt.njcx)THEN
-          WRITE(*,*)' strclo: jc>njcx ',jc,njcx
+          WRITE(0,*)' strclo: jc>njcx ',jc,njcx
           STOP
       ENDIF
       tcla(jc)=tcur
@@ -234,7 +234,7 @@ c store close approach point
         xcla(i,jc)=x(i)
         vcla(i,jc)=v(i)
       ENDDO
-c     WRITE(*,*) ' closest approach at time, distance, rdot'
+c     WRITE(0,*) ' closest approach at time, distance, rdot'
 c     WRITE(iuncla,*) ' closest approach at time, distance, rdot'
       lpla=lench(planam)
       numcla=numcla+1
@@ -243,7 +243,7 @@ c     WRITE(iuncla,*) ' closest approach at time, distance, rdot'
 !     +              iyear,'/',imonth,'/',iday,hour/24d0
 !      WRITE(iuncla,100) planam(1:lpla),date,tcur,r,rdot,x,v
  100  FORMAT(a,1x,a16,f12.5,1x,f11.8,e11.3,1x,6(1x,f11.8))
-!      WRITE(*,97)planam(1:lpla),date,tcur,r
+!      WRITE(0,97)planam(1:lpla),date,tcur,r
  97   FORMAT(' Close approach to ',a,' on ',a16,f12.5,' MJD at ',
      +     f10.8,' AU.')
 c     WRITE(iuncla,*) ' relative position and velocity'
@@ -314,8 +314,8 @@ c  main loop on intermediate points
 c  control on end of gauss-seidel iterations
       ep(it)=ep(it)/isrk
       IF(it.gt.1.and.ep(it).gt.ep(it-1)*1.1d0)THEN
-         WRITE(*,*)' rkg: stop at iteration ',it, ' before too late'
-         WRITE(*,*)t1,(ep(jj),jj=it-1,it)
+         WRITE(0,*)' rkg: stop at iteration ',it, ' before too late'
+         WRITE(0,*)t1,(ep(jj),jj=it-1,it)
          GOTO 77
       ENDIF
 c  new state vector y3
@@ -329,8 +329,8 @@ c  new state vector y3
       IF(ep(it).gt.eprk)THEN
          IF(it.ge.lit1)THEN
 c  too many gauss-seidel iterations
-            WRITE(*,*)' rkg: non convergent after ',it,' iterations'
-            WRITE(*,*)t1,ep(it)
+            WRITE(0,*)' rkg: non convergent after ',it,' iterations'
+            WRITE(0,*)t1,ep(it)
          ENDIF
          it=it+1
          GOTO 1

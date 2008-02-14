@@ -55,7 +55,7 @@ c line of variations
         IF(daa.gt.dpig)daa=daa-dpig
         daa=daa*degrad/15
         IF(daa.lt.0.d0.or.daa.gt.24.d0)THEN
-           WRITE(*,*)' outmul: daa out of range ', daa
+           WRITE(0,*)' outmul: daa out of range ', daa
         ENDIF
         CALL sessag(daa,siga,inta,mina,seca)
         dee=(delta+dem(n))*degrad

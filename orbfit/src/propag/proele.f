@@ -104,7 +104,7 @@ c normal matrix is propagated by similarity transformation
       invop=1
       CALL matin(dedein,det,6,6,6,ising,invop)
       IF(ising.ne.0)THEN
-         WRITE(*,*)'PROELC: this should not happen'
+         WRITE(0,*)'PROELC: this should not happen'
       ENDIF
       CALL mulmat(c0,6,6,dedein,6,6,tmp)
       CALL transp(dedein,6,6,dedint)

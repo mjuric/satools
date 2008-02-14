@@ -22,7 +22,7 @@ c check that the matrix is indeed symmetric
           if(a(i,j).ne.a(j,i))sym=.false.
         enddo
       enddo
-      if(.not.sym)write(*,*)'invmat: input matrix not symmetric'
+      if(.not.sym)write(0,*)'invmat: input matrix not symmetric'
 c ==========================================================
 c Tcholewski
 c ==========================================================
@@ -51,7 +51,7 @@ c Control of conditioning number of the inverted matrix
           endif
         enddo
         cond=(omax/omin)**2
-        write(*,100)cond
+        write(0,100)cond
  100    format(' invmat: condition number ',d10.3)
         call inver(c,v,ndim,ndim)
 c unnormalize the matrix by norm of columns
@@ -61,8 +61,8 @@ c unnormalize the matrix by norm of columns
         enddo
         enddo
       else
-        write(*,*)' matrix is not positive definite'
-        write(*,*)' pivot number ',indp,' is ',c(indp,indp)
+        write(0,*)' matrix is not positive definite'
+        write(0,*)' pivot number ',indp,' is ',c(indp,indp)
       endif
       return
       end

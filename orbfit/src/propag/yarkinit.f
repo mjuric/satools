@@ -80,7 +80,7 @@ c - projections s_P and s_Q of the spin axis computed
          sqya=yarkp(1)*qvya(1)+yarkp(2)*qvya(2)+yarkp(3)*qvya(3)
          cgam=yarkp(1)*nvya(1)+yarkp(2)*nvya(2)+yarkp(3)*nvya(3)
          obli=dacos(cgam)/radeg
-         write(*,*)' Obliquity of the spin axis; Yarkovsky: ',obli
+         write(0,*)' Obliquity of the spin axis; Yarkovsky: ',obli
 c - compute the \alpha(k) and \beta(k) coefficients
          eta=dsqrt(1.d0-elkep(2)*elkep(2))
          etaya75=eta**0.75d0
@@ -133,12 +133,12 @@ c -- \alpha_1(x) ... \alpha_7(x) functions
 c close the input file
          call filclo(unit,' ')
       ELSE
-         WRITE(*,*)' Yarkovsky datafile not found:',file(1:le)
+         WRITE(0,*)' Yarkovsky datafile not found:',file(1:le)
          stop     
       ENDIF
-      WRITE(*,*)' Yarkovsky data loaded for asteroid ', astnam
+      WRITE(0,*)' Yarkovsky data loaded for asteroid ', astnam
       RETURN
  111  yarfil=.false.
-      WRITE(*,*)' incomplete yarkovsky file for asteroid ', astnam
+      WRITE(0,*)' incomplete yarkovsky file for asteroid ', astnam
       RETURN
       END

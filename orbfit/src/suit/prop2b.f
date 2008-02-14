@@ -60,8 +60,8 @@ c  Absolute peri-planet longitude POL at epoch T0
       if(ecc2.lt.eps)then
          pol=0.d0
       elseif(ecc2.ge.1.d0)then
-         write(*,*)' dcc.ge.1, ecc**2=',ecc2
-         write(*,*)e
+         write(0,*)' dcc.ge.1, ecc**2=',ecc2
+         write(0,*)e
          stop
       else
          pol=atan2(e(2),e(3))
@@ -86,8 +86,8 @@ c  search for F for a given lambda within [POL, POL + 2PIGR]
              el = el + del
              if (abs(del).lt.eps) goto 100
  70   continue
-      write(*,*)' Too many iter. in newton - prop2b, iter=',iter,' del=',del
-      write(*,*) ' eq,eps ',e, eps
+      write(0,*)' Too many iter. in newton - prop2b, iter=',iter,' del=',del
+      write(0,*) ' eq,eps ',e, eps
       goto 100
       stop
 c  Computation of position and velocity on the orbit plane
@@ -170,6 +170,6 @@ c  Computation of derivatives of velocity vector w. r. to the elements
       dxde(6,6)=-enne*e(1)**3*x(3)/r**3
 c  Computation of second derivatives if required
       if(ider.lt.2)return
-      write(*,*) 'second derivatives not supported in this version'
+      write(0,*) 'second derivatives not supported in this version'
       stop
       end

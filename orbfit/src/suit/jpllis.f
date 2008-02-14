@@ -116,14 +116,14 @@
      +        STOP '**** jpllis: internal error (C09) ****'
       ELSE
           ln=lench(names(i))
-          WRITE(*,100) names(i)(1:ln)
+          WRITE(0,100) names(i)(1:ln)
           fail=.true.
       END IF
  100  FORMAT(' ERROR: ',A,' is unknown among JPL planets')
  1    CONTINUE
 
       IF(emwarn) THEN
-          WRITE(*,101)
+          WRITE(0,101)
           fail=.true.
       END IF
  101  FORMAT(' ERROR in the list of JPL planets: please DO NOT select'/

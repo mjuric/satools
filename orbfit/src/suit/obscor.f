@@ -69,10 +69,10 @@
 * Input of correlation model
           IF(doit) THEN
               lf=lench(file)
-              WRITE(*,210) file(1:lf)
+              WRITE(0,210) file(1:lf)
               CALL rdcorm(file)
           ELSE
-              WRITE(*,211)
+              WRITE(0,211)
           END IF
       END IF
  210  FORMAT('INFO(obscor): reading error correlation model ',

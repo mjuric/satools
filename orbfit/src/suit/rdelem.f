@@ -85,7 +85,7 @@
           REWIND(uniin)
       END IF
       lfo=lench(form)
-      IF(form.NE.' ') WRITE(*,102) infil1(1:lf),form(1:lfo)
+      IF(form.NE.' ') WRITE(0,102) infil1(1:lf),form(1:lfo)
  102  FORMAT('Scanning file "',A,'" (format: ',A,')')
 
 * Reading file
@@ -109,10 +109,10 @@
      +                eltype,telem,elem,cove,nore,mass,h,g,comele)
           CALL filclo(uniin,' ')
       ELSEIF(form.EQ.' ') THEN
-          WRITE(*,120) infil1(1:lf)
+          WRITE(0,120) infil1(1:lf)
           STOP '**** rdelem: abnormal end ****'
       ELSE
-          WRITE(*,121) form(1:lfo),infil1(1:lf)
+          WRITE(0,121) form(1:lfo),infil1(1:lf)
           STOP '**** rdelem: abnormal end ****'
       END IF
  120  FORMAT('ERROR: unknown format type for file "',A,'"')

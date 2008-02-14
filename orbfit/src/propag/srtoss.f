@@ -96,7 +96,7 @@ c==================================================
         k=iposs(n)
         tmp=toss(k)-tsort(n)
         if(tmp.ne.0.d0)then
-           write(*,*)'sorting problem ',tmp,n,tsort(n),k,toss(k)
+           write(0,*)'sorting problem ',tmp,n,tsort(n),k,toss(k)
         endif
         sel(k)=sels(n)
         csir(2*k)=csi(2*n)

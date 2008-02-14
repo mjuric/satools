@@ -2,7 +2,7 @@
       implicit double precision (a-h,o-z)      
       dimension vec(nv),b(nr,nc)
       if ((nr*nc).ne.nv) then
-        write(*,*)'error: nr*nc must be = nv'
+        write(0,*)'error: nr*nc must be = nv'
         stop
       endif
       do 12 j=1,nc

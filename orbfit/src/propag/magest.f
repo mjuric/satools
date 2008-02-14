@@ -66,7 +66,7 @@ c First create a vector of appmags and rms's
                WRITE(ierrou,*) 'Unknown Color:',col,' Obs #',j
                numerr=numerr+1
             ELSE
-               WRITE(*,*) 'Unknown Color:',col,' Obs #',j
+               WRITE(0,*) 'Unknown Color:',col,' Obs #',j
             ENDIF
          ENDIF
          IF(avail(j))THEN
@@ -104,7 +104,7 @@ c main loop
          ENDDO
 c jump out if no good observations
          IF(icount.eq.0)THEN
-            WRITE(*,*)' magnitude cannot be estimated w/o obs'
+            WRITE(0,*)' magnitude cannot be estimated w/o obs'
             rmsh=-1.d0
             RETURN
          ENDIF             
@@ -124,7 +124,7 @@ c              if data not used
          ENDDO
 C Divide by icount or wsum here?
          rmsh=sqrt(rmsh/wrsum)
-         IF(verbose) write(*,*)'H,RMS',hmean,rmsh
+         IF(verbose) write(0,*)'H,RMS',hmean,rmsh
 c Handle outliers in a separate loop
          numrej=0
          numchg=0
@@ -141,7 +141,7 @@ C              test for recovery
                      numchg=numchg+1
                      rmsmag(j)=tmprms(j)
                   ENDIF
-                  IF(verbose) write(*,*)'REC:Hnew,chi2,rms,res',
+                  IF(verbose) write(0,*)'REC:Hnew,chi2,rms,res',
      +                 hnew,chi2,rmsmag(j),resmag(j)
                ELSE
 C              test for rejection
@@ -152,7 +152,7 @@ C              test for rejection
                      numchg=numchg+1
                      rmsmag(j)=99.99d0
                   ENDIF
-                  IF(verbose) write(*,*)'REJ:Hnew,chi2,rms,res',
+                  IF(verbose) write(0,*)'REJ:Hnew,chi2,rms,res',
      +                 hnew,chi2,rmsmag(j),resmag(j)
                ENDIF
 C              count rejection
@@ -161,19 +161,19 @@ C              count rejection
          ENDDO
          IF(numchg.eq.0) GOTO 10
       ENDDO
-      WRITE(*,*)'WARNING: Did not finish rejecting photometry...'
+      WRITE(0,*)'WARNING: Did not finish rejecting photometry...'
 ************************************************************************
  10   IF(.not.batch)THEN
-         WRITE(*,190)h0,hmean,icount,rmsh,numrej,nrej
+         WRITE(0,190)h0,hmean,icount,rmsh,numrej,nrej
  190     FORMAT('Absol Magnitude: Old=',f5.2,' New=',f5.2,/
      +        'no. magnitude obs.=',i4, ' with RMS ',f5.2,/
      +        'no. rejected obs.=',i4,' in ',i4,' passes.')
-         WRITE(*,*)
+         WRITE(0,*)
       ENDIF
       h0=hmean
       RETURN
 
 c parsing error
- 3    WRITE(*,*)'magest: error in parsing magn. no ',j,' ',smag(j)
+ 3    WRITE(0,*)'magest: error in parsing magn. no ',j,' ',smag(j)
       STOP
       END

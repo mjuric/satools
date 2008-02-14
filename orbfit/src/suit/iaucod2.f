@@ -88,13 +88,13 @@ c           1999AA123
          iaudes=head//desfield(2:3)//desfield(4:4)//desfield(7:7)//tail
           else
 c Unknown type
-             write(*,*)'cannot understand MPC designation: ',mpccod
+             write(0,*)'cannot understand MPC designation: ',mpccod
              goto 10
           endif
           return
       ELSE
 c wrong length of designator
-          write(*,*) 'designation ',mpccod,' not understood'          
+          write(0,*) 'designation ',mpccod,' not understood'          
       ENDIF
  10   CONTINUE
       iaudes=mpccod

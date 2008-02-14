@@ -51,10 +51,10 @@ C	   AAn - Semi-major axis (AU)
       AI2=eqp1(3)*degrad
       AE2=eqp1(2)
       AA2=eqp1(1)
-c      write(*,*)AA1,AE1,AI1,AN1,AP1
-c      write(*,*)eq0
-c      write(*,*)AA2,AE2,AI2,AN2,AP2
-c      write(*,*)eqp
+c      write(0,*)AA1,AE1,AI1,AN1,AP1
+c      write(0,*)eq0
+c      write(0,*)AA2,AE2,AI2,AN2,AP2
+c      write(0,*)eqp
       call lowmoid(moid)
       RETURN
       END

@@ -117,7 +117,7 @@ c *************************************************************************
       deforb=(.NOT.fail)
       defcov=.false.
       IF(fail) THEN
-         WRITE(*,204)
+         WRITE(0,204)
  204     FORMAT(2X,'INITIAL ORBIT DETERMINATION FAILED')
       ELSE
 c output new elements, multiline format, no header, in .fel file.
@@ -132,11 +132,11 @@ c compute residuals RMS
          enddo
          rms = snormd(csi,w,2*n,nused)
          WRITE(unirep,222)rms
-         WRITE(*,222)rms
+         WRITE(0,222)rms
  222     FORMAT(' RMS of residuals, preliminary orbit=',f10.4)
 c change to equinoctal
          CALL coocha(elem,eltype,gms,eq,'EQU',enne)
-         WRITE(*,220) telem,eq
+         WRITE(0,220) telem,eq
  220     FORMAT(' preliminary orbit elements for epoch=',f12.4/6f13.7)
       END IF
       RETURN

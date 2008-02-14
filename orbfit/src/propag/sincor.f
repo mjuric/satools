@@ -61,7 +61,7 @@ c assign ider depending from inew
       ELSEIF(inew.eq.1)THEN
         ider=2
       ELSE
-        WRITE(*,*)'sincor: inew not correct',inew,icor
+        WRITE(0,*)'sincor: inew not correct',inew,icor
         STOP
       ENDIF
       twobo=.false.
@@ -86,7 +86,7 @@ c  compute magnitude difference (apparent minus absolute)
              CALL rrdot(eq,iobsrt(j),t0,tauj,iocj,alj,dej,dade,ddde,
      +             ider,twobo)
           ELSE
-             WRITE(*,*)'sincor: iobs= ',iobsrt(j), ' not known'
+             WRITE(0,*)'sincor: iobs= ',iobsrt(j), ' not known'
              STOP
           ENDIF
           restar=.false.

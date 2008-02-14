@@ -84,7 +84,7 @@ c proper motion
          x=obs(3)
          y=obs(4)
       ELSE
-         WRITE(*,*)'preobs: this we have not invented yet, iobs=',iobs
+         WRITE(0,*)'preobs: this we have not invented yet, iobs=',iobs
          STOP
       ENDIF
       return
@@ -201,7 +201,7 @@ c proper motion
            ENDDO
          ENDDO
       ELSE
-         WRITE(*,*)'preobc2: this we have not invented yet, iobs=',iobs
+         WRITE(0,*)'preobc2: this we have not invented yet, iobs=',iobs
          STOP
       ENDIF
 c =====================================================================
@@ -216,7 +216,7 @@ c eigenvalues
         if(eigval(i).gt.0.d0)then
            sig(i)=sqrt(eigval(i))
         else
-           write(*,*) 'non positive eigenvalue'
+           write(0,*) 'non positive eigenvalue'
            sig(i)=0.d0
         endif
  1    continue

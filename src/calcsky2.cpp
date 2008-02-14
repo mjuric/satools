@@ -90,7 +90,7 @@ main(int argc, char **argv)
 {
 	try {
 		if(argc < 8) {
-			cout << "Usage: " << argv[0] << " <output_file.txt> <mjd_star> <mjd_end> <dt> <tol> <catalog> <ASTORB2|NATIVE> [from, to)\n";
+			cout << "Usage: " << argv[0] << " <output_file.txt> <mjd_star> <mjd_end> <dt> <tol> <catalog> <ASTORB2|NATIVE|COMET> [from, to)\n";
 			cout << "Specify tolerance in arcsec, dt in days.\n";
 			cout << "[from, to) can specify interval of catalog entries to process.\n";
 			return -1;
@@ -108,6 +108,8 @@ main(int argc, char **argv)
 		string format = Util::toupper(argv[7]);
 		if(format == "ASTORB2") {
 			sprintf(scat, "%s/catalogs/astorb.dat.%s", ws, argv[6]);
+		} else if(format == "COMET") {
+			sprintf(scat, "%s/catalogs/%s", ws, argv[6]);
 		} else if(format == "NATIVE") {
 			sprintf(scat, "%s/tmp/propagated/%s.obj", ws, argv[6]);
 		} else {

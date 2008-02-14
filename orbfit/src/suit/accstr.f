@@ -57,14 +57,14 @@
       IF(i.EQ.1) THEN
           IF(lads.GT.LEN(adsa)) THEN
               error=.true.
-              WRITE(*,200) 'ADSA',ads(1:lads)
+              WRITE(0,200) 'ADSA',ads(1:lads)
           ELSE
               adsa=ads(1:lads)
           END IF
       ELSE
           IF(lads.GT.LEN(adsd)) THEN
               error=.true.
-              WRITE(*,200) 'ADSD',ads(1:lads)
+              WRITE(0,200) 'ADSD',ads(1:lads)
           ELSE
               adsd=ads(1:lads)
           END IF

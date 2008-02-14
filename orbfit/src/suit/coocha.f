@@ -92,7 +92,7 @@ c  also computed in any case apart from identical transformation
             enne=0.d0
          endif
       else
-         write(*,*)'**** coocha: in coord.type ',coox,' unknown ****'
+         write(0,*)'**** coocha: in coord.type ',coox,' unknown ****'
          stop
       endif
 c  transformation to the output type cooy
@@ -114,7 +114,7 @@ c  rounding off
          eps=1.d2*rouoff
          call equcar(z,gm,eps,y)
       else
-         write(*,*)'**** coocha: out coord.type ',cooy,' unknown ****'
+         write(0,*)'**** coocha: out coord.type ',cooy,' unknown ****'
          stop
       endif
       return
@@ -188,10 +188,10 @@ c  also computed in any case apart from identical transformation
          call prop2b(t0,z,t0,w,gm,ider,derws,ddxde)
          call matin(derws,det,6,0,6,ising,1)
       elseif(coox.eq.'EQP')then
-         write(*,*)' partial derivatives for EQP not implemented'
+         write(0,*)' partial derivatives for EQP not implemented'
          stop
       else
-         write(*,*)'**** coocha: in coord.type ',coox,' unknown ****'
+         write(0,*)'**** coocha: in coord.type ',coox,' unknown ****'
          stop
       endif
 c  transformation to the output type cooy
@@ -205,10 +205,10 @@ c  eccentricity and inclination is set to $100 \times$ rounding off
          eps=1.d2*rouoff
          call equkep(z,eps,y)
          call ekensd(y,w,derws2)
-* ***    write(*,*)(w(ii)-z(ii),ii=1,6)
+* ***    write(0,*)(w(ii)-z(ii),ii=1,6)
          call matin(derws2,det,6,0,6,ising,1)
       elseif(cooy.eq.'EQP')then
-         write(*,*)' partial derivatives for EQP not implemented'
+         write(0,*)' partial derivatives for EQP not implemented'
          stop
       elseif(cooy.eq.'CAR')then
 c  control for convergence in kepler equation is set to $100 \times$
@@ -218,9 +218,9 @@ c  rounding off
          call prop2b(t0,z,t0,y,gm,ider,derws2,ddxde)
          eps=1.d2*rouoff
          call equcar(z,gm,eps,w)
-* ***    write(*,*)(w(ii)-y(ii),ii=1,6)
+* ***    write(0,*)(w(ii)-y(ii),ii=1,6)
       else
-         write(*,*)'**** coocha: out coord.type ',cooy,' unknown ****'
+         write(0,*)'**** coocha: out coord.type ',cooy,' unknown ****'
          stop
       endif
 c  multiplication of jacobian matrices to get the jacobian of the composite

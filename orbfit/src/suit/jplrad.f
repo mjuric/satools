@@ -141,7 +141,7 @@ c ====================== CLEAN UP =====================================
       error=.false.
  10   CONTINUE
       IF(error) THEN
-         WRITE(*,105) errcod,rec
+         WRITE(0,105) errcod,rec
  105     FORMAT(' jplrad: error code',I3,'rec:',A)
          tdt=0
          r=-1.
@@ -175,7 +175,7 @@ c     'Evpatoria' = 255 (not in MPC file...)
          station=255
       else
          station=500
-         write(*,*)'jplrad: unknown station: ',stastr
+         write(0,*)'jplrad: unknown station: ',stastr
       endif
       return
       end

@@ -42,8 +42,8 @@ c input options
       call cinopt(progna,run,iunlog,tref,catnam0,catnam1,covpro)
 c check availability of JPL ephemrides
       IF(tref.lt.tejpl1.or.tref.gt.tejpl2)THEN
-         WRITE(*,*)' JPL ephemerides not available for t=',t
-         WRITE(*,*)' but only for interval ',tejpl1,tejpl2
+         WRITE(0,*)' JPL ephemerides not available for t=',t
+         WRITE(0,*)' but only for interval ',tejpl1,tejpl2
          STOP
       ENDIF
 c read the name of the elements file, inquire
@@ -54,19 +54,19 @@ c read the name of the elements file, inquire
      +     fail1,fail)
       CALL rmsp(catnam0,l0)
       INQUIRE(file=catnam0(1:l0),exist=ex)
-      write(*,*)' file =',catnam0(1:l0),' exists=',ex,' found=',found,
+      write(0,*)' file =',catnam0(1:l0),' exists=',ex,' found=',found,
      +      ' fail=',fail
       IF(.not.found.or.fail.or..not.ex)THEN
-         write(*,*) found,fail,ex
-         write(*,*) 'catalog not found:',catnam0(1:l0)
+         write(0,*) found,fail,ex
+         write(0,*) 'catalog not found:',catnam0(1:l0)
          STOP
       ENDIF
       CALL rdncha(prognp,'catnam1',catnam1,ireq,found,
      +     fail1,fail)
       CALL rmsp(catnam1,l1)
-      write(*,*)' file =',catnam1(1:l1)
+      write(0,*)' file =',catnam1(1:l1)
       IF(.not.found.or.fail)THEN
-         write(*,*) 'catalog name not found:',catnam1(1:l1)
+         write(0,*) 'catalog name not found:',catnam1(1:l1)
          STOP
       ENDIF
 c batch operations to reduce output
@@ -98,7 +98,7 @@ c Begin main loop
       DO 10 i=1,nx
 c input orbit at common epoch, with covariance    
          REWIND (ipirip)
-c        WRITE(*,*) 'Reading no. ',i
+c        WRITE(0,*) 'Reading no. ',i
          CALL rdorb(namid,eq,eltype,t,covar,defcov,normal,defnor,h,gmag,
      +        mass,rsys,epoch,no,eof)
          IF(eof) GOTO 5
@@ -111,14 +111,14 @@ c convert name in case it is of the form nam0=namp
          ENDIF
 c check availability of JPL ephemrides
          IF(t.lt.tejpl1.or.t.gt.tejpl2)THEN
-            WRITE(*,*)' JPL ephemerides not available for t=',t
-            WRITE(*,*)' but only for interval ',tejpl1,tejpl2
+            WRITE(0,*)' JPL ephemerides not available for t=',t
+            WRITE(0,*)' but only for interval ',tejpl1,tejpl2
             GOTO 10
          ENDIF
 c check availability of covariance and normal matrices
          IF(icov.eq.2)THEN
             IF(.not.defcov.or.(.not.defnor))THEN
-               WRITE(*,*)' matrix missing for ',name,defcov,defnor
+               WRITE(0,*)' matrix missing for ',name,defcov,defnor
                GOTO 10
             ENDIF
          ENDIF
@@ -143,11 +143,11 @@ c output single line catalog record
          ENDIF
          ndone=ndone+1
  10   ENDDO
-      WRITE(*,*) 'CANNOT COMPLETE CATALOG, nx=', nx
+      WRITE(0,*) 'CANNOT COMPLETE CATALOG, nx=', nx
 c     end of input file
  5    CALL clorbf
       i=i-1
-      WRITE(*,*)' total number of orbits ',i,' propagated ',ndone
+      WRITE(0,*)' total number of orbits ',i,' propagated ',ndone
       stop
       end
 

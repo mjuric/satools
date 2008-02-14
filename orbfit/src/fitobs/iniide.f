@@ -14,7 +14,7 @@ c ======END INTERFACE====================================================
      +            fail1,fail)
       if(.not.found)then
          inide=.false.
-         write(*,*)' ***** identif ele. file name not found ***'
+         write(0,*)' ***** identif ele. file name not found ***'
          return
       endif
       INQUIRE(file=elefide,exist=inide)
@@ -23,19 +23,19 @@ c ======END INTERFACE====================================================
          CALL inasti(iun3,nam0,namp,eqide,tide,inide)
          CALL filclo(iun3,' ')
          if(.not.inide)then
-            write(*,*)'proposed identification ',nam0,' with ',namp
-            write(*,*)'not found in',elefide
+            write(0,*)'proposed identification ',nam0,' with ',namp
+            write(0,*)'not found in',elefide
          endif
          write(iun20,*)' proposed starting value from ',elefide
-         write(*,*)' proposed starting value from identif'
+         write(0,*)' proposed starting value from identif'
          write(iun20,208)nam0,namp,tide
-         write(*,208)nam0,namp,tide
+         write(0,208)nam0,namp,tide
  208    format(a6,1x,a6,' ident. elem (a,h,k,p,q,lam), epoch=',f8.1)
          write(iun20,104) eqide
-         write(*,104) eqide
+         write(0,104) eqide
  104     format(6f13.7)
       else
-         write(*,*)'file ',elefide,' not found'       
+         write(0,*)'file ',elefide,' not found'       
       endif 
       return
       end
@@ -69,7 +69,7 @@ c  read first guess file
             return
          endif
  1    continue
- 2    write(*,*)' identification ',nam0,' = ',namp,' not found'
+ 2    write(0,*)' identification ',nam0,' = ',namp,' not found'
       inide=.false.
       return
       end

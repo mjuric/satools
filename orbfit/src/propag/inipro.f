@@ -68,7 +68,7 @@ c  input coefficients for Runge-Kutta
       if(imet.ne.3)then
          call legnum(isrk,isfl)
          if(isfl.ne.0)then
-            write(*,997)isrk,isfl
+            write(0,997)isrk,isfl
  997        format(' required isrk=',i4,'  found only up to ',i4)
             stop
          endif

@@ -86,7 +86,7 @@
                   IF(iextr.EQ.0)
      +                STOP' **** iersts: internal error (02) ****'
               ELSE
-                  WRITE(*,100) tjme
+                  WRITE(0,100) tjme
                   STOP '**** iersts: abnormal END ****'
               END IF
           END IF

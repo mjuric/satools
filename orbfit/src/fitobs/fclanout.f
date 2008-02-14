@@ -81,7 +81,7 @@ c full n-body propagation from ellipse
 c to be used for xephem output-to be done later
 c          CALL proele('EQU',tc,elm(1,n),tcl1,elm(1,n))
            mtpon=.true.
-c          write(*,*)tc,tcl0,tcl2
+c          write(0,*)tc,tcl0,tcl2
            CALL proele('EQU',tc,elm(1,n),tcl2,eq1)
            WRITE(iun9,109)eq1
  109       FORMAT(6f20.15)
@@ -93,7 +93,7 @@ c check for existence of data
               IF((tta.gt.tcl1.and.tta.lt.tcl2).or.
      +             (tta.gt.tcl2.and.tta.lt.tcl1))THEN
               ELSE
-                 write(*,*)' point ',n, ' time at target plane ',
+                 write(0,*)' point ',n, ' time at target plane ',
      +              tta,' was ', tcl0
               ENDIF
               nt=nt+1
@@ -106,15 +106,15 @@ c file output: target plane
               WRITE(iun7,107)xx,vv,ttar(jt)
  107          FORMAT(7e20.12)
 c temporary output
-              write(*,177)ttar(jt),xta(nt),yta(nt),nt,n
+              write(0,177)ttar(jt),xta(nt),yta(nt),nt,n
  177          FORMAT(f11.4,1x,f7.4,1x,f7.4,1x,i4,1x,i4)
               IF(njt.gt.1)THEN
-                 WRITE(*,*)' warning: multiple intersection ',njt,n
+                 WRITE(0,*)' warning: multiple intersection ',njt,n
               ENDIF
 c reset counter for next orbit
               njt=0
            ELSEIF(njt.le.0)THEN
-              write(*,*)' no target plane ',n
+              write(0,*)' no target plane ',n
               GOTO 7
            ENDIF
 c close approach manifold
@@ -133,20 +133,20 @@ c true close approach manifold plotted on the MTP
                  xcl(nc)=xx(2)*rr
                  ycl(nc)=xx(3)*rr
 c temporary output
-                 write(*,177)tcla(jc),xcl(nc),ycl(nc),nc
-                 write(*,*)
+                 write(0,177)tcla(jc),xcl(nc),ycl(nc),nc
+                 write(0,*)
                  IF(njc.gt.1)THEN
-                   write(*,*)' warning: multiple approach ',njc
+                   write(0,*)' warning: multiple approach ',njc
                  ENDIF
 c reset counter
                  njc=0
               ENDIF
            ELSEIF(njc.le.0)THEN
-              write(*,*)' no minimum distance ',n
+              write(0,*)' no minimum distance ',n
               GOTO 7
            ENDIF
         ELSE
-           WRITE(*,*)' fclan:this we have not invented yet ', inl
+           WRITE(0,*)' fclan:this we have not invented yet ', inl
            RETURN           
         ENDIF
  7    continue
@@ -179,7 +179,7 @@ c mark Earth
       CALL plotob(xta,yta,0.d0,0.d0,npot,
      +     xlabel,ylabel,title,idev,1)
       ELSE
-         WRITE(*,*)' no target plane point available', npot
+         WRITE(0,*)' no target plane point available', npot
       ENDIF
       IF(inl.eq.1)GOTO 2
 c graphics: close approach manifold
@@ -197,7 +197,7 @@ c      ycl0=tpc(2)*rr0
       ylabel=' close approach manifold zeta (AU) '
 c If we are making .ps files then the MTP will be overwritten!
       if(idev.eq.5.or.idev.eq.6)then
-         write(*,*)'The PostScript file ''giffv.ps'' is '//
+         write(0,*)'The PostScript file ''giffv.ps'' is '//
      +        'about to be overwritten. If you wish to save it'//
      +        ' you should rename it before proceeding.'
          pause

@@ -68,7 +68,7 @@ c ================= HANDLE RADAR ============================
       if(rec1(15:15).eq.'R'.or.rec1(15:15).eq.'r')then
 c radmpc determines whether MPC radar observations are used or ignored.
          if(radmpc)then
-            write(*,*)'Radar observation near record ',nobs
+            write(0,*)'Radar observation near record ',nobs
             read(unit,101,end=20) rec2
 c  alpha is actually r, delta is rdot
             call mpcrad(rec1,rec2,iobs(nobs),
@@ -95,13 +95,13 @@ c  generate range and range rate only if mixed observation
                nobs=nobs+1
             endif
          else
-            if(rec1(15:15).eq.'R')write(*,*) 'ignoring MPC radar obs'
+            if(rec1(15:15).eq.'R')write(0,*) 'ignoring MPC radar obs'
             nobs=nobs-1
             goto 1
          endif
 c ================= HANDLE SATELLITE ============================
       elseif(rec1(15:15).eq.'S'.or.rec1(15:15).eq.'s')then
-         write(*,*)'Satellite observation at record ',nobs
+         write(0,*)'Satellite observation at record ',nobs
          nobs=nobs-1
 c         iobs(nobs)=3000+j
          goto 1
@@ -117,7 +117,7 @@ c assign iobs=1000+ichar(obscha), but replace blanks with P's
       endif
       if(error) then
           l=lench(file)
-          write(*,102) file(1:l),nobs
+          write(0,102) file(1:l),nobs
  102      format(' **** mpcin: input conversion error ****'/
      .       ' **** file = "',a,'", line',i5,' ****')
           nobs=0
@@ -136,6 +136,6 @@ c regular ending
       ENDIF
       return
 c erroneous radar ending
- 20   write(*,*) 'mpcin: incomplete radar observation, end of file'
+ 20   write(0,*) 'mpcin: incomplete radar observation, end of file'
       stop
       end

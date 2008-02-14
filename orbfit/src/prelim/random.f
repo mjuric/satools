@@ -107,7 +107,7 @@
 
       INTEGER ia(55),ix,unit,i
 
-      WRITE(*,*)' ENTER SEED'
+      WRITE(0,*)' ENTER SEED'
       READ(*,*) ix
       CALL in55(ia,ix)
       CALL filopn(unit,'random.dat','UNKNOWN')

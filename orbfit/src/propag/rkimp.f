@@ -116,14 +116,14 @@ c****************
       IF(iorb.eq.11)THEN
          if(iclap.ne.0.and.idc.ne.0)then
 * to be improved with a real safety feature
-            write(*,*)'t =',t,' close approach to planet=',
+            write(0,*)'t =',t,' close approach to planet=',
      +           ordnam(idc)
             write(iuncla,*)'t =',t,' close approach to planet=',
      +           ordnam(idc)
          endif
       ELSEIF(iorb.eq.9)THEN 
          if(idc.ne.0)then
-            write(*,*)'t =',t,' close approach code=',idc
+            write(0,*)'t =',t,' close approach code=',idc
             write(iuncla,*)'t =',t,' close approach code =',idc
          endif
       ENDIF

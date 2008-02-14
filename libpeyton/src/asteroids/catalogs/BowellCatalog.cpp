@@ -4,6 +4,7 @@
 #include <astro/system/log.h>
 
 #include <stdio.h>
+#include <iostream>
 
 #include "BowellCatalog.h"
 
@@ -42,8 +43,25 @@ char *BowellCatalog::identify(char *name) {
 
 int BowellCatalog::read(Asteroid &obj, const char *name)
 {
-	THROW(ENotImplemented, "Not implemented yet !");
-	return -1;
+	std::cerr << "Here! " << name2id.size() << "\n";
+	// on-demand creation of name-id mapping
+	if(name2id.empty())
+	{
+		std::cerr << "Name2id on-demand map creation... ";
+		Asteroid obj;
+		for(int i=0; i != recordCount(); i++)
+		{
+			read(obj, i);
+			name2id[obj.name] = i;
+//			std::cerr << obj.name << " " << i << "\n";
+		}
+		std::cerr << "done.\n";
+	}
+
+	typeof(name2id.begin()) it = name2id.find(name);
+	if(it == name2id.end()) { return -1; }
+
+	return read(obj, it->second);
 }
 
 int BowellCatalog::read(Asteroid &obj, const int id)

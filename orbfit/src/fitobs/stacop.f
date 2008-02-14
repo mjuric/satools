@@ -24,7 +24,7 @@ c function: copy to/from
          csino0=csinoc
          delno0=delnoc
       else
-         write(*,*)' stacop: copying not known, icop=',icop
+         write(0,*)' stacop: copying not known, icop=',icop
          stop
       endif
       return

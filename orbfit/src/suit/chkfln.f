@@ -29,7 +29,7 @@
 
       ll=lench(name)
       lf=lench(file)
-      WRITE(*,100) name(1:ll),nx,kr,file(1:lf),na
+      WRITE(0,100) name(1:ll),nx,kr,file(1:lf),na
  100  FORMAT(' **** Insufficient PARAMETER definition ****'/
      + ' Sorry, the present version of the program does not',
      + ' allow'/

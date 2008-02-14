@@ -3,4 +3,4 @@
 * ---------------------------------------------------------------------
 * Max number of records in TAI-UTC (leap second) file
       INTEGER ntaix
-      PARAMETER (ntaix=50)
+      PARAMETER (ntaix=500)

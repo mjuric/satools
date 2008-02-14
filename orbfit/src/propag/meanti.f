@@ -6,7 +6,7 @@
       DOUBLE PRECISION tw,w
       meanti=0.d0
       IF(m.le.0)THEN
-         WRITE(*,*)'meanti: no data '
+         WRITE(0,*)'meanti: no data '
          RETURN
       ENDIF
       tw=0.d0

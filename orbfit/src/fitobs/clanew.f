@@ -97,12 +97,12 @@ c find closest point on MTP according to linear approx
 c control on the size of displacement s1 (in AU)
       s1max=linlim
       IF(abs(s1).gt.s1max)THEN
-         WRITE(*,*)' clanew: Newton step too long s1=',s1,s1max
+         WRITE(0,*)' clanew: Newton step too long s1=',s1,s1max
          s1=s1*s1max/abs(s1)
       ENDIF
 c control on the size of change in the sigma space
       IF(s1/sig(2).gt.siglim)THEN
-         WRITE(*,*)' clanew: too large deltasig=',s1/sig(2),siglim
+         WRITE(0,*)' clanew: too large deltasig=',s1/sig(2),siglim
          error=.true.
          RETURN 
       ENDIF
@@ -112,7 +112,7 @@ c new target point on MTP
          tpc1(jj)=tpc(jj)+dtpc(jj)
       ENDDO
       dminew=sqrt(tpc1(1)**2+tpc1(2)**2)
-      WRITE(*,*)' displ.=',s1,' deltasig=',s1/sig(2),' dmin=',dminew
+      WRITE(0,*)' displ.=',s1,' deltasig=',s1/sig(2),' dmin=',dminew
       WRITE(iun20,*)' displ.=',s1,' deltasig=',s1/sig(2),' dmin=',dminew
 c find corresponding orbital elements at epoch
       CALL mulmav(b,2,2,dtpc,2,del2)
@@ -150,10 +150,10 @@ c exploratory propagation (back to before close approach)
       CALL proele('EQU',tcl,eq1,tcl1,elnew)
 c store new target plane; batch mode
       batchsel=.true.
-c      write(*,*)'tcl.tcl0.tcl1.tcl2 ',tcl,tcl0,tcl1,tcl2
+c      write(0,*)'tcl.tcl0.tcl1.tcl2 ',tcl,tcl0,tcl1,tcl2
       CALL mtpsel(batchsel,tc,t1,xc0,vc0,tcl0,tcl1,tcl2,error)
       IF(error)THEN
-          WRITE(*,*)' tc,t1,tcl0,tcl1,tcl2 ',tc,t1,tcl0,tcl1,tcl2
+          WRITE(0,*)' tc,t1,tcl0,tcl1,tcl2 ',tc,t1,tcl0,tcl1,tcl2
           RETURN
       ENDIF
       dmin0=vsize(xc0)
@@ -171,7 +171,7 @@ c right hand side at target (to obtain xpla)
       ide=0
       CALL force(xast,xast(nvar2+1),tcl0,dery,nvar2,idc,xpla)
       IF(idc.ne.iplam)THEN
-         WRITE(*,*)' fclan: ???? idc=',idc,' iplam=',iplam
+         WRITE(0,*)' fclan: ???? idc=',idc,' iplam=',iplam
       ENDIF
 c relative coordinates
       DO i=1,3
@@ -182,8 +182,8 @@ c mtp reference system
       CALL mtpref(tpnor,xpla(4),v3,vt3)
 c rotation to v3 reference system
       CALL mtprot(batchsel,vt3,dx,dv,dxde,gc,tpc,dtpdet,sig,axes,tpr)
-      WRITE(*,171)sig
-      WRITE(*,172)axes
+      WRITE(0,171)sig
+      WRITE(0,172)axes
       WRITE(iun20,171)sig
  171  FORMAT(' semiaxes of target ellipse: lengths ',2d14.5)
       WRITE(iun20,172)axes
@@ -196,7 +196,7 @@ c adopt new minimum as nominal
       CALL mcopy(6,6,cnew,cc)
       csinor=csinew
       delnor=delnew
-      write(*,*)' Newton control=',dminew-tpr
+      write(0,*)' Newton control=',dminew-tpr
       write(iun20,*)' Newton control=',dminew-tpr
       RETURN
       END

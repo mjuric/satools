@@ -192,7 +192,7 @@ c plot style
       elseif(istyle.lt.0)then
         style='points'
       else
-        write(*,*)' style code ',istyle,' not known'
+        write(0,*)' style code ',istyle,' not known'
         return
       endif
 c  preparation of command file
@@ -224,17 +224,17 @@ c  set graphics terminal type and output device
       elseif(idev.eq.5)then
          write(22,*)'set terminal postscript monochrome'
          write(22,*)'set output "giffv.ps"'
-         write(*,*)'Generating Postscript file ''giffv.ps''.'
+         write(0,*)'Generating Postscript file ''giffv.ps''.'
       elseif(idev.eq.6)then
          write(22,*)'set terminal postscript color'
          write(22,*)'set output "giffv.ps"'
-         write(*,*)'Generating Postscript file ''giffv.ps''.'
+         write(0,*)'Generating Postscript file ''giffv.ps''.'
       elseif(idev.eq.7)then
          write(22,*)'set terminal postscript monochrome'
          write(22,*)'set output "|lpr"'
-         write(*,*)'Sending plot to lpr.'
+         write(0,*)'Sending plot to lpr.'
       else
-         write(*,*)' this device flag ',idev,' not known'
+         write(0,*)' this device flag ',idev,' not known'
          return
       endif
       write(22,123)style
@@ -246,7 +246,7 @@ c  pause for screen images
       close(22)
 c  on SONY NEWS system is a function
 c     ii=system('gnuplot giffv.gnu')
-c     write(*,*)ii
+c     write(0,*)ii
 c  on IBM RISC system is a subroutine
       if(idev.eq.4)then
          call system('xterm -t -e gnuplot giffv.gnu')
@@ -256,7 +256,7 @@ c  on IBM RISC system is a subroutine
 c  hard copy (if not done already)
 c     if(idev.eq.-7)then
 c        ii=system('lpr giffv.ps')
-c        write(*,*)ii
+c        write(0,*)ii
 c        call system('lpr giffv.ps')
 c     elseif(idev.eq.-5)then
 c        call system('lpr giffv.ps -h')

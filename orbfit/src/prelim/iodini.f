@@ -44,7 +44,7 @@
      +            found,fail1,fail)
       IF(iodntr.GT.n3smax) THEN
           iodntr=n3smax
-          WRITE(*,200) iodntr
+          WRITE(0,200) iodntr
       END IF
  200  FORMAT(' WARNING: the value of "init_orbdet.n_triplets" has been',
      +       ' decreased to',I4/
@@ -95,7 +95,7 @@
               iodmen(i)='Vaisala'
           ELSE
               lt=lench(tmp)
-              WRITE(*,110) tmp(1:lt)
+              WRITE(0,110) tmp(1:lt)
               fail=.true.
           END IF
  1        CONTINUE

@@ -120,7 +120,7 @@
  1    CONTINUE
 
       IF(nosol) THEN
-c          WRITE(*,100)
+c          WRITE(0,100)
 c          STOP '**** sel3g: abnormal end ****'
            RETURN
       END IF
@@ -131,7 +131,7 @@ c          STOP '**** sel3g: abnormal end ****'
       sel(selipt(1))=2
       sel(selipt(2))=2
       sel(selipt(3))=2
-      write(*,*)'sel3g: selected ',selipt(1), selipt(2),selipt(3)
+      write(0,*)'sel3g: selected ',selipt(1), selipt(2),selipt(3)
       END
 
 

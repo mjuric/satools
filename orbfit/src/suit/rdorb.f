@@ -233,7 +233,7 @@
 
  20   CONTINUE
       lf=lench(orbfn)
-      WRITE(*,200) orbfn(1:lf),orbnr
+      WRITE(0,200) orbfn(1:lf),orbnr
  200  FORMAT(' ERROR in file ',A,' at line',I6)
       STOP '**** rdorb: abnormal end ****'
 

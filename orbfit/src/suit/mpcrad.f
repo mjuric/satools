@@ -87,7 +87,7 @@ c Object Name
       mpcname1=rec1(1:12)
       mpcname2=rec2(1:12)
       if(mpcname1.ne.mpcname2)then
-         write(*,*)'name error radar obs. ',mpcname1,' ',mpcname2
+         write(0,*)'name error radar obs. ',mpcname1,' ',mpcname2
          errcod=44
          goto 10
       endif
@@ -101,8 +101,8 @@ c ========== HANDLE DATE AND TIME =================
  100  FORMAT(15X,I4,1X,I2,1X,A9)
       READ(rec2,100,ERR=10) year2,month2,chdate2
       if(year.ne.year2.or.month.ne.month2.or.chdate.ne.chdate2)then
-         write(*,*)'date error radar obs. ',year,' ',month,' ',chdate
-         write(*,*)'                      ',year2,' ',month2,' ',chdate2
+         write(0,*)'date error radar obs. ',year,' ',month,' ',chdate
+         write(0,*)'                      ',year2,' ',month2,' ',chdate2
          errcod=45
          goto 10
       endif
@@ -111,7 +111,7 @@ c ========== HANDLE DATE AND TIME =================
 * Position of the decimal point
       pp=INDEX(chdate,'.')
       IF(pp.EQ.0) THEN
-          WRITE(*,*)'mpcrad: radar data without correct time'
+          WRITE(0,*)'mpcrad: radar data without correct time'
           STOP
 c          errcod=2
 c         READ(chdate,*,ERR=10) day
@@ -135,7 +135,7 @@ c MPC made a mess by rounding time to 10^-5 days
           ELSE
             sec=isec
           ENDIF
-c          WRITE(*,*)sec,isec,iisec
+c          WRITE(0,*)sec,isec,iisec
           ndd=ll-pp
           acct=10.0d0**(-ndd)
       END IF
@@ -225,7 +225,7 @@ c divide by 10000 to get the transmitter, remainder is the receiver
 
  10   CONTINUE
       IF(error) THEN
-         WRITE(*,101) errcod,rec1
+         WRITE(0,101) errcod,rec1
  101     FORMAT(' mpcrad: error code',I3,'rec:',A)
          tdt=0
          r=-1.

@@ -58,7 +58,7 @@ c firstly from arc 1 and then from arc 2
       enm0=(eqp(6)-eq0(6)+ng0*dpig)/(tp-t0)
       enmp=(eq0(6)-eqp(6)+ngp*dpig)/(t0-tp)
 c Choose  the best orbit to start from
-      write(*, 177)ng0,ngp
+      write(0, 177)ng0,ngp
  177  format(' number of rev. ',i4, i4) 
       if(iorb.eq.1)then
          enm=enm0
@@ -67,7 +67,7 @@ c Choose  the best orbit to start from
           enm=enmp
           ng=-ngp
        else
-          write(*,*)' start: iorb=',iorb
+          write(0,*)' start: iorb=',iorb
           stop
        endif
       am=(gms/enm**2)**(1.d0/3.d0)

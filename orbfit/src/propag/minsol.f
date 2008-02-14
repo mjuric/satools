@@ -56,7 +56,7 @@ c temporary variables and workspace
 c ===========================================================
 c control on dimensioning
       if (no.gt.nob2x) THEN
-         write(*,*) 'no>nob2x in minsol',no,nob2x
+         write(0,*) 'no>nob2x in minsol',no,nob2x
          stop
       ENDIF
 c ===========================================================
@@ -114,7 +114,7 @@ c squeeze normal matrix into a smaller one
       IF(jj.eq.kk.and.jj.ne.0)THEN
          ndc=jj
       ELSE
-         write(*,*)' minsol, this should not happen ',jj,kk
+         write(0,*)' minsol, this should not happen ',jj,kk
          stop
       ENDIF        
 c ===========================================================
@@ -194,12 +194,12 @@ c check that the matrix is indeed symmetric
         DO 2 j=1,i-1
           da=abs((a(i,j)-a(j,i))/(a(i,j)+a(j,i)))
           IF(da.gt.100*eps)THEN
-             write(*,*)'invmat: ',i,j,a(i,j),a(j,i),da,100*eps
+             write(0,*)'invmat: ',i,j,a(i,j),a(j,i),da,100*eps
              sym=.false.
           ENDIF
  2      CONTINUE
  1    CONTINUE
-      IF(.not.sym)write(*,*)'invmat: input matrix not symmetric'
+      IF(.not.sym)write(0,*)'invmat: input matrix not symmetric'
 c ==========================================================
 c Tcholewski
 c ==========================================================
@@ -241,8 +241,8 @@ c unnormalize the matrix by norm of columns
           ENDDO
         ENDDO
       ELSE
-        write(*,*)' matrix is not positive definite'
-        write(*,*)' pivot number ',indp,' is ',c(indp,indp)
+        write(0,*)' matrix is not positive definite'
+        write(0,*)' pivot number ',indp,' is ',c(indp,indp)
       ENDIF
       RETURN
       END

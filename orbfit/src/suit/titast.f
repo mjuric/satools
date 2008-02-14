@@ -30,7 +30,7 @@ c  shorten and remove blanks from name
          le1=lench(astnap)
          titnam=astna0(1:le)//'='//astnap(1:le1)
       else
-         write(*,*)'titast: this should not happen, iarc=',iarc
+         write(0,*)'titast: this should not happen, iarc=',iarc
       endif
       return
       end

@@ -74,7 +74,7 @@ c prepare DEC string
      +        rdstri,delta*degrad,
      +        secrad*adot/24.d0,secrad*ddot/24.d0,
      +        dis,elo*degrad,hmagn
-         write(*,101)timstr,t1,ids,
+         write(0,101)timstr,t1,ids,
      +        rastri,alpha*degrad,
      +        rdstri,delta*degrad,
      +        secrad*adot/24.d0,secrad*ddot/24.d0,
@@ -97,7 +97,7 @@ c rescaling in arcsec
             enddo
          enddo
          write(iun,201)(sig(j),(axes(i,j),i=1,2),j=1,2)
-         write(*,201)(sig(j),(axes(i,j),i=1,2),j=1,2)
+         write(0,201)(sig(j),(axes(i,j),i=1,2),j=1,2)
  201     format(
      +'Size and orientation of 1-sigma uncertainty ellipse'/
      +'Short axis : Size= ',1p,g12.6 ,' (arcsec); Direction= ',
@@ -107,7 +107,7 @@ c rescaling in arcsec
       ELSEIF(iobs/1000.eq.2)THEN
 c %%%%%%%%%%%% RADAR %%%%%%%%%%%%%%%%
          write(iun,102)t1,ids,alpha*au,delta*au
-         write(*,102)t1,ids,alpha*au,delta*au
+         write(0,102)t1,ids,alpha*au,delta*au
  102     format('time, MJD=',f13.6,'  station=',i4/
      +       ' range (KM)         = ',f16.5/
      +       ' range rate (KM/DAY)=  ',f15.5)
@@ -120,14 +120,14 @@ c rescaling in km, km/day
             enddo
          enddo
          write(iun,202)(sig(j),(axes(i,j),i=1,2),j=1,2)
-         write(*,202)(sig(j),(axes(i,j),i=1,2),j=1,2)
+         write(0,202)(sig(j),(axes(i,j),i=1,2),j=1,2)
  202     format(' in the range (KM), range-rate (KM/DAY) plane'/
      +          ' sigma1 = ',1p,g14.7 ,' axis1= ',2(1x,g12.5)/
      +          ' sigma2 = ',1p,g14.7 ,' axis2= ',2(1x,g12.5))
       ELSEIF(iobs/1000.eq.4)THEN
 c %%%%%%%%%%%% PROPER MOTION %%%%%%%%%%%%%%%%
          write(iun,109)t1,ids,alpha*secrad/24.d0,delta*secrad/24.d0
-         write(*,109)t1,ids,alpha*secrad/24.d0,delta*secrad/24.d0
+         write(0,109)t1,ids,alpha*secrad/24.d0,delta*secrad/24.d0
  109     format('time, MJD=',f13.6,'  station=',i4/
      +       ' RA motion (arcsec/hour)     = ',f9.2/
      +       ' DEC motion (arcsec/hour)    = ',f9.2)
@@ -140,11 +140,11 @@ c rescaling in arcsec/hour
             enddo
          enddo
          write(iun,209)(sig(j),(axes(i,j),i=1,2),j=1,2)
-         write(*,209)(sig(j),(axes(i,j),i=1,2),j=1,2)
+         write(0,209)(sig(j),(axes(i,j),i=1,2),j=1,2)
  209     format('sigma1 (arcsec/hr)= ',1p,g14.7 ,' axis1= ',2(1x,g12.5)/
      +          'sigma2 (arcsec/hr)= ',1p,g14.7 ,' axis2= ',2(1x,g12.5))
       ELSE
-         WRITE(*,*)'outobs: iobs=',iobs,' not understood'
+         WRITE(0,*)'outobs: iobs=',iobs,' not understood'
       ENDIF
       return
       end

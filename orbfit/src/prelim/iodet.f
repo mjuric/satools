@@ -89,7 +89,7 @@
       methb=' '
 
       ln=lench(name)
-      WRITE(*,202) name(1:ln)
+      WRITE(0,202) name(1:ln)
       IF(unirep.GT.0) WRITE(unirep,202) name(1:ln)
  202  FORMAT('Preliminary orbit for object ',A,':')
 
@@ -126,7 +126,7 @@
  4    CONTINUE
 
       IF(iodvrb.GE.2) THEN
-          WRITE(*,203) 'Trying',selipt,
+          WRITE(0,203) 'Trying',selipt,
      +                 tdt(is2)-tdt(is1),tdt(is3)-tdt(is2)
           IF(unirep.GT.0) WRITE(unirep,203) 'Trying',selipt,
      +                    tdt(is2)-tdt(is1),tdt(is3)-tdt(is2)
@@ -134,7 +134,7 @@
  203  FORMAT(4X,A,' observations:',3I6,' (DT=',2F10.2,' d)')
       CALL iodsdt(selipt,tdt,n,iodexp,ioddtm,ir)
       IF(iodvrb.GE.2) THEN
-          WRITE(*,204) ir,tdt(ir(2))-tdt(ir(1))
+          WRITE(0,204) ir,tdt(ir(2))-tdt(ir(1))
           IF(unirep.GT.0) WRITE(unirep,204) ir,tdt(ir(2))-tdt(ir(1))
       END IF
  204  FORMAT(4X,'RMS check observations:', I6,' -',I6,
@@ -166,12 +166,12 @@
       lm=lench(iodmen(itry))
       msg=' '
       IF((iodvrb.GE.2) .AND. iodmul) THEN
-          WRITE(*,210) iodmen(itry)(1:lm)
+          WRITE(0,210) iodmen(itry)(1:lm)
           IF(unirep.GT.0) WRITE(unirep,210) iodmen(itry)(1:lm)
       END IF
  210  FORMAT(8X,'Trying ',A,' method')
       IF(iodvrb.GE.3) THEN
-          WRITE(*,240) iodmen(itry)(1:lm),name(1:ln),in,
+          WRITE(0,240) iodmen(itry)(1:lm),name(1:ln),in,
      +                 (noisea(i)*secrad,noised(i)*secrad,i=1,3)
           IF(unirep.GT.0) WRITE(unirep,240) iodmen(itry)(1:lm),
      +                    name(1:ln),in,
@@ -191,12 +191,12 @@
           IF(iodvrb.GE.2) THEN
               lmsg=lench(msg)
               IF(lmsg.GT.0) THEN
-                  WRITE(*,220) 'Gauss',name(1:ln),ngr,nsol,nkep,
+                  WRITE(0,220) 'Gauss',name(1:ln),ngr,nsol,nkep,
      +                         msg(1:lmsg)
                   IF(unirep.GT.0) WRITE(unirep,220) 'Gauss',name(1:ln),
      +                            ngr,nsol,nkep,msg(1:lmsg)
               ELSE
-                  WRITE(*,221) 'Gauss',name(1:ln),ngr,nsol,nkep
+                  WRITE(0,221) 'Gauss',name(1:ln),ngr,nsol,nkep
                   IF(unirep.GT.0) WRITE(unirep,221)'Gauss', name(1:ln),
      +                            ngr,nsol,nkep
               END IF
@@ -206,12 +206,12 @@
      +                iobs,obscod,sel,ir(1),ir(2),resa,resd,rms1)
           IF(iodvrb.GE.2) THEN
               IF(ieltyv(is).EQ.'KEP') THEN
-                  WRITE(*,222) 'Gauss',name(1:ln),is,'a',elemv(1,is),
+                  WRITE(0,222) 'Gauss',name(1:ln),is,'a',elemv(1,is),
      +                          elemv(2,is),rms1*secrad
                   IF(unirep.GT.0) WRITE(unirep,222)'Gauss', name(1:ln),
      +                    is,'a',elemv(1,is),elemv(2,is),rms1*secrad
               ELSE
-                  WRITE(*,222) 'Gauss',name(1:ln),is,'q',elemv(1,is),
+                  WRITE(0,222) 'Gauss',name(1:ln),is,'q',elemv(1,is),
      +                          elemv(2,is),rms1*secrad
                   IF(unirep.GT.0) WRITE(unirep,222) 'Gauss',name(1:ln),
      +                     is,'q',elemv(1,is),elemv(2,is),rms1*secrad
@@ -231,7 +231,7 @@
           IF(fail) nsol=0
           nc(7)=nc(7)+nsol
           IF(iodvrb.GE.2) THEN
-              WRITE(*,221) 'Vaisala',name(1:ln),nsol,nsol,nsol
+              WRITE(0,221) 'Vaisala',name(1:ln),nsol,nsol,nsol
               IF(unirep.GT.0) WRITE(unirep,221) 'Vaisala',name(1:ln),
      +                                           nsol,nsol,nsol
           END IF
@@ -241,13 +241,13 @@
      +                iobs,obscod,sel,ir(1),ir(2),resa,resd,rms1)
           IF(iodvrb.GE.2) THEN
               IF(ieltyv(is).EQ.'KEP') THEN
-                  WRITE(*,222) 'Vaisala',name(1:ln),is,'a',elemv(1,is),
+                  WRITE(0,222) 'Vaisala',name(1:ln),is,'a',elemv(1,is),
      +                         elemv(2,is),rms1*secrad
                   IF(unirep.GT.0) WRITE(unirep,222) 'Vaisala',
      +                            name(1:ln),is,'a',elemv(1,is),
      +                            elemv(2,is),rms1*secrad
               ELSE
-                  WRITE(*,222) 'Vaisala',name(1:ln),is,'q',elemv(1,is),
+                  WRITE(0,222) 'Vaisala',name(1:ln),is,'q',elemv(1,is),
      +                          elemv(2,is),rms1*secrad
                   IF(unirep.GT.0) WRITE(unirep,222) 'Vaisala',
      +                            name(1:ln),is,'q',elemv(1,is),
@@ -281,11 +281,11 @@
           dt1=tdt(selb(2))-tdt(selb(1))
           dt2=tdt(selb(3))-tdt(selb(2))
           dtc=tdt(irb(2))-tdt(irb(1))
-          WRITE(*,230) name(1:ln),nc,selb,irb,dt1,dt2,dtc
+          WRITE(0,230) name(1:ln),nc,selb,irb,dt1,dt2,dtc
           IF(unirep.GT.0) WRITE(unirep,230)
      +                        name(1:ln),nc,selb,ir,dt1,dt2,dtc
       ELSE
-          WRITE(*,235) name(1:ln),nc
+          WRITE(0,235) name(1:ln),nc
           IF(unirep.GT.0) WRITE(unirep,235) name(1:ln),nc
       END IF
  230  FORMAT(4X,'IOD(',A,') STAT:',7I6,' SEL:',3I6,' IR:',2I6,' DT:',
@@ -296,12 +296,12 @@
       IF(existb) THEN
           lm=lench(methb)
           IF(in.LE.0) THEN
-              WRITE(*,232) name(1:ln),methb(1:lm),rmsb*secrad
+              WRITE(0,232) name(1:ln),methb(1:lm),rmsb*secrad
               IF(unirep.GT.0) WRITE(unirep,232) name(1:ln),methb(1:lm),
      +                                          rmsb*secrad
               comele=methb(1:lm)
           ELSE
-              WRITE(*,233) name(1:ln),methb(1:lm),rmsb*secrad
+              WRITE(0,233) name(1:ln),methb(1:lm),rmsb*secrad
               IF(unirep.GT.0) WRITE(unirep,233) name(1:ln),methb(1:lm),
      +                                          rmsb*secrad
               comele=methb(1:lm)//'(wN)'
@@ -320,7 +320,7 @@
      +        CALL wrirwg(rwofil,objid,iobs,tutm,obscod,alpha,rmsa,
      +             resa,delta,rmsd,resd,smag,rmsmag,sel,n,rmsb*secrad)
       ELSE
-          WRITE(*,231) name(1:ln)
+          WRITE(0,231) name(1:ln)
           IF(unirep.GT.0) WRITE(unirep,231) name(1:ln)
           comele='FAIL'
       END IF

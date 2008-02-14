@@ -28,7 +28,7 @@ c packing of matrices: no. lines and columns
         if(icor(i).gt.0)ncor=ncor+1
  1    continue
       if(ncor.eq.0)then
-         write(*,*)' no correction, icor=',icor
+         write(0,*)' no correction, icor=',icor
          return
       endif
       write(iun,*)

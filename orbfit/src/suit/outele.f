@@ -41,20 +41,20 @@
 
       IF(multi .AND. (ll.GT.0)) THEN
           IF(unit.GT.0) WRITE(unit,133) label(1:ll)
-          IF(stdout) WRITE(*,133) label(1:ll)
+          IF(stdout) WRITE(0,133) label(1:ll)
       END IF
       IF(eltype.EQ.'KEP') THEN
           IF(multi) THEN
               IF(unit.GT.0) WRITE(unit,100) elem(1),elem(2),
      +                                      (elem(i)*degrad,i=3,6)
-              IF(stdout) WRITE(*,100) elem(1),elem(2),
+              IF(stdout) WRITE(0,100) elem(1),elem(2),
      +                                (elem(i)*degrad,i=3,6)
           ELSE
               IF(ll.GT.0) THEN
                   IF(unit.GT.0) WRITE(unit,120) label(1:ll),elem(1),
      +                                          elem(2),
      +                                         (elem(i)*degrad,i=3,6),t0
-                  IF(stdout) WRITE(*,120) label(1:ll),elem(1),elem(2),
+                  IF(stdout) WRITE(0,120) label(1:ll),elem(1),elem(2),
      +                                    (elem(i)*degrad,i=3,6),t0
               ELSE
                   IF(unit.GT.0) WRITE(unit,130) elem(1),elem(2),
@@ -67,37 +67,37 @@
           IF(multi) THEN
               IF(unit.GT.0) WRITE(unit,101) (elem(i),i=1,5),
      +                                      elem(6)*degrad
-              IF(stdout) WRITE(*,101) (elem(i),i=1,5),elem(6)*degrad
+              IF(stdout) WRITE(0,101) (elem(i),i=1,5),elem(6)*degrad
           ELSE
               IF(ll.GT.0) THEN
                   IF(unit.GT.0) WRITE(unit,121) label(1:ll),
      +                                          (elem(i),i=1,5),
      +                                          elem(6)*degrad,t0
-                  IF(stdout) WRITE(*,121) label(1:ll),(elem(i),i=1,5),
+                  IF(stdout) WRITE(0,121) label(1:ll),(elem(i),i=1,5),
      +                                    elem(6)*degrad,t0
               ELSE
                   IF(unit.GT.0) WRITE(unit,131) (elem(i),i=1,5),
      +                                          elem(6)*degrad,t0
-                  IF(stdout) WRITE(*,131) (elem(i),i=1,5),
+                  IF(stdout) WRITE(0,131) (elem(i),i=1,5),
      +                                    elem(6)*degrad,t0
               END IF
           END IF
       ELSEIF(eltype.EQ.'CAR') THEN
           IF(multi) THEN
               IF(unit.GT.0) WRITE(unit,102) elem
-              IF(stdout) WRITE(*,102) elem
+              IF(stdout) WRITE(0,102) elem
           ELSE
               IF(ll.GT.0) THEN
                   IF(unit.GT.0) WRITE(unit,122) label(1:ll),elem,t0
-                  IF(stdout) WRITE(*,122) label(1:ll),elem,t0
+                  IF(stdout) WRITE(0,122) label(1:ll),elem,t0
               ELSE
                   IF(unit.GT.0) WRITE(unit,132) elem,t0
-                  IF(stdout) WRITE(*,132) elem,t0
+                  IF(stdout) WRITE(0,132) elem,t0
               END IF
           END IF
       ELSE
           lt=lench(eltype)
-          WRITE(*,200) eltype(1:lt)
+          WRITE(0,200) eltype(1:lt)
           STOP '**** outele: abnormal end ****'
       END IF
  120  FORMAT(8X,'KepElem(',A,'):',1P,E15.7,0P,F13.8,4F10.5,
@@ -130,7 +130,7 @@
           CALL mjddat(t0,day,month,year,hour)
           cm=chmon(month)
           WRITE(unit,110) t0,cm,day,year,hour
-          IF(stdout) WRITE(*,110) t0,cm,day,year,hour
+          IF(stdout) WRITE(0,110) t0,cm,day,year,hour
       END IF
  110  FORMAT(8X,'Epoch of elements  : MJD',F17.8,' TDT (',A,I3,',',
      +       I5,',',F10.6,' h)')
