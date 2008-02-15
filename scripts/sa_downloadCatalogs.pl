@@ -18,15 +18,15 @@ $id = sprintf "%04d%02d%02d", $year, $mon, $mday;
 print "Downloading ASTORB ...\n";
 `wget ftp://ftp.lowell.edu/pub/elgb/astorb.dat.gz -O astorb.dat.$id.gz`;
 
-print `gunzip astorb.dat.$id.gz`;
+print `gunzip astorb.dat.$id.gz && ln -sf astorb.dat.$id astorb.dat.latest`;
 
 print "ASTORB downloaded\n";
 
 #############
 
 print "Downloading AstDys proper elements ...\n";
-`wget http://hamilton.dm.unipi.it/astdys/catalogs/ufitobs.pro -O ufitobs.pro.$id`;
-`wget http://hamilton.dm.unipi.it/astdys/catalogs/allnum.pro -O allnum.pro.$id`;
+`wget http://hamilton.dm.unipi.it/astdys/catalogs/ufitobs.pro -O ufitobs.pro.$id && ln -sf ufitobs.pro.$id ufitobs.pro.latest`;
+`wget http://hamilton.dm.unipi.it/astdys/catalogs/allnum.pro  -O allnum.pro.$id  && ln -sf allnum.pro.$id allnum.pro.latest`;
 
 print "Proper elements downloaded.\n";
 
