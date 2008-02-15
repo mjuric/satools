@@ -59,8 +59,8 @@ else
 fi;
 
 echo ""
-echo "Note #1: Assuming you have gfortran, build SATOOLS by running \`make\`. Otherwise, change the top of the Makefile first."
-echo "Note #2: Define CFLAGS, CCFLAGS and/or FFLAGS to override the default optimization/debugging settings in libpeyton and satools."
-echo "Note #3: Before running the code, don't forget to source env.csh"
-echo "Note #4: Read the README file for example usage"
+echo "Note #1: Build SATOOLS by running \`make\`." 
+echo "         To override the default optimization/debugging settings in libpeyton and satools, define CFLAGS, CCFLAGS and/or FFLAGS environment variables."
+echo "Note #2: Source ./env.csh before running the code."
+echo "Note #3: Read the README file for example usage and notes."
 echo ""

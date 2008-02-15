@@ -1,25 +1,23 @@
 Building
 =====
 
-Assuming you have g++, gcc and gfortran, run the following (from the satools
-directory) to set up and build the entire toolset, do:
+Assuming you have GCC 3.x or 4.x toolchain, to set up and build the entire
+toolset, do:
 
-./configure
+./configure <g77|gfortran>
 make
 
-Otherwise, first modify the F77 variable in Makefile.
+where you should select g77 for GCC 3.x and gfortran for 4.x.
 
 The configure script will set up the basic environment required to compile
 and run satools (e.g., will copy the necessary config files from setup/ to
-your home directory, if they don't already exist).
-
-Compiled binaries will end up in satools/bin. Scripts are in
-satools/scripts.
+your home directory, if they don't already exist). Compiled binaries will
+end up in satools/bin, while various PERL scripts are in satools/scripts.
 
 Running
 =====
 
-Source env.csh (assuming you use csh). This will add satools binaries
+Source env.csh (assuming you use csh). This will add the satools binaries
 to your path, and set up the SATOOLS and SDSSAST_WORKSPACE environment
 variables.
 
