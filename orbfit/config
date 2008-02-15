@@ -18,6 +18,7 @@ usage () {
 	echo "          SilGra  (Silicon Graphics, f77)"
 	echo "          fort77  (f2c through fort77 script)"
 	echo "          g77     (GNU g77 compiler)"
+	echo "          gfortran(GNU gfortran compiler)"
 	echo "          ALPHA   (Digital alpha f90 compiler)"
 	exit 1
 }
@@ -73,3 +74,11 @@ do
 done
 
 echo $conf $opt > .conf.status
+
+# touch .dep files
+touch ./src/orbfit/make.dep
+touch ./src/fitobs/make.dep
+touch ./src/suit/make.dep
+touch ./src/propag/make.dep
+touch ./src/prelim/make.dep
+touch ./src/bineph/make.dep

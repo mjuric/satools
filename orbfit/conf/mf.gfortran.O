@@ -1,7 +1,7 @@
-# Makefile options for GNU g77 compiler, optimized
+# Makefile options for GNU gfortran compiler, optimized
 
 # Fortran compiler
-FC=$(G77)
+FC=gfortran
 # Options for Fortran compiler:
 ##FFLAGS=-O3 -malign-double -funroll-loops -finline-functions -I../include
 FFLAGS=-O3 -funroll-loops -finline-functions -I../include

@@ -62,4 +62,6 @@ docs:
 includes:
 	../build/mkuseall.pl > ../include/astro/useall.h
 
+ifneq ($(MAKECMDGOALS),depend)
 include make.dep
+endif

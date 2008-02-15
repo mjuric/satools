@@ -1,7 +1,7 @@
-# Makefile options for GNU g77 compiler, debugging
+# Makefile options for GNU gfortran compiler, debugging
 
 # Fortran compiler
-FC=g77
+FC=gfortran
 # Options for Fortran compiler:
 FFLAGS=-g -C -I../include
 # "ranlib" command: if it is not needed, use "RANLIB=touch"
