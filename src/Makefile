@@ -1,8 +1,8 @@
 .f.o:
-	$(F77) -g -O0 -I../orbfit/src/include -I./include -c $*.f -o $*.o
+	$(F77) $(FFLAGS) -I../orbfit/src/include -I./include -c $*.f -o $*.o
 
 .cpp.o:
-	$(CXX) -g -O0 -I../include -c $*.cpp -o $*.o
+	$(CXX) $(CCFLAGS) -I../include -c $*.cpp -o $*.o
 
 all: id2.x propagate.x createcache.x createcache2.x showcache.x phi.x extractrun.x \
 	nearest.x out2sdss.x proc.x whatis.x \
@@ -27,120 +27,120 @@ p:
 	rm -f propagate.o
 
 propagate.x: $(OBJS) $(LIBS) propagate.o
-	$(CXX) -O0 propagate.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran ../libpeyton/lib/libparallel.a -o propagate.x
+	$(CXX) $(CCFLAGS) propagate.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran ../libpeyton/lib/libparallel.a -o propagate.x
 	cp propagate.x ../bin
 
 mockCatalog.x: $(LIBS) mockCatalog.o
-	$(CXX) -O0 mockCatalog.o $(LIBS) -o mockCatalog.x
+	$(CXX) $(CCFLAGS) mockCatalog.o $(LIBS) -o mockCatalog.x
 	cp mockCatalog.x ../bin
 
 id2.x: $(OBJS) $(LIBS) id2.o cleanup.o
-	$(CXX) -O0 id2.o cleanup.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o id2.x
+	$(CXX) $(CCFLAGS) id2.o cleanup.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o id2.x
 	cp id2.x ../bin
 
 createcache.x: $(OBJS) $(LIBS) createcache.o
-	$(CXX) -O0 createcache.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o createcache.x
+	$(CXX) $(CCFLAGS) createcache.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o createcache.x
 	cp createcache.x ../bin
 
 createcache2.x: $(OBJS) $(LIBS) createcache2.o
-	$(CXX) -O0 createcache2.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran ../libpeyton/lib/libparallel.a -o createcache2.x
+	$(CXX) $(CCFLAGS) createcache2.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran ../libpeyton/lib/libparallel.a -o createcache2.x
 	cp createcache2.x ../bin
 
 calcsky.x: $(OBJS) $(LIBS) calcsky.o
-	$(CXX) -O0 calcsky.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o calcsky.x
+	$(CXX) $(CCFLAGS) calcsky.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o calcsky.x
 	cp calcsky.x ../bin
 
 calcpos.x: $(OBJS) $(LIBS) calcpos.o
-	$(CXX) -O0 calcpos.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o calcpos.x
+	$(CXX) $(CCFLAGS) calcpos.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o calcpos.x
 	cp calcpos.x ../bin
 
 calcsky2.x: $(OBJS) $(LIBS) calcsky2.o
-	$(CXX) -O0 calcsky2.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o calcsky2.x
+	$(CXX) $(CCFLAGS) calcsky2.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o calcsky2.x
 	cp calcsky2.x ../bin
 
 sky2binary.x: $(OBJS) $(LIBS) sky2binary.o
-	$(CXX) -O0 sky2binary.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o sky2binary.x
+	$(CXX) $(CCFLAGS) sky2binary.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o sky2binary.x
 	cp sky2binary.x ../bin
 
 skyresample.x: $(OBJS) $(LIBS) skyresample.o
-	$(CXX) -O0 skyresample.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o skyresample.x
+	$(CXX) $(CCFLAGS) skyresample.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o skyresample.x
 	cp skyresample.x ../bin
 
 showcache.x: $(OBJS) $(LIBS) showcache.o
-	$(CXX) -O0 showcache.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o showcache.x
+	$(CXX) $(CCFLAGS) showcache.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o showcache.x
 	cp showcache.x ../bin
 
 extractrun.x: $(OBJS) $(LIBS) extractrun.o
-	$(CXX) -O0 extractrun.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o extractrun.x
+	$(CXX) $(CCFLAGS) extractrun.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o extractrun.x
 	cp extractrun.x ../bin
 
 phi.x: $(OBJS) $(LIBS) phi.o
-	$(CXX) -O0 phi.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o phi.x
+	$(CXX) $(CCFLAGS) phi.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o phi.x
 	cp phi.x ../bin
 
 nearest.x: $(OBJS) $(LIBS) nearest.o cleanup.o
-	$(CXX) -O0 nearest.o cleanup.o $(LIBS) -o nearest.x
+	$(CXX) $(CCFLAGS) nearest.o cleanup.o $(LIBS) -o nearest.x
 	cp nearest.x ../bin
 
 out2sdss.x: $(OBJS) $(LIBS) out2sdss.o
-	$(CXX) -O0 out2sdss.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o out2sdss.x
+	$(CXX) $(CCFLAGS) out2sdss.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o out2sdss.x
 	cp out2sdss.x ../bin
 
 makempec.x: $(OBJS) $(LIBS) makempec.o
-	$(CXX) -O0 makempec.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o makempec.x
+	$(CXX) $(CCFLAGS) makempec.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o makempec.x
 	cp makempec.x ../bin
 	
 proc.x: $(OBJS) $(LIBS) proc.o
-	$(CXX) -O0 proc.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o proc.x
+	$(CXX) $(CCFLAGS) proc.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o proc.x
 	cp proc.x ../bin
 
 whatis.x: $(OBJS) $(LIBS) whatis.o
-	$(CXX) -O0 whatis.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o whatis.x
+	$(CXX) $(CCFLAGS) whatis.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o whatis.x
 	cp whatis.x ../bin
 
 setpairs.x: $(OBJS) $(LIBS) setpairs.o
-	$(CXX) -O0 setpairs.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o setpairs.x
+	$(CXX) $(CCFLAGS) setpairs.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o setpairs.x
 	cp setpairs.x ../bin
 
 updatematches.x: $(OBJS) $(LIBS) updatematches.o
-	$(CXX) -O0 updatematches.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o updatematches.x
+	$(CXX) $(CCFLAGS) updatematches.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o updatematches.x
 	cp updatematches.x ../bin
 
 mergempec.x: $(OBJS) $(LIBS) mergempec.o
-	$(CXX) -O0 mergempec.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o mergempec.x
+	$(CXX) $(CCFLAGS) mergempec.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o mergempec.x
 
 analysis.x: $(OBJS) $(LIBS) analysis.o
-	$(CXX) -O0 analysis.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o analysis.x
+	$(CXX) $(CCFLAGS) analysis.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o analysis.x
 	cp analysis.x ../bin
 
 astorb_analysis.x: $(OBJS) $(LIBS) astorb_analysis.o
-	$(CXX) -O0 astorb_analysis.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o astorb_analysis.x
+	$(CXX) $(CCFLAGS) astorb_analysis.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o astorb_analysis.x
 	cp astorb_analysis.x ../bin
 
 oiddbconvert.x: $(OBJS) $(LIBS) oiddbconvert.o
-	$(CXX) -O0 oiddbconvert.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o oiddbconvert.x
+	$(CXX) $(CCFLAGS) oiddbconvert.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o oiddbconvert.x
 	cp oiddbconvert.x ../bin
 
 renamesent.x: $(OBJS) $(LIBS) renamesent.o
-	$(CXX) -O0 renamesent.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o renamesent.x
+	$(CXX) $(CCFLAGS) renamesent.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o renamesent.x
 	cp renamesent.x ../bin
 
 filtercatalog.x: $(OBJS) $(LIBS) filtercatalog.o
-	$(CXX) -O0 filtercatalog.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o filtercatalog.x
+	$(CXX) $(CCFLAGS) filtercatalog.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o filtercatalog.x
 	cp filtercatalog.x ../bin
 
 properidx.x: $(OBJS) $(LIBS) properidx.o
-	$(CXX) -O0 properidx.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o properidx.x
+	$(CXX) $(CCFLAGS) properidx.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o properidx.x
 	cp properidx.x ../bin
 
 photutils: johnson johnson_gr_r
 
 johnson.x: $(OBJS) $(LIBS) johnson.o
-	$(CXX) -O0 johnson.o $(LIBS) -lgfortran -o johnson.x
+	$(CXX) $(CCFLAGS) johnson.o $(LIBS) -lgfortran -o johnson.x
 	cp johnson.x ../bin
 
 johnson_gr_r.x: $(OBJS) $(LIBS) johnson_gr_r.o
-	$(CXX) -O0 johnson_gr_r.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o johnson_gr_r.x
+	$(CXX) $(CCFLAGS) johnson_gr_r.o $(OBJS) $(LIBS) $(ORBFIT) -lgfortran -o johnson_gr_r.x
 	cp johnson_gr_r.x ../bin
 
 depend:
@@ -149,6 +149,9 @@ depend:
 
 clean:
 	-(rm -f *.o ../bin/*.x *.x make.dep)
-	touch make.dep
 
+ifneq ($(MAKECMDGOALS),depend)
+ifneq ($(MAKECMDGOALS),clean)
 include make.dep
+endif
+endif

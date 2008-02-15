@@ -1,0 +1,39 @@
+#!/bin/bash
+
+die()
+{
+	echo $1
+	exit
+}
+
+echo "
+satools setup script
+"
+
+## Check for ~/.conf.sdss
+echo -n "[  ~/.conf.sdss  ]   ";
+if [ ! -f ~/.conf.sdss ]; then 
+	echo -n "Not found. Copying from setup/... "
+	(cp setup/dot-conf.sdss ~/.conf.sdss && echo "OK.") || die "Failed copying from setup/dot-conf.sdss"
+else
+	echo "Exists. Leaving unchanged";
+fi;
+
+## Setup environment
+echo -n "[     ./env.csh  ]   Generating... ";
+SATOOLS=`pwd`
+echo "# Source this before running satools
+
+setenv SATOOLS \"$SATOOLS\"
+setenv SDSSAST_WORKSPACE \"\$SATOOLS/workspace\"
+setenv PERL5LIB \"\$SATOOLS/scripts/modules\"
+setenv CONF_SDSS ~/.conf.sdss
+set path=(\$path \"\$SATOOLS/scripts\" \"\$SATOOLS/bin\")
+" > ./env.csh && echo "OK." || die "Failed."
+
+echo ""
+echo "Note #1: Assuming you have gfortran, build SATOOLS by running \`make\`. Otherwise, change the top of the Makefile first."
+echo "Note #2: Define CFLAGS, CCFLAGS and/or FFLAGS to override the default optimization/debugging settings in libpeyton and satools."
+echo "Note #3: Before running the code, don't forget to source env.csh"
+echo "Note #4: Read the README file for example usage"
+echo ""

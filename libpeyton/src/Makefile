@@ -14,7 +14,7 @@
 #
 
 .cpp.o:
-	$(CXX) -O0 -g -fPIC -D_GNU_SOURCE -I../include $(FITSFLAGS) -c $*.cpp -o $*.o
+	$(CXX) $(CCFLAGS) -fPIC -D_GNU_SOURCE -I../include $(FITSFLAGS) -c $*.cpp -o $*.o
 
 all: ../lib/libastro.a
 parallel: ../lib/libparallel.a
@@ -51,7 +51,7 @@ depend:
 	$(CXX) -M -I../include $(FITSFLAGS) $(SRC) $(PARALLELSRC) > make.dep
 
 clean:
-	-(rm -f $(OBJS) $(PARALLELOBJS) ../lib/libastro.a ../lib/libparallel.a)
+	-(rm -f $(OBJS) $(PARALLELOBJS) ../lib/libastro.a ../lib/libparallel.a make.dep)
 
 cpar:
 	-(rm -f $(PARALLELOBJS) ../lib/libparallel.a)
@@ -63,5 +63,7 @@ includes:
 	../build/mkuseall.pl > ../include/astro/useall.h
 
 ifneq ($(MAKECMDGOALS),depend)
+ifneq ($(MAKECMDGOALS),clean)
 include make.dep
+endif
 endif

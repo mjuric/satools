@@ -1,0 +1,34 @@
+Building
+=====
+
+Assuming you have g++, gcc and gfortran, run the following (from the satools
+directory) to set up and build the entire toolset, do:
+
+./configure
+make
+
+Otherwise, first modify the F77 variable in Makefile.
+
+The configure script will set up the basic environment required to compile
+and run satools (e.g., will copy the necessary config files from setup/ to
+your home directory, if they don't already exist).
+
+Compiled binaries will end up in satools/bin. Scripts are in
+satools/scripts.
+
+Running
+=====
+
+Source env.csh (assuming you use csh). This will add satools binaries
+to your path, and set up the SATOOLS and SDSSAST_WORKSPACE environment
+variables.
+
+Then, run whatever you need/want from the toolset. E.g., for start, try
+this:
+
+	source env.csh
+	sa_downloadCatalogs.pl
+	calcpos.x -runs -desig=Sedna latest ASTORB2 94
+
+Which will first download the freshest ASTORB catalog, and then calculate
+the position of asteroid Sedna at the time of run 94.
