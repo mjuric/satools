@@ -98,7 +98,7 @@ int ObservationCalculator::calculateObservation(Observation &obs, MJD time, cons
 
 //	std::cout << "[" << obj.name << "] " << obj.numeration << " " << obj.elements[0] << "\n";
 	// (in)sanity checks - ASTORB sometimes has weird stuff in it...
-	if(obj.elements[0] > 150 || obj.elements[0] == 0) { 
+	if(obj.elements[0] > 1500 || obj.elements[0] == 0) { 
 		obs.ra = 0; obs.dec = 88; obs.mag = 99; obs.R = 99; obs.phase = 0; return -1;
 	}
 
