@@ -25,6 +25,7 @@ PARALLELSRC=	net/Socket.cpp \
 		net/RemoteInstance.cpp
 
 ../lib/libparallel.a: $(PARALLELOBJS)
+	mkdir -p ../lib
 	ar r ../lib/libparallel.a $(PARALLELOBJS)
 	ranlib ../lib/libparallel.a
 
@@ -44,6 +45,7 @@ SRC=	asteroids/catalogs/MPCCatalog.cpp asteroids/catalogs/BowellCatalog.cpp aste
 		sdss/RunGeometry.cpp
 
 ../lib/libastro.a: $(OBJS)
+	mkdir -p ../lib
 	ar r ../lib/libastro.a $(OBJS)
 	ranlib ../lib/libastro.a
 

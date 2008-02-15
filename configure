@@ -3,6 +3,7 @@
 die()
 {
 	echo $1
+	echo ""
 	exit
 }
 
@@ -10,17 +11,34 @@ echo "
 satools setup script
 "
 
-## Check for ~/.conf.sdss
-echo -n "[  ~/.conf.sdss  ]   ";
-if [ ! -f ~/.conf.sdss ]; then 
-	echo -n "Not found. Copying from setup/... "
-	(cp setup/dot-conf.sdss ~/.conf.sdss && echo "OK.") || die "Failed copying from setup/dot-conf.sdss"
-else
-	echo "Exists. Leaving unchanged";
-fi;
+if [ "$1" != "g77" -a "$1" != "gfortran" ]; then
+	die "Usage: $0 <g77|gfortran>"
+fi
 
-## Setup environment
-echo -n "[     ./env.csh  ]   Generating... ";
+## Create directory structure
+echo -n "[        --        ]   Creating subdirectories... ";
+SDSSAST_WORKSPACE=`pwd`/workspace
+(mkdir -p $SDSSAST_WORKSPACE bin && (cd $SDSSAST_WORKSPACE && mkdir -p catalogs input lib output tmp && mkdir -p tmp/propagated tmp/skies)) \
+	&& echo "OK." || die "Failed."
+
+
+## Setup compile environment
+F77=$1
+F77LIB=$1
+if [ "$1" = "g77" ]; then
+	F77LIB=g2c
+fi
+
+echo -n "[ ./compilers.mak  ]   Generating... ";
+SATOOLS=`pwd`
+echo "# Compiler settingd
+
+F77=$F77
+F77LIB=$F77LIB
+" > ./compilers.mak && echo "OK." || die "Failed."
+
+## Setup execution environment
+echo -n "[       ./env.csh  ]   Generating... ";
 SATOOLS=`pwd`
 echo "# Source this before running satools
 
@@ -30,6 +48,15 @@ setenv PERL5LIB \"\$SATOOLS/scripts/modules\"
 setenv CONF_SDSS ~/.conf.sdss
 set path=(\$path \"\$SATOOLS/scripts\" \"\$SATOOLS/bin\")
 " > ./env.csh && echo "OK." || die "Failed."
+
+## Check for ~/.conf.sdss
+echo -n "[    ~/.conf.sdss  ]   ";
+if [ ! -f ~/.conf.sdss ]; then 
+	echo -n "Not found. Copying from setup/... "
+	(cp setup/dot-conf.sdss ~/.conf.sdss && echo "OK.") || die "Failed copying from setup/dot-conf.sdss"
+else
+	echo "Exists. Leaving unchanged";
+fi;
 
 echo ""
 echo "Note #1: Assuming you have gfortran, build SATOOLS by running \`make\`. Otherwise, change the top of the Makefile first."

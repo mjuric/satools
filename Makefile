@@ -1,6 +1,4 @@
-# Note: Change the line below if your fortran compiler is not gfortran
-F77=gfortran
-export F77
+include compilers.mak
 
 satools:
 	# Build orbfitlib
