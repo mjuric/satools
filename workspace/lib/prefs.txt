@@ -1,0 +1,6 @@
+int	observatory.code	645
+string	detection.id.file	detection.id
+string	mpec.headers		mpec.headers
+double	time.toffset		-27.04
+#double	time.toffset		5.144
+#double	time.toffset		0
