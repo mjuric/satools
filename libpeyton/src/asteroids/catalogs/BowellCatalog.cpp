@@ -43,19 +43,15 @@ char *BowellCatalog::identify(char *name) {
 
 int BowellCatalog::read(Asteroid &obj, const char *name)
 {
-	std::cerr << "Here! " << name2id.size() << "\n";
 	// on-demand creation of name-id mapping
 	if(name2id.empty())
 	{
-		std::cerr << "Name2id on-demand map creation... ";
 		Asteroid obj;
 		for(int i=0; i != recordCount(); i++)
 		{
 			read(obj, i);
 			name2id[obj.name] = i;
-//			std::cerr << obj.name << " " << i << "\n";
 		}
-		std::cerr << "done.\n";
 	}
 
 	typeof(name2id.begin()) it = name2id.find(name);
