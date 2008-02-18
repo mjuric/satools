@@ -17,6 +17,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "version.h"
+
 #include <astro/asteroids/catalog.h>
 #include <astro/system.h>
 #include <astro/exceptions.h>
@@ -82,8 +84,10 @@ float gaussdev()
 	}
 }
 
-int main()
+int main(int argc, char **argv)
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	srand(time(NULL));
 	try {
 		const char *ws = System::workspace();

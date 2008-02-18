@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <iostream>
 #include <stdlib.h>
 #include <astro/photometry.h>
@@ -12,6 +14,8 @@ Preferences pref;
 
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc < 7) {
 		cout << "Usage: " << argv[0] << " <g-r> <r> <mon> <day> <h> <name>";
 		return -1;

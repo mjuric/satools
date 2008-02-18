@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include "mpecfile.h"
 
 #include <astro/system/error.h>
@@ -13,6 +15,8 @@ Preferences pref;
 using namespace std;
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 4) {
 		cout << "Description : Takes a list of pairs from two runs gives them the same designation (the one from first run)\n";
 		cout << "Usage       : " << argv[0] << " <run1.sdss> <run2.sdss> <list>\n";

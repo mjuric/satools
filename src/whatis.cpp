@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include "safile.h"
 
 #include <astro/system/log.h>
@@ -18,6 +20,8 @@ peyton::system::Preferences pref;
 using namespace std;
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 4) {
 		cout << "Description: Extract designation of object at the given position\n";
 		cout << "Usage      : " << argv[0] << " <mpec.sdss file> <ra> <dec>\n";

@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include "safile.h"
 
 #include <astro/system/error.h>
@@ -15,6 +17,8 @@ Preferences pref;
 using namespace std;
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc < 3) {
 		cout << "Description : Merges a number of .mpec.sdss files into one big file, discarding the headers\n";
 		cout << "Usage       : " << argv[0] << " <dest.sdss> <source1.mpec> [ <source2.mpec> [...]]\n";

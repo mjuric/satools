@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <astro/system/preferences.h>
 #include <astro/coordinates.h>
 
@@ -27,6 +29,8 @@ vector<ms> matches;
 
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 5) {
 		cout << "Usage : " << argv[0] << " <db.sdss> <run1> <run2> <positions.match>\n";
 		return -1;

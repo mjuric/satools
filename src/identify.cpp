@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -158,6 +160,8 @@ void printMatch(MJD time,
 
 int main(int argc, char* argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 6) {
 		cout << "Usage: " << argv[0] << " <output_file> <radius> <input_file> <catalog> <cache>\n";
 		cout << "Catalog must be in NATIVE format\n";

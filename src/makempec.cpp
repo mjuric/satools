@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <astro/time.h>
 #include <astro/types.h>
 #include <astro/util.h>
@@ -60,6 +62,8 @@ void prepHeader(ostream &db, const char *mpecFile)
 
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 3) {
 		cout << "Description: Generate MPC reports from SDSS asteroid database files\n";
 		cout << "Usage: " << argv[0] << " <out_file.mpec> <in_file.sdss>\n";

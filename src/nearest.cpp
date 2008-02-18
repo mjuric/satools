@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <stdlib.h>
 
 #include <fstream>
@@ -15,6 +17,8 @@ peyton::system::Preferences pref;
 
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 3) {
 		cout << "Description: Find nearest object in all.in\n";
 		cout << "Usage: " << argv[0] << " <ra> <dec>\n";

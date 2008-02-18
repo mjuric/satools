@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include "identrecord.h"
 #include "sarecord.h"
 
@@ -14,6 +16,8 @@ peyton::system::Preferences pref;
 
 int main(int argc, char **argv)
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	string b("binary"), a("ascii");
 
 	if(argc != 3 ||

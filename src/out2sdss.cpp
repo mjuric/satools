@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <astro/time.h>
 #include <astro/types.h>
 #include <astro/util.h>
@@ -68,6 +70,8 @@ const double vCut = 0.03;
 
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	const char *ws = System::workspace();
 
 	if(argc != 3) {

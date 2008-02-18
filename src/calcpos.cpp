@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <astro/system/preferences.h>
 #include <astro/system/error.h>
 #include <astro/system.h>
@@ -228,6 +230,8 @@ void calculate_position(double mjd, const std::string &desig)
 
 main(int argc, char **argv)
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	try {
 		if(argc != 3 && argc < 5) {
 			cout << "Usage 1: " << argv[0] << " <mjd> <desig> <catalog> <ASTORB2|NATIVE|COMET>\n";

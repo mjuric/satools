@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -376,6 +378,8 @@ int loadObservations(std::vector<SloanObservation> &out, Radians node, Radians i
 
 int main(int argc, char* argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc != 7) {
 		cout << "Description: Identify objects from \"object\" catalog with objects in \"base\" catalog."
 				" Which catalog is base, and which is object is controled by <base>=sloan|cat input parameter.\n";

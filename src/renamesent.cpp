@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include "mpecfile.h"
 
 #include <astro/system/error.h>
@@ -24,7 +26,8 @@ struct less_mpec : public std::binary_function<MPECRecord &, MPECRecord &, bool>
 using namespace std;
 int main(int argc, char *argv[])
 {
-	
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	MPECFile out("94.mpec.sdss");
 	MPECFile unsent("94_unsent.mpec.sdss", 0);
 	MPECFile sent("sent.mpec.sdss", 0);

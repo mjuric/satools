@@ -1,3 +1,5 @@
+#include "version.h"
+
 #include <stack>
 #include <ctype.h>
 #include <stdarg.h>
@@ -113,6 +115,8 @@ int sfscanf(const char *text, const char *format, ...)
 
 void main()
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	const char *fmt = "A5,1X,A18,1X,A15,1X,A5,1X,F5.2,1X,A4,1X,A5,1X,A4,1X,6I4,1X,2I5,1X,I4,2I2.2,3(1X,F10.6),F10.6,1X,F10.8, 1X,F12.8,1X,I4,2I2.2,1X,F7.2,1X,F8.2,1X,I4,2I2,3(1X,F7.2,1X,I4,2I2)";
 //	const char *txt = "    1 Ceres              E. Bowell        3.34  0.12 0.72 913.0 G?      0   0   0   0   0   0 56959 4750 19960427  80.477333  71.802404  80.659857 10.600303 0.07604100   2.76788714 19960414 2.3E-02  1.4E-04 19960416 2.7E-02 19960530 3.1E-02 20040111 3.1E-02 20040111";
 	const char *txt = "    1 Ceres              E. Bowell        3.34  0.12 0.72 848.4 G?      0   0   0   0   0   0 62125 5596 20010710 125.049915  73.973398  80.489708 10.583794 0.07879873   2.76716809 20010411 2.3E-02 -1.5E-05 20010710 1.9E-02 20021003 2.6E-02 20090225 2.6E-02 20090225";

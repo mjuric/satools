@@ -1,9 +1,13 @@
+#include "version.h"
+
 #include <iostream>
 #include <stdlib.h>
 #include <astro/photometry.h>
 
 int main(int argc, char *argv[])
 {
+	PRINT_VERSION_IF_ASKED(argc, argv);
+
 	if(argc < 3) {
 		cout << "Usage: " << argv[0] << " <g> <r>\n";
 		return -1;
