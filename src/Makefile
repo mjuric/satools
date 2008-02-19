@@ -4,7 +4,7 @@ include ../compilers.mak
 	$(F77) $(FFLAGS) -I../orbfit/src/include -I./include -c $*.f -o $*.o
 
 .cpp.o:
-	$(CXX) $(CCFLAGS) -I../include -c $*.cpp -o $*.o
+	$(CXX) $(CCFLAGS) -I/home/mjuric/sources/tbb/include -I../include -c $*.cpp -o $*.o
 
 all: id2.x propagate.x createcache.x createcache2.x showcache.x phi.x extractrun.x \
 	nearest.x out2sdss.x proc.x whatis.x \
@@ -53,7 +53,7 @@ calcsky.x: $(OBJS) $(LIBS) calcsky.o
 	cp calcsky.x ../bin
 
 calcpos.x: $(OBJS) $(LIBS) calcpos.o
-	$(CXX) $(CCFLAGS) calcpos.o $(OBJS) $(LIBS) $(ORBFIT) -l$(F77LIB) -o calcpos.x
+	$(CXX) $(CCFLAGS) calcpos.o $(OBJS) $(LIBS) $(ORBFIT) -L /home/mjuric/sources/tbb20_20070927oss_src/build/linux_em64t_gcc_cc4.1.2_libc2.5_kernel2.6.18_release -ltbb -l$(F77LIB) -o calcpos.x
 	cp calcpos.x ../bin
 
 calcsky2.x: $(OBJS) $(LIBS) calcsky2.o

@@ -19,6 +19,11 @@
 #include <iostream>
 #include <set>
 
+#include <tbb/task_scheduler_init.h>
+#include <tbb/parallel_for.h>
+#include <tbb/blocked_range.h>
+#include <tbb/mutex.h>
+
 using namespace std;
 using namespace peyton;
 using namespace peyton::exceptions;
@@ -85,11 +90,9 @@ bool geom_epoch_sort(const RunGeometry &a, const RunGeometry &b)
 	return a.tstart > b.tstart;
 }
 
-void calculate_position_in_runs(std::vector<Observation> &obsv, const std::vector<RunGeometry> &geoms, const Asteroid &obj)
+void calculate_position_in_runs(std::vector<Observation> &obsv, const std::vector<RunGeometry> &geoms, const Asteroid &obj, ObservationCalculator &oc)
 {
 	// propagate orbits & calculate positions at each epoch
-	static ObservationCalculator oc;
-
 	Asteroid ast(obj);
 	obsv.resize(geoms.size());
 
@@ -139,6 +142,58 @@ void is_in_run(bool &within_bounds, bool &within_tolerance, const Observation &o
 	within_tolerance = is_in_run_aux(o, geom, matchRadius);
 }
 
+struct propagator
+{
+	const std::vector<RunGeometry> &geoms;
+	const std::vector<Asteroid> &asts;
+	mutable tbb::mutex &mtx;
+
+	propagator(const std::vector<Asteroid> &asts_, const std::vector<RunGeometry> &geoms_, tbb::mutex &mtx_) : asts(asts_), geoms(geoms_), mtx(mtx_) {}
+
+#if 1
+	void operator()(const tbb::blocked_range<size_t>& r ) const 
+	{
+		ObservationCalculator oc;
+		std::vector<Observation> obsv;
+		for(size_t i = r.begin(); i != r.end(); ++i)
+		{
+			const Asteroid &ast = asts[i];
+			{
+// PROBLEM: if the mutex is commented out, we crash as the 
+//          FORTRAN piece is not threadsafe :-((.
+				tbb::mutex::scoped_lock lock(mtx);
+				calculate_position_in_runs(obsv, geoms, ast, oc);
+			}
+			FOR(0, obsv.size())
+			{
+				bool within_bounds, within_tolerance;
+				is_in_run(within_bounds, within_tolerance, obsv[i], geoms[i], 30*ctn::s2r);
+
+				if(in_run_only && !within_tolerance) { continue; }
+
+				{
+					tbb::mutex::scoped_lock lock(mtx);
+
+					std::cout << geoms[i].run << "\t";
+					print_observation(obsv[i], ast.numeration);
+					std::cout << "\t" << within_bounds << "\t" << within_tolerance;
+					std::cout << "\n";
+				}
+			}
+		}
+	}
+#else
+	void operator()(const tbb::blocked_range<size_t>& r ) const 
+	{
+		{
+			tbb::mutex::scoped_lock lock(mtx);
+
+			std::cerr << "Range: " << r.begin() << " .. " << r.end() << " of " << asts.size() << "\n";
+		}
+	}
+#endif
+};
+
 void calculate_positions_in_runs(const std::set<int> &runs, std::vector<std::string> &desigs)
 {
 	// load all runs, sort according to time
@@ -171,25 +226,10 @@ void calculate_positions_in_runs(const std::set<int> &runs, std::vector<std::str
 		}
 	}
 
-	// propagate orbits & calculate positions at each epoch
-	std::vector<Observation> obsv;
-	FOREACH(asts)
-	{
-		Asteroid &ast = *i;
-		calculate_position_in_runs(obsv, geoms, ast);
-		FOR(0, obsv.size())
-		{
-			bool within_bounds, within_tolerance;
-			is_in_run(within_bounds, within_tolerance, obsv[i], geoms[i], 30*ctn::s2r);		
-			
-			if(in_run_only && !within_tolerance) { continue; }
-
-			std::cout << geoms[i].run << "\t";
-			print_observation(obsv[i], ast.numeration);
-			std::cout << "\t" << within_bounds << "\t" << within_tolerance;
-			std::cout << "\n";
-		}
-	}
+	// propagate orbits & calculate & output positions at each epoch
+	tbb::task_scheduler_init init;
+	tbb::mutex mtx;
+	tbb::parallel_for(tbb::blocked_range<size_t>(0, asts.size(), 10000), propagator(asts, geoms, mtx));
 }
 
 void calculate_position(double mjd, const std::string &desig)
