@@ -194,9 +194,10 @@ public:
 		}
 		
 		if(argc != 3) {
-			cout << "Usage: " << argv[0] << " <runset> <astorb>\n";
-			cout << "Purpose: propagates ASTORB catalog to epochs for a given runSet\n\n";
-			cout << "Input catalog must be in ASTORB format\n";
+			cout << "Usage #1: " << argv[0] << " <runset> <astorb>\n";
+			cout << "Usage #2: " << argv[0] << " <epochs_file.txt> <astorb>\n";
+			cout << "Purpose: propagates the entire ASTORB catalog to a set of MJDs given as runSet (epochs.txt file) or one-MJD-per-line.txt file.\n\n";
+			cout << "Input catalog must be in ASTORB2 format. Outputs will be in NATIVE format, and will be stored in " << ws << "/tmp/propagated/<astorb>.<mjd>.obj, one file per mjd\n";
 			return -1;
 		}
 
@@ -214,6 +215,13 @@ public:
 		//
 		vector<MJD> epochs;
 		sprintf(buf, "%s/input/%s.d/epochs.txt", ws, runSet);
+		if(access(buf, R_OK) != 0) {
+			strcpy(buf, runSet);
+			if(access(buf, R_OK) != 0) {
+				std::cerr << "Cannot find runset or file named '" << buf << "'\n";
+				return -1;
+			}
+		}
 		ifstream f(buf);
 		while(!f.eof()) {
 			MJD t0;
@@ -248,7 +256,7 @@ public:
 		//
 		// spawn remote instances
 		//
-		string exe = string("/bin/nice -19 ") + satools + "/bin/propagate.x";
+		string exe = std::string(satools) + "/env.sh /bin/nice -19 " + satools + "/bin/propagate.x";
 		spawnFlock("satools-propagate", exe);
 		if(!clients.size()) THROW(EAny, "No birds in flock (none of the remote clients started up)!");
 		cout << "Number of slaves : " << clients.size() << "\n";
