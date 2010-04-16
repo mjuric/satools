@@ -37,7 +37,7 @@ F77=$F77
 F77LIB=$F77LIB
 " > ./compilers.mak && echo "OK." || die "Failed."
 
-## Setup execution environment
+## Setup execution environment (csh)
 echo -n "[       ./env.csh  ]   Generating... ";
 SATOOLS=`pwd`
 echo "# Source this before running satools
@@ -48,6 +48,21 @@ setenv PERL5LIB \"\$SATOOLS/scripts/modules\"
 setenv CONF_SDSS ~/.conf.sdss
 set path=(\$path \"\$SATOOLS/scripts\" \"\$SATOOLS/bin\")
 " > ./env.csh && echo "OK." || die "Failed."
+
+## Setup execution environment (bash)
+echo -n "[        ./env.sh  ]   Generating... ";
+SATOOLS=`pwd`
+echo "# Source this before running satools
+
+export SATOOLS=\"$SATOOLS\"
+export SDSSAST_WORKSPACE=\"\$SATOOLS/workspace\"
+export PERL5LIB=\"\$SATOOLS/scripts/modules\"
+export CONF_SDSS=~/.conf.sdss
+export PATH=\"\$PATH:\$SATOOLS/scripts:\$SATOOLS/bin\"
+
+\"\$@\"
+" > ./env.sh && chmod +x './env.sh' && echo "OK." || die "Failed."
+
 
 ## Check for ~/.conf.sdss
 echo -n "[    ~/.conf.sdss  ]   ";
@@ -61,6 +76,6 @@ fi;
 echo ""
 echo "Note #1: Build SATOOLS by running \`make\`." 
 echo "         To override the default optimization/debugging settings in libpeyton and satools, define CFLAGS, CCFLAGS and/or FFLAGS environment variables."
-echo "Note #2: Source ./env.csh before running the code."
+echo "Note #2: Source ./env.sh (sh) or ./env.csh (csh) before running the code."
 echo "Note #3: Read the README file for example usage and notes."
 echo ""
