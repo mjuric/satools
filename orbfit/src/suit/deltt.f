@@ -21,7 +21,7 @@
 
 * Max number of entries in ET-UT table
       INTEGER nx
-      PARAMETER (nx=200)
+      PARAMETER (nx=500)
 
       DOUBLE PRECISION dt,c1,c2
       DOUBLE PRECISION tv(nx),dtv(nx)
