@@ -3,6 +3,7 @@
 
 #include <astro/system/mixed.h>
 #include <functional>
+#include <cstring>
 #include <map>
 
 namespace peyton {

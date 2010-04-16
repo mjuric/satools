@@ -2,6 +2,7 @@
 #define __astro_system_config_h
 
 #include <string>
+#include <cstdlib>
 #include <map>
 
 namespace peyton {

@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <cstdlib>
 
 #include "CometCatalog.h"
 

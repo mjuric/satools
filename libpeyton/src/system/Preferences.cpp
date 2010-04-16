@@ -6,6 +6,8 @@
 
 #include <fstream>
 #include <stdio.h>
+#include <cstdlib>
+#include <cstring>
 #include <unistd.h>
 
 using namespace peyton;

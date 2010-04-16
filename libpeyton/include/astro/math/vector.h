@@ -21,6 +21,7 @@
 #include <astro/compat/compat.h>
 #include <astro/system/error.h>
 #include <astro/util.h>
+#include <cstdlib>
 
 #include <iosfwd>
 #include <cmath>

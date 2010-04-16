@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <cstdlib>
 
 #include "BowellCatalog.h"
 
@@ -60,10 +61,13 @@ int BowellCatalog::read(Asteroid &obj, const char *name)
 	return read(obj, it->second);
 }
 
-int BowellCatalog::read(Asteroid &obj, const int id)
+int BowellCatalog::read(Asteroid &obj, const int id_)
 {
+	int id = id_;
 	if(id != -1) {
 		fseek(fp, id*recordByteLen, SEEK_SET);
+	} else {
+		id = ftell(fp) / recordByteLen;
 	}
 
 	int y, m, d;
@@ -84,7 +88,8 @@ int BowellCatalog::read(Asteroid &obj, const int id)
 		);
 
 	if(ret != 14) {
-		DEBUG(basic, "Error reading asteroid record");
+		char c[20]; sprintf(c, "%d", id+1);
+		DEBUG(basic, "Error reading asteroid at line #" + std::string(c));
 		return -1;
 	}
 

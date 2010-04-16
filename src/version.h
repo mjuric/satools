@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <cstring>
 
 static const char SATOOLS_VERSION[] = "$Format:%ad, %an <%ae>, [%H]$";
 

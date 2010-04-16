@@ -4,6 +4,7 @@
 #include <astro/system/log.h>
 
 #include <stdio.h>
+#include <cstdlib>
 
 #include "MPCCatalog.h"
 
