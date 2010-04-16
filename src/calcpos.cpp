@@ -339,8 +339,9 @@ main(int argc, char **argv)
 		else
 		{
 			cin >> mjd;
-			while(cin >> desig)
+			while(getline(cin, desig))
 			{
+				desig = Util::trim(desig);
 				calculate_position(mjd, desig);
 				cin >> mjd;
 			}
