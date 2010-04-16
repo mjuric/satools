@@ -25,7 +25,7 @@ if(not -f "astorb.dat.$id")
 #############
 
 # PHA list
-@neolist = `wget --quiet -O - http://newton.dm.unipi.it/neodys/neo_name.list`;
+@neolist = `wget --quiet -O - http://newton.dm.unipi.it/~neodys/neo_name.list`;
 ($? >> 8) == 0 or die("Error downloading PHA list.\n");
 while(chomp($_ = shift(@neolist)))
 {
