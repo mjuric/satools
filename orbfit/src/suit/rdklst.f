@@ -48,7 +48,7 @@
       IF(rec(1:2).EQ.'$I') THEN
           IF(nkls.LE.0) STOP '**** rdklst: internal error (01) ****'
           IF(keytyp(nkls).NE.3) THEN
-              WRITE(0,103) kr
+              write(99,103) kr
               STOP '**** rdklst: abnormal end ****'
           END IF
           ns2it=ns2it+1
@@ -87,7 +87,7 @@
       IF(rec1(1:6).EQ.'INPUT:') THEN
           CALL strcnt(rec1(7:),file1,rest,error)
           IF(error) THEN
-              WRITE(0,105) kr
+              write(99,105) kr
               STOP '**** rdklst: abnormal end ****'
           END IF
           CALL rdkls1(file1)
@@ -108,7 +108,7 @@
           IF(nospli) STOP '**** rdklst: internal error (04) ****'
           ktyp=kt
       ELSE
-          WRITE(0,101) ni,kr
+          write(99,101) ni,kr
           STOP '**** rdklst: abnormal end ****'
       END IF
  101  FORMAT(' **** rdklst: INTERNAL ERROR:',i3,' items at line',i5,
@@ -117,7 +117,7 @@
 * Handling of default category
       IF(ni.EQ.1) THEN
           IF(key1(lk:lk).NE.'.') THEN
-              WRITE(0,102) kr
+              write(99,102) kr
               STOP '**** rdklst: abnormal end ****'
           END IF
           ldc=lk-1
@@ -136,7 +136,7 @@
 * Look if the key is already present in the namelist
       DO 3 i=1,nkls
       IF(key1(1:lk).EQ.keylst(i)) THEN
-          WRITE(0,110) key1(1:lk),kr
+          write(99,110) key1(1:lk),kr
           STOP '**** rdklst: abnormal end ****'
       END IF
  3    CONTINUE
@@ -163,7 +163,7 @@
           keytyp(nkls)=6
       ELSE
           lkt=lench(ktyp)
-          WRITE(0,111) ktyp(1:lkt),kr
+          write(99,111) ktyp(1:lkt),kr
           STOP '**** rdklst: abnormal end ****'
       END IF
  111  FORMAT(' **** rdklst: unknown key type ****'/

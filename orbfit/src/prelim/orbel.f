@@ -54,7 +54,7 @@ c control against ellipse parameter
       p1=ele(6)*(1-ele(5)**2)
       p2=r2s*v2s-rv**2
       if(abs(p1-p2).gt.1.d-6)then
-        write(0,*)'Ellipse parameter problem; dp = ', p1-p2
+        write(99,*)'Ellipse parameter problem; dp = ', p1-p2
 c        stop
         fail=.true.
         return
@@ -78,7 +78,7 @@ c computation of vectors P and Q
       qz=(beta1*z2+beta2*z2p)/ses
 c control for P and Q
       if(abs(px*qx+py*qy+pz*qz).gt.1d-6)then
-        write(0,*)'Scalar product (PQ) different from 0'
+        write(99,*)'Scalar product (PQ) different from 0'
 c        stop 
         fail=.true.
         return

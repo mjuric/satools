@@ -36,8 +36,8 @@ c particular options for this run
         CALL rdnam(iunit)
         CALL filclo(iunit,' ')
       ELSE
-        write(0,*)'Option file not found: ',file
-        write(0,*)'*** Using default options. ***'
+        write(99,*)'Option file not found: ',file
+        write(99,*)'*** Using default options. ***'
 c        stop 
       ENDIF
 c =============================
@@ -81,10 +81,10 @@ c =============SOME ASTEROID NAME NEEDED===================
       CALL rdncha(prognp,'astna0',astna0,ireq,
      +            found,fail1,fail)
       IF(.not.found.or.fail)THEN
-**         WRITE(0,*)' finopt: first arc ast. name required'
+**         write(99,*)' finopt: first arc ast. name required'
 **         STOP
          CALL rmsp(run,le)
-         WRITE(0,*)' finopt: first arc ast. name not found, ',
+         write(99,*)' finopt: first arc ast. name not found, ',
      +        'using ',run(1:le)
          astna0=run(1:le)
       ENDIF
@@ -92,10 +92,10 @@ c =============SOME ASTEROID NAME NEEDED===================
       CALL rdncha(prognp,'astnap',astnap,ireq,
      +            found,fail1,fail)
       IF(.not.found.or.fail)THEN
-         WRITE(0,*)' asteroid ',astna0
+         write(99,*)' asteroid ',astna0
          astnap=' '
       ELSE
-         WRITE(0,*)' two asteroids  ', astna0,astnap
+         write(99,*)' two asteroids  ', astna0,astnap
       ENDIF
 c =================XEPHEM INTEGRATION=====================
       ireq=.false.
@@ -107,7 +107,7 @@ c default is no integration
       ELSE
 c announce xephem interface; gnuplot graphics disabled
          IF(ixeph.gt.0)THEN
-            WRITE(0,*)' xephem integration lvel ',ixeph
+            write(99,*)' xephem integration lvel ',ixeph
          ENDIF
       ENDIF
       RETURN

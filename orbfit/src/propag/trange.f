@@ -22,7 +22,7 @@
 * transformation from JD to MJD
       tejpl1=ss(1)-2400000.5d0
       tejpl2=ss(2)-2400000.5d0
-*      write(0,*) tejpl1,tejpl2
+*      write(99,*) tejpl1,tejpl2
 *
 c Dummy call to deltt to read the ET-UT data
       tt=deltt(50000.d0)

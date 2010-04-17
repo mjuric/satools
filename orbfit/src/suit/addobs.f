@@ -61,7 +61,7 @@ c     the observation was already there
             IF(chaobs(alnt(j),aln(mj),dent(j),den(mj),
      +           smagt(j),smag(mj),iobst(j),iobs(mj)) )THEN 
 c ... but it is changed 
-c               write(0,*)'change',j,mj,alnt(j),aln(mj),dent(j),den(mj),
+c               write(99,*)'change',j,mj,alnt(j),aln(mj),dent(j),den(mj),
 c     +           smagt(j),smag(mj),iobst(j),iobs(mj)
                change=.true.
                aln(mj)=alnt(j)
@@ -76,7 +76,7 @@ c     +           smagt(j),smag(mj),iobst(j),iobs(mj)
                   WRITE(ierrou,*)'addobs: changed observ. at record ',mj
                   numerr=numerr+1
                ELSE
-                  WRITE(0,*)'addobs: changed observation at record ',mj
+                  write(99,*)'addobs: changed observation at record ',mj
                ENDIF
             ELSE
 c do not give precedence to rwo weighting unless rwo weights are negative
@@ -89,13 +89,13 @@ c cutoff is 5 milliarcsec or 1 meter (radar) for new weights
                if(rmsa(mj).ge.0d0.and.
      +              abs(rmsa(mj)-rmsat(j)).gt.rmseps)then
                   change=.true.
-c                  write(0,'(a,4g16.8)')'alf',rmseps,
+c                  write(99,'(a,4g16.8)')'alf',rmseps,
 c     +                 rmsa(mj)-rmsat(j),rmsa(mj),rmsat(j)
                   rmsa(mj)=rmsat(j) 
                endif  
                if(rmsd(mj).ge.0d0.and.
      +              abs(rmsd(mj)-rmsdt(j)).gt.rmseps)then
-c                  write(0,'(a,4g16.8)')'del',rmseps,
+c                  write(99,'(a,4g16.8)')'del',rmseps,
 c     +                 rmsd(mj)-rmsdt(j),rmsd(mj),rmsdt(j)
                    change=.true.
                   rmsd(mj)=rmsdt(j) 
@@ -109,9 +109,9 @@ c the observation was already there, in double copy!
      +              smagt(j),smag(double),iobst(j),iobs(double)))THEN 
                   change=.true.
 c double, and changed! human intervention required
-                  WRITE(0,*)'addobs: double and changed'
-                  WRITE(0,*)' records ',mj,' and ',double,' in .rwo'
-                  WRITE(0,*)' record ',j,' in .obs'
+                  write(99,*)'addobs: double and changed'
+                  write(99,*)' records ',mj,' and ',double,' in .rwo'
+                  write(99,*)' record ',j,' in .obs'
 c                STOP
                ELSE
 c OK, it is the double
@@ -122,7 +122,7 @@ c OK, it is the first one
          ELSEIF(mj.eq.0)THEN
 c the observation is new: add it
            change=.true.
-c           WRITE(0,*)'addobs: new observation at record ',j
+c           write(99,*)'addobs: new observation at record ',j
            mnew=mnew+1
            aln(mnew)=alnt(j)
            den(mnew)=dent(j)
@@ -172,7 +172,7 @@ c =========END INTERFACE=====================
      +                findob,j,tutt,idsta(j)
                  numerr=numerr+1
                  ELSE
-                    WRITE(0,*)'findob: two same time',
+                    write(99,*)'findob: two same time',
      +                findob,j,tutt,idsta(j)
                  ENDIF
               ELSE
@@ -180,7 +180,7 @@ c =========END INTERFACE=====================
                     WRITE(ierrou,*)'findob: three same time',
      +                   findob,double,j,tutt,idsta(j)
                  ELSE
-                    WRITE(0,*)'findob: three same time',
+                    write(99,*)'findob: three same time',
      +                   findob,double,j,tutt,idsta(j)
                  ENDIF
 c                STOP
@@ -299,9 +299,9 @@ c this observation is present in .obs, .rad files, in duplicate!
      +             smagt(j),smag(double),iobst(j),iobs(double)))THEN
                  change=.true.
 c double, and changed! human intervention required
-                 WRITE(0,*)'addobs: double and changed'
-                 WRITE(0,*)' records ',mj,' and ',double,' in .obs'
-                 WRITE(0,*)' record ',j,' in .rwo'
+                 write(99,*)'addobs: double and changed'
+                 write(99,*)' records ',mj,' and ',double,' in .obs'
+                 write(99,*)' record ',j,' in .rwo'
 c                STOP
               ELSE
 c OK, it is the duplicate

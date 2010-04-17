@@ -37,7 +37,7 @@
       anold=anecc
       IF(n.LE.nmax) GOTO 1
 
-      WRITE(0,100) m,ecc
+      write(99,100) m,ecc
  100  FORMAT(' **** ANECC: not converged'/
      .       ' **** M =',F15.10,'     ecc =',F15.10)
 

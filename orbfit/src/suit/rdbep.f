@@ -64,7 +64,7 @@
           READ(unit,REC=1) vers,nbep,n
           IF(vers.NE.102) THEN
               lf=lench(filbep)
-              WRITE(0,120) filbep(1:lf),vers
+              write(99,120) filbep(1:lf),vers
               STOP '**** rdbep: abnormal end ****'
           END IF
           CLOSE(unit)

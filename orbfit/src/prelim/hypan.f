@@ -48,7 +48,7 @@
       IF(ABS(err).LT.eps) RETURN
       IF(n.LE.nmax) GOTO 1
 
-*     WRITE(0,100) m,ecc
+*     write(99,100) m,ecc
 *100  FORMAT(' **** HYPAN: not converged'/
 *    .       ' **** M =',1P,E12.4,', ecc =',E12.4)
 

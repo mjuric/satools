@@ -80,7 +80,7 @@ c find directory of observations
      +            fail1,fail)
       endif
       IF(.not.found.or.fail) then
-         write(0,*)' obs. directory option not found, using ''obsdata'''
+         write(99,*)' obs. dir. option not found, using ''obsdata'''
          obsdir0='obsdata'
       ENDIF
       CALL rmsp(obsdir0,le)
@@ -96,7 +96,7 @@ c find observations file name
       IF(.not.found.or.fail)THEN
          nam0=astna0
          CALL rmsp(nam0,lnam)
-         WRITE(0,*)' obs. filename option not found, using name ',
+         write(99,*)' obs. filename option not found, using name ',
      +        nam0(1:lnam),';'
       ENDIF
 c input data 

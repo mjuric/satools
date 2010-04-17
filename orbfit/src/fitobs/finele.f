@@ -64,7 +64,7 @@ c check that the asteroid name has been read
       ENDIF
       IF(.not.found.or.fail)THEN
          namel0=astna0
-         write(0,*)namel0
+         write(99,*)namel0
       ENDIF
       CALL rmsp(namel0,lnam)
 c read the name of the elements file, inquire
@@ -78,7 +78,7 @@ c read the name of the elements file, inquire
       ENDIF
       IF(.not.found.or.fail)THEN
 c the arc exists, but the input elements file is not specified
-         write(0,*)'elements file name not found, trying ''ast.cat'''
+         write(99,*)'elements file name not found, trying ''ast.cat'''
          write(iun20,*)'elem file name not found, trying ''ast.cat'''
          elefi0='ast.cat'
       ENDIF
@@ -90,7 +90,7 @@ c the arc exists, but the input elements file is not specified
      +        coox,t0,elem,gam,c,mass,h0,gma0,comele)
 c error case
          IF(.not.ini0)THEN
-            write(0,*)'asteroid ',namel0,' not found in ',elefi0
+            write(99,*)'asteroid ',namel0,' not found in ',elefi0
             write(iun20,*)'asteroid ',namel0,' not found in ',elefi0
             RETURN
          ENDIF
@@ -106,7 +106,7 @@ c coordinate change to equinoctal
 c initial conditions found
          CALL wriequ(iun20,namel0,t0,eq0)
       ELSE
-         WRITE(0,*) 'File ',elefi0(1:le),' not found!'
+         write(99,*) 'File ',elefi0(1:le),' not found!'
       ENDIF
       RETURN
       END

@@ -34,7 +34,7 @@ c line of maximum variation: in the alpha-delta plane
 c in the elements space
       xv=(b(1,1)*vad(1)+b(1,2)*vad(2))
       yv=(b(2,1)*vad(1)+b(2,2)*vad(2))
-c     WRITE(0,*)xv,yv
+c     write(99,*)xv,yv
 c direction not used any more 
 c     theta0=atan2(yv,xv)
 c linear step for variation axis parametrisation
@@ -67,21 +67,21 @@ c transfer of parametrisation in the V1,V2 plane
            x=(b(1,1)*alde(1)+b(1,2)*alde(2))
            y=(b(2,1)*alde(1)+b(2,2)*alde(2))
         ELSE
-           write(0,*)' linobs: this should not happen,ibv=',ibv
+           write(99,*)' linobs: this should not happen,ibv=',ibv
         ENDIF
 c compute displacement on the confidence ellipsoid corresponding to x,y
         nn=nn+1    
         CALL elemo4(x,y,v,ceicel,elm4)
         CALL mulmav(v6(1,3),6,4,elm4,4,elm(1,nn))
-c       write(0,*)(elm(i,nn),i=1,6)
+c       write(99,*)(elm(i,nn),i=1,6)
 c add to the original center of the ellipsoid of confidence
         CALL vsumg(6,eq,elm(1,nn),eqnew)
         ecc=sqrt(eqnew(2)**2+eqnew(3)**2)
         IF(ecc.ge.1.d0.or.eqnew(1).le.0.d0)THEN
-           write(0,*)' Hyperbolic, ecc=',ecc,' a=',eqnew(1)
+           write(99,*)' Hyperbolic, ecc=',ecc,' a=',eqnew(1)
            nn=nn-1
         ELSEIF(ecc.ge.0.99d0)THEN
-           write(0,*)' Almost Hyperbolic, ecc=',ecc,' a=',eqnew(1)
+           write(99,*)' Almost Hyperbolic, ecc=',ecc,' a=',eqnew(1)
            nn=nn-1
         ENDIF
  7    continue
@@ -120,7 +120,7 @@ c eigenvalues
         IF(eigval(i).gt.0.d0)THEN
            sig(i)=sqrt(eigval(i))
         ELSE
-           write(0,*) 'non positive eigenvalue'
+           write(99,*) 'non positive eigenvalue'
            sig(i)=0.d0
         ENDIF
       ENDDO
@@ -194,7 +194,7 @@ c ===========================================================
 c Cholewski method for inversion
       CALL tchinv(c4,ndimm2,cinv,ws,ierr)
       IF(ierr.ne.0)THEN
-         write(0,*)' decide what to do, ierr=',ierr
+         write(99,*)' decide what to do, ierr=',ierr
       ENDIF
 c ===========================================================
 c matrix to be used for out of plane component

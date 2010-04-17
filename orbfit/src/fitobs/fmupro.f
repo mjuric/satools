@@ -32,7 +32,7 @@ c =====================================================================
 c main loop
 c propagation to time tr
       DO j=imim,imip
-        WRITE(0,*)' orbit ',j
+        write(99,*)' orbit ',j
 c       CALL proelc('EQU',t0,eqm(1,j),gm(1,1,j),cm(1,1,j),
 c    +          tr,eq1(1,j),g1(1,1,j),c1(1,1,j))
         CALL proele('EQU',t0,eqm(1,j),tr,eq1(1,j))
@@ -45,18 +45,18 @@ c summary table
 c =====================================================================
       CALL tee(iun20,'SUMMARY OF MULTIPLE SOLUTIONS=')
       WRITE(iun20,223) tr
-      WRITE(0,223) tr
+      write(99,223) tr
  223  FORMAT(' elements at time ',f8.1,' (MJD):')
       CALL tee(iun20,
      +  'no.,     a      h      k      p      q      lambda=') 
       DO i=imim,imip
-        WRITE(0,144)i,(eqm(j,i),j=1,6)
+        write(99,144)i,(eqm(j,i),j=1,6)
  144    FORMAT(i3,6f12.8)
         WRITE(iun20,144)i,(eqm(j,i),j=1,6)
       ENDDO
       CALL tee(iun20,'no.,  magn,  MOID ,  nod+  ,  nod-=')
       DO i=imim,imip
-        WRITE(0,145)i,hmu(i),moid(i),dnp(i),dnm(i),iconv(i)
+        write(99,145)i,hmu(i),moid(i),dnp(i),dnm(i),iconv(i)
         WRITE(iun20,145)i,hmu(i),moid(i),dnp(i),dnm(i),iconv(i)
  145    FORMAT(i3,2x,f5.2,1x,f8.5,1x,f8.5,1x,f8.5,1x,i2)
       ENDDO

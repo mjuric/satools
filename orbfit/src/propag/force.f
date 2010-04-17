@@ -122,7 +122,7 @@ c        if(istate.eq.2)call prodmv(xpla(4,i),rot,xxp)
              if(istate.eq.2)xpla(j+3,i)=xpla(j+3,i)+rot(j,k)*xxp(k)
  22        continue
  21      continue
-c         write(0,*)(xpla(iii,i),iii=1,3)
+c         write(99,*)(xpla(iii,i),iii=1,3)
  9    continue
 c ===========================================================
       IF(iatrue.gt.0)THEN
@@ -158,8 +158,8 @@ c       d(i)=vsize(x-xpla(1:3,i))
                    IF(istate.eq.2)xxpla(icqfw+3)=xpla(icqfw+3,i)
                  ENDDO
               else
-                 write(0,*)' force: this should not happen',t0, idc,i
-                 write(0,*)nmass,(d(iii),dmin(iii),iii=1,nmass)
+                 write(99,*)' force: this should not happen',t0, idc,i
+                 write(99,*)nmass,(d(iii),dmin(iii),iii=1,nmass)
                  stop
               endif
            endif
@@ -179,8 +179,8 @@ c general relativistic correction
          enddo
       elseif(icrel.eq.2)then
          call eihrel(x,v,xpla,d,r,rast,frel)
-c     write(0,'(a4,3(1x,g22.16))')'frel',frel(1),frel(2),frel(3)
-c     write(0,'(a4,3(1x,g22.16))')'drgr',drgr(1,1),drgr(2,1),drgr(3,1)
+c     write(99,'(a4,3(1x,g22.16))')'frel',frel(1),frel(2),frel(3)
+c     write(99,'(a4,3(1x,g22.16))')'drgr',drgr(1,1),drgr(2,1),drgr(3,1)
          do j=1,3
             f(j)=f(j)+frel(j)
          enddo
@@ -199,20 +199,20 @@ c ===========================================================
 c yarkovsky effect, if required and data are avilable
       if(iyark.ge.1.and.yarfil)then
          IF(.not.yarini)THEN
-            WRITE(0,*)' contradiction in non gravitational parameters'
-            WRITE(0,*)'iyark=',iyark,' yarfil=',yarfil,' yarini=',yarini
+            write(99,*)' contradiction in non gravitational parameters'
+           write(99,*)'iyark=',iyark,' yarfil=',yarfil,' yarini=',yarini
             STOP 
          ENDIF
 c diurnal
          call yarkdi(x,yarkv,iyarpt)
-c         write(0,'(a,3(1x,d18.12))') 'diur ',yarkv(1),yarkv(2),yarkv(3)
+c         write(99,'(a,3(1x,d18.12))') 'diur ',yarkv(1),yarkv(2),yarkv(3)
          do j=1,3
             f(j)=f(j)+yarkv(j)
          enddo
 c seasonal
          if(iyark.gt.1)then
             call yarkse(x,v,yarkv,iyarpt)
-c         write(0,'(a,3(1x,d18.12))')'seas ',yarkv(1),yarkv(2),yarkv(3)
+c         write(99,'(a,3(1x,d18.12))')'seas ',yarkv(1),yarkv(2),yarkv(3)
             do j=1,3
                f(j)=f(j)+yarkv(j)
             enddo

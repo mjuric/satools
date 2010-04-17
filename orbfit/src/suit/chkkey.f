@@ -62,7 +62,7 @@
       END IF
  2    CONTINUE
       lf=lench(namif(i))
-      WRITE(0,100) keys(i)(1:lk1),krecnm(i),namif(i)(1:lf)
+      write(99,100) keys(i)(1:lk1),krecnm(i),namif(i)(1:lf)
  100  FORMAT(' ERROR: unrecognized keyword "',a,'"'/
      +        8x,'(record',i4,' in file "',a,'")')
       fail=.true.

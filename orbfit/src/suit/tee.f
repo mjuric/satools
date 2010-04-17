@@ -7,7 +7,7 @@ c =====================================================================
       character*80 string
       integer le
       le=index(string,'=')
-      write(0,*)string(1:le-1)
+      write(99,*)string(1:le-1)
       write(iun,*)string(1:le-1)
       return
       end

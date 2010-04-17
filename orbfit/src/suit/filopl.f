@@ -46,7 +46,7 @@
           INQUIRE(FILE=nam1,EXIST=found)
           IF(.NOT.found) THEN
               ll=lench(name)
-              WRITE(0,102) name(1:ll)
+              write(99,102) name(1:ll)
               STOP '**** filopl: abnormal end ****'
           END IF
       END IF
@@ -64,7 +64,7 @@
 
  3    CONTINUE
       ll=lench(nam1)
-      WRITE(0,101) nam1(1:ll)
+      write(99,101) nam1(1:ll)
  101  FORMAT(' **** filopl: cannot OPEN file "',a,'" (STATUS=old) ****')
       STOP '**** filopl: abnormal end ****'
       END

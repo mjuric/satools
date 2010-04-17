@@ -70,10 +70,10 @@
               le=lench(ermnam)
               filea=ermnam(1:le)//'.cla'
               filed=ermnam(1:le)//'.cld'
-              WRITE(0,210) ermnam(1:le)
+              write(99,210) ermnam(1:le)
               CALL rrmscl(filea,filed,.false.)
           ELSE
-              WRITE(0,211)
+              write(99,211)
           END IF
           IF(fail) STOP '**** astrwb: abnormal END ****'
           first=.false.

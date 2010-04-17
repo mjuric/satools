@@ -27,6 +27,6 @@ c ---------------------------------------------------------------
       accj2(1)=ratio*x(1)*brac1
       accj2(2)=ratio*x(2)*brac1
       accj2(3)=ratio*x(3)*brac2
-c      write(0,*)accj2(1),accj2(2)
+c      write(99,*)accj2(1),accj2(2)
       return
       end

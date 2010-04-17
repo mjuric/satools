@@ -60,7 +60,7 @@ c     write(ipirip,*)enne,ecc,z
 * =====================================================================
 * now compare with h given in input
       h=min(step,hmax)
-c      write(0,110)hms,h
+c      write(99,110)hms,h
 c110  format(' max. step required ',f9.6,' selected ',f9.6)
       return
       end
@@ -149,7 +149,7 @@ c         write(ipirip,*)' with e>0.2 select the stepsize by hand'
         sum=(c2ie+s2ie)/2.d0
         df=sum*ri**(m+4)
         f=f+df
-cc      write(0,100)i,df
+cc      write(99,100)i,df
 cc100   format(i5,d18.6)
         vadf=adf
         adf=dabs(df)
@@ -187,9 +187,9 @@ c**********************************************************************
         dbess=x2p*ifl/ifat
         dbess=dbess/jfat
         dbess=dbess/jpifat
-cc      write(0,*)dbess
+cc      write(99,*)dbess
         bessel=bessel+dbess
-cc      write(0,*)i,j,ifat,jfat,jpifat
+cc      write(99,*)i,j,ifat,jfat,jpifat
         if(dabs(dbess).lt.epbs)return
         jpifat=jpifat*(i+j)
         jfat=jfat*j

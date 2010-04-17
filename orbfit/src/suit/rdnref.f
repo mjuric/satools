@@ -61,7 +61,7 @@
       lf=lench(file)
       IF(.NOT.found) THEN
           IF(reqrd) THEN
-              WRITE(0,100) ck(1:lt),vartyp(1:lz)
+              write(99,100) ck(1:lt),vartyp(1:lz)
               fail1=.true.
               fail=.true.
           END IF
@@ -70,7 +70,7 @@
           RETURN
       END IF
       IF(ktyp1.NE.ktyp0) THEN
-          WRITE(0,106) ck(1:lt),ktyp0,ktyp1
+          write(99,106) ck(1:lt),ktyp0,ktyp1
           STOP '**** rdnref: abnormal end ****'
       END IF
  100  FORMAT(' ERROR: Missing definition of keyword "',a,'" (type: ',
@@ -88,7 +88,7 @@
 
 * Error message
  1    CONTINUE
-      WRITE(0,101) ck(1:lt),vartyp(1:lz),kr,file(1:lf)
+      write(99,101) ck(1:lt),vartyp(1:lz),kr,file(1:lf)
  101  FORMAT(' ERROR: Abnormal definition of keyword "',a,'" (type: ',
      +       a,')'/8x,'(record',i4,' in file "',a,'")')
       fail1=.true.

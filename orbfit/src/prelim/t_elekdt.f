@@ -35,14 +35,14 @@
       CALL elekdt(elem,eltype,gm,dt)
       CALL ekcc1(elem,eltype,xva,gm,0.d0)
 
-      WRITE(0,201) eltype,elem0
-      WRITE(0,201) eltype,elem
-      WRITE(0,201) eltypi,elemi
+      write(99,201) eltype,elem0
+      write(99,201) eltype,elem
+      write(99,201) eltypi,elemi
 
-      WRITE(0,*)
+      write(99,*)
 
-      WRITE(0,200) xv
-      WRITE(0,200) xva
+      write(99,200) xv
+      write(99,200) xva
 
  200  FORMAT(1P,6E20.12)
  201  FORMAT(A,1P,6E20.12)

@@ -125,7 +125,7 @@
       t2=t*t
       if(ncl) t2=t
       tval=dabs(t)
-*     IF(NS/10*10.EQ.NS) WRITE(0,7) NF,NS,X(1),X(2),T,TM,TF
+*     IF(NS/10*10.EQ.NS) write(99,7) NF,NS,X(1),X(2),T,TM,TF
 *  7  FORMAT(1X,2I6,3F12.5,1P,2E10.2)
 *  Loop 175 is 6 iterations on first sequence and two iterations therafter.
       do 175 m=1,ni
@@ -243,7 +243,7 @@
       ns=ns+1
 *  Return if done.
       if(.not.nper) go to 78
-*     WRITE(0,7) NF,NS,X(1),X(2),T,TM,TF
+*     write(99,7) NF,NS,X(1),X(2),T,TM,TF
 *     WRITE(4,7) NF,NS
       return
 *  Control on size of next sequence and adjust last sequence to exactly

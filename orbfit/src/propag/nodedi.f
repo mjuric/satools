@@ -51,6 +51,6 @@ c nodal points and distances
       rme=eqp(1)*(1.d0-eqp(2)**2-eqp(3)**2)/(1.d0-eccp*cosfp)            
       dnp=rp-rpe
       dnm=rm-rme
-c      WRITE(0,*)rp,rpe,dnp,rm,rme,dnm,cosf,cosfp,ome,omep
+c      write(99,*)rp,rpe,dnp,rm,rme,dnm,cosf,cosfp,ome,omep
       RETURN
       END

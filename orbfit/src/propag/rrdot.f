@@ -122,7 +122,7 @@ c Orbit propagation at time tb
          CALL rkg(tretdb,xastr,xastr(4),-taud,xast,xast(4),xdummy)
          if(i.lt.itmax)GOTO 11
 c too many iterations
-      WRITE(0,*)' slow convergence on down leg time ',tb-tbold
+      write(99,*)' slow convergence on down leg time ',tb-tbold
 c compute relative velocity between asteroid and receiver
  9    CONTINUE
       CALL vdiff(xast(4),vre,rhordv)
@@ -164,7 +164,7 @@ c convergence control
          IF(abs(tt-ttold).lt.ept) GOTO 19
       if(i.lt.itmax)GOTO 21
 c too many iterations
-      WRITE(0,*)' slow convergence on up leg time ',tt-ttold
+      write(99,*)' slow convergence on up leg time ',tt-ttold
  19   CONTINUE
 c compute relative velocity between asteroid and transmitter
       CALL vsumg(3,xea(4),ytr,vtr)
@@ -265,7 +265,7 @@ c Earth ionospheric/tropospheric delay
 c ref. EM Standish, A&A 233, 252 (1990)
       rsta=vsize(xsta)
       if(rsta.lt.1d-12)then
-         write(0,*)'deltau: radar station at geocenter!'
+         write(99,*)'deltau: radar station at geocenter!'
          cosz=1d0-1d-8
       else
          cosz=prscag(3,xsta,rho)/rsta/q
@@ -338,7 +338,7 @@ c     rho,drho - |rhov| & d|rhov|/dt
 c ================================
 c rate of change of the Earth ionospheric/tropospheric ~ Doppler shift
       if(rsta.lt.1d-12)then
-         write(0,*)'deltau: radar station at geocenter!'
+         write(99,*)'deltau: radar station at geocenter!'
          cosz=1d0-1d-8
       else
          cosz=(rhov(1)*xsta(1)+rhov(2)*xsta(2)+rhov(3)*xsta(3))/rsta/rho

@@ -117,10 +117,10 @@ c *************************************************************
                                                                                 
       stop                                                                      
                                                                                 
-  98  write(0,'(/a18,i3)')'read error on input file'                            
+  98  write(99,'(/a18,i3)')'read error on input file'                            
       stop                                                                      
                                                                                 
-  99  write(0,                                                                  
+  99  write(99,                                                                  
      *  '(/''write error on output file, nrec='',i6)')nrp                       
       stop                                                                      
                                                                                 

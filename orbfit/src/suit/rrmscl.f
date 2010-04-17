@@ -62,7 +62,7 @@
       READ(unit,102) rec
  102  FORMAT(A)
       IF(lench(rec).LT.110) THEN
-          WRITE(0,200) file(1:lf)
+          write(99,200) file(1:lf)
           STOP '**** rrmscl: abnormal end ****'
       END IF
  200  FORMAT('**** ERROR: file "',A,'" is written in an obsolete ',

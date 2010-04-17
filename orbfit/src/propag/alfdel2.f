@@ -56,7 +56,7 @@ c****************
 c   static memory not required
 c****************
       IF(ider.gt.1.or.ider.lt.0)THEN
-         WRITE(0,*)'alfdel2; ider=',ider,' not understood'
+         write(99,*)'alfdel2; ider=',ider,' not understood'
          STOP
       ENDIF
 c Orbit propagation:
@@ -179,7 +179,7 @@ c Computation of solar distance, earth distance, phase, elongation
       pha=acos(cospha)
       coselo=-prscal(d,xea)/(dis*vsize(xea))
       elo=acos(coselo)
-c	  WRITE(0,*)'alfdel2; dsun=',dsun,'phase=',pha
+c	  write(99,*)'alfdel2; dsun=',dsun,'phase=',pha
 c =====================================================================
 c rotation to the equatorial reference system
       call prodmv(deq,rotinv,d)

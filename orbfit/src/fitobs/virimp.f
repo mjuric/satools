@@ -87,9 +87,9 @@ c select time interval, step
          fields='cal,mjd,coord,mag,elong,glat,r,delta,appmot,skyerr'
          scale='UTC'
          IF(nint(abs(tdt2-tdt1)/dt).gt.500)THEN
-            write(0,*)'Too many ephemeris points: ',
+            write(99,*)'Too many ephemeris points: ',
      +           nint(abs(tdt2-tdt1)/dt)
-            write(0,*)'Select a time interval and time span to ',
+            write(99,*)'Select a time interval and time span to ',
      +        'ensure that there are fewer than 500 points.'
             goto 10
          ELSE
@@ -97,7 +97,7 @@ c select time interval, step
      +           dt,mass,hmag,gmag,idsta,scale,fields)
          ENDIF
          CALL filclo(iuneph,' ')
-         WRITE(0,*)' look at the ephemerides in file ./virimp.eph '
+         write(99,*)' look at the ephemerides in file ./virimp.eph '
       ELSEIF(ivir.eq.3)THEN
          CALL filopn(iunvir,'virimp.eq0','unknown')
 c output header 
@@ -124,12 +124,12 @@ c find corresponding orbital elements at epoch
             dels(2+jj)=-del4(jj)
          ENDDO
          CALL mulmav(v,6,6,dels,6,delems)
-c        WRITE(0,*)tpstr
-c        WRITE(0,*)delems
+c        write(99,*)tpstr
+c        write(99,*)delems
 c linear map from ellipse
 c        dxl=prscag(6,delems,dtpdet(1,1))
 c        dyl=prscag(6,delems,dtpdet(1,2))
-c        WRITE(0,*)dxl,dyl
+c        write(99,*)dxl,dyl
 c find corresponding orbital elements at epoch
          CALL mulmav(b,2,2,tpwea,2,del2)
          CALL mulmav(ceicel,4,2,del2,2,del4)
@@ -138,18 +138,18 @@ c find corresponding orbital elements at epoch
             dels(2+jj)=-del4(jj)
          ENDDO
          CALL mulmav(v,6,6,dels,6,delemw)
-c        WRITE(0,*)tpwea
-c        WRITE(0,*)delemw
+c        write(99,*)tpwea
+c        write(99,*)delemw
 c linear map from ellipse
 c        dxl=prscag(6,delemw,dtpdet(1,1))
 c        dyl=prscag(6,delemw,dtpdet(1,2))
-c        WRITE(0,*)dxl,dyl
+c        write(99,*)dxl,dyl
 c check 
 c        CALL transp(dtpdet,6,2,dtpcde)
 c        CALL mulmat(dtpcde,2,6,v,6,6,aa)
-c        WRITE(0,*)' aa=',aa
+c        write(99,*)' aa=',aa
 c        CALL mulmat(aa,2,2,b,2,2,id)
-c        WRITE(0,*)'id=',id
+c        write(99,*)'id=',id
 c compute 4 corners
          CALL vsumg(6,eqc,delems,elems(1,1))
          CALL vsumg(6,elems(1,1),delemw,elems(1,2))
@@ -162,7 +162,7 @@ c compute 4 corners
          CALL vsumg(6,elems(1,3),delemw,elems(1,4))
          CALL vsumg(6,elems(1,3),selemw,elems(1,3))
 c give time
-         WRITE(0,*)' give time for prediction (MJD)'
+         write(99,*)' give time for prediction (MJD)'
          READ(*,*)tmjd
 c universal time of the required observation 
          mjd1=intlo(tmjd)
@@ -181,7 +181,7 @@ c predict
      +           hmag,gmag,appmag)
             al(jj)=al(jj)-alpha
             de(jj)=de(jj)-delta
-c           write(0,*)jj,al(jj)*degrad,de(jj)*degrad
+c           write(99,*)jj,al(jj)*degrad,de(jj)*degrad
          ENDDO
 c ======four dimensional preimage===============
          menunam='prednonl'
@@ -209,10 +209,10 @@ c           ENDDO
 c linear map from 4-d axis
 c           dxl=prscag(6,delemw,dtpdet(1,1))
 c           dyl=prscag(6,delemw,dtpdet(1,2))
-c           WRITE(0,*)' alternate no. ',j,dxl,dyl,delemw
+c           write(99,*)' alternate no. ',j,dxl,dyl,delemw
 c        ENDDO
          DO j=1,npo1+5
-            write(0,*)'diff. observation ', j,al(j)*degrad,de(j)*degrad
+            write(99,*)'diff. observation ', j,al(j)*degrad,de(j)*degrad
          ENDDO
          titnam='virtual impactor' 
          CALL plocbd(titnam,alpha,delta,5.d0,tut,al,de,5+npo1,iob1)

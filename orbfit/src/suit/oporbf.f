@@ -31,7 +31,7 @@
 
       DATA first/.true./
 
-	  write(0,*) "Doing shit..."
+	  write(99,*) "Doing shit..."
 
       IF(first) THEN
           orbunt=0
@@ -44,13 +44,13 @@
       orbfn=file
       CALL filopn(orbunt,orbfn,'OLD')
       CALL rdfnam(orbunt,orbfn,orbnr)
-	  write(0,*) "Doing shit..."
+	  write(99,*) "Doing shit..."
       lf=lench(orbfn)
 
 * Format
       CALL rdfcha(orbunt,'format',.true.,form,found,kr)
       IF(form.NE.'OEF1.1') THEN
-          WRITE(0,100) orbfn(1:lf)
+          write(99,100) orbfn(1:lf)
           STOP '**** oporbf: abnormal end ****'
       END IF
  100  FORMAT('ERROR: unsupported format in file ',A)
@@ -61,7 +61,7 @@
  1        CONTINUE
           CALL getrsc(orbunt,rec,orbnr,end)
           IF(end) THEN
-              WRITE(0,104) orbfn(1:lf)
+              write(99,104) orbfn(1:lf)
               STOP '**** oporbf: abnormal end ****'
           END IF
           orbnr=orbnr-1
@@ -82,7 +82,7 @@
       ELSEIF(rectyp.EQ.'ML') THEN
           deltyp=' '
       ELSE
-          WRITE(0,101) orbfn(1:lf)
+          write(99,101) orbfn(1:lf)
           STOP '**** oporbf: abnormal end ****'
       END IF
  101  FORMAT('ERROR: unsupported record type in file ',A)
@@ -91,7 +91,7 @@
       CALL rdfref(orbunt,'refsys',.false.,dfrsty,dfrsep,found,kr)
       IF(.NOT.found) THEN
           IF(rectyp.EQ.'1L') THEN
-              WRITE(0,105) orbfn(1:lf)
+              write(99,105) orbfn(1:lf)
               STOP '**** oporbf: abnormal end ****'
           END IF
           dfrsty=' '
@@ -111,7 +111,7 @@
       RETURN
 
  10   CONTINUE
-      WRITE(0,102) orbfn(1:lf),orbnr
+      write(99,102) orbfn(1:lf),orbnr
  102  FORMAT(' FORMAT ERROR in file ',A,' at line',I5)
       STOP '**** oporbf: abnormal end ****'
 

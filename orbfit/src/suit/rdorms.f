@@ -73,7 +73,7 @@
 
  20   CONTINUE
       lf=lench(file)
-      WRITE(0,101) file(1:lf),nr
+      write(99,101) file(1:lf),nr
  101  FORMAT(' Input error (file "',A,'", record',I5,')')
       STOP '**** rdorms: abnormal end ****'
 

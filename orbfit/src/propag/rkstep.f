@@ -12,7 +12,7 @@ c     INCLUDE 'model.h'
       INTEGER npas,nrk,lf,l,i
 c  printout data on aborted step
       l=iabs(lf)
-      write (*,*) 'Non-convergence in rk-gauss. See .pro file.'
+      write (99,*) 'Non-convergence in rk-gauss. See .pro file.'
       write (ipirip,100)npas,nrk,lf,ep(l),eprk,h,isrk,(ep(i),i=1,l)
  100  format(' non convergence in rk at step ',i4,' nrk ',i3,' lf= ',i5
      */' last control ',d14.5,' convergence required ',d12.3/

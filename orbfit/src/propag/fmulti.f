@@ -100,17 +100,17 @@ c input parameters of segment on the variations line
 c sigma and imult have to be passed in the call
          WRITE(iun20,*)' sigma=',sigma,'  in ',imult,' steps'
          IF(2*imult+1.gt.mulx)THEN
-            WRITE(0,*)' too many; max is ',mulx
+            write(99,*)' too many; max is ',mulx
             STOP
          ENDIF
       ELSE
-         WRITE(0,*)' how many sigma?'
+         write(99,*)' how many sigma?'
          READ(*,*) sigma
- 259     WRITE(0,*)' how many steps on each side?'
+ 259     write(99,*)' how many steps on each side?'
          READ(*,*) imult
          WRITE(iun20,*)' sigma=',sigma,'  in ',imult,' steps'
          IF(2*imult+1.gt.mulx)THEN
-            WRITE(0,*)' too many; max is ',mulx
+            write(99,*)' too many; max is ',mulx
             GOTO 259
          ENDIF
       ENDIF
@@ -133,7 +133,7 @@ c main loop on number of steps (positive side)
 c =====================================================================
        DO 5 i=1,imult
         imi=imult+i+1
-        WRITE(0,*)' alternate solution no. ',imi
+        write(99,*)' alternate solution no. ',imi
         WRITE(iun20,*)' alternate solution no. ',imi
 c use weak direction to find initial conditions 
         hh=dn*sigma
@@ -146,13 +146,13 @@ c 1=Euler 2= RK2
 c check for hyperbolic
         IF(fail.or.sqrt(eqm(2,imi)**2+eqm(3,imi)**2).ge.0.99d0
      +       .or.eqm(1,imi).le.0.d0)THEN
-           WRITE(0,*)'step ',imi,' hyperbolic'
-           WRITE(0,*)(eqm(j,imi),j=1,6)
+           write(99,*)'step ',imi,' hyperbolic'
+           write(99,*)(eqm(j,imi),j=1,6)
            imi=imi-1
            GOTO 6
         ELSEIF(bizarre(eqm(1,imi)))THEN
-           WRITE(0,*)'step ',imi,' byzarre'
-           WRITE(0,*)(eqm(j,imi),j=1,6)
+           write(99,*)'step ',imi,' byzarre'
+           write(99,*)(eqm(j,imi),j=1,6)
            imi=imi-1
            GOTO 6
         ELSE
@@ -206,7 +206,7 @@ c =====================================================================
 c main loop on number of steps (negative side)
 c =====================================================================
         imi=imult-i+1
-        WRITE(0,*)' alternate solution no. ',imi
+        write(99,*)' alternate solution no. ',imi
         WRITE(iun20,*)' alternate solution no. ',imi
 c use weak direction to find initial conditions 
         hh=-dn*sigma
@@ -219,13 +219,13 @@ c 1=Euler 2= RK2
 c check for hyperbolic
         IF(fail.or.sqrt(eqm(2,imi)**2+eqm(3,imi)**2).ge.0.99d0
      +       .or.eqm(1,imi).le.0.d0)THEN
-           WRITE(0,*)'step ',imi,' hyperbolic'
-           WRITE(0,*)(eqm(j,imi),j=1,6)
+           write(99,*)'step ',imi,' hyperbolic'
+           write(99,*)(eqm(j,imi),j=1,6)
            imi=imi+1
            GOTO 8
         ELSEIF(bizarre(eqm(1,imi)))THEN
-           WRITE(0,*)'step ',imi,' byzarre'
-           WRITE(0,*)(eqm(j,imi),j=1,6)
+           write(99,*)'step ',imi,' byzarre'
+           write(99,*)(eqm(j,imi),j=1,6)
            imi=imi+1
            GOTO 8
         ELSE
@@ -274,13 +274,13 @@ c =====================================================================
       CALL filopn(iunctc,'mult.ctc','unknown')
       CALL wromlh(iunctc,'ECLM','J2000')
       DO i=imim,imip
-        WRITE(0,144)i,(eqm(j,i),j=1,6)
+        write(99,144)i,(eqm(j,i),j=1,6)
         WRITE(iun20,144)i,(eqm(j,i),j=1,6)
  144    FORMAT(i3,6f12.8)
       ENDDO
       CALL tee(iun20,'no  RMS ,lastcor,  magn,  MOID ,nod+,nod-, sigQ=')
       DO i=imim,imip
-        WRITE(0,145)i,csinom(i),delnom(i),hmu(i)
+        write(99,145)i,csinom(i),delnom(i),hmu(i)
      +                    ,moid(i),dnp(i),dnm(i),iconv(i),sigq(i)
         WRITE(iun20,145)i,csinom(i),delnom(i),hmu(i)
      +                    ,moid(i),dnp(i),dnm(i),iconv(i),sigq(i)

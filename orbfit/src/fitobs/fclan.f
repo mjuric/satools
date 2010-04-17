@@ -144,12 +144,12 @@ c      IF(iclan.eq.1.or.iclan.eq.2)THEN
 c t1 has been passed as dummy variable, nothing to do
          ELSE
 c select final time
- 56         WRITE(0,*)' search for close approaches until time (MJD)?'
+ 56         write(99,*)' search for close approaches until time (MJD)?'
             READ(*,*) t1
             IF(icont.eq.1.and.(t1-tc)/(t1old-tc).le.1.d0)THEN
-               WRITE(0,*)' change in direction not allowed '
-               WRITE(0,*)' epoch, old target time, new target time' 
-               WRITE(0,*) tc,t1old,t1,' must be in sequence'
+               write(99,*)' change in direction not allowed '
+               write(99,*)' epoch, old target time, new target time' 
+               write(99,*) tc,t1old,t1,' must be in sequence'
                GOTO 56
             ENDIF
          ENDIF 
@@ -162,8 +162,8 @@ c no target plane so far
          epsmtp=1.d-10
 c check availability of JPL ephemerides
          IF(t1.lt.tejpl1.or.t1.gt.tejpl2)THEN
-            WRITE(0,*)' JPL ephemerides not available for t1=',t1
-            WRITE(0,*)' but only for interval ',tejpl1,tejpl2
+            write(99,*)' JPL ephemerides not available for t1=',t1
+            write(99,*)' but only for interval ',tejpl1,tejpl2
             ok=.false.
             RETURN
          ENDIF
@@ -181,12 +181,12 @@ c select modified target plane
 c     ELSEIF(iclan.eq.3.or.iclan.eq.4)THEN
       ELSEIF(iclan.eq.2)THEN
 c for previously selected target plane: what to do? nothing
-         WRITE(0,*)' using previously selected target plane'
+         write(99,*)' using previously selected target plane'
          WRITE(iun20,*)' using previously selected target plane'
-         WRITE(0,*)' close app. at t=',tcl0
-         WRITE(0,*)' distance=',dmin0,' velocity=',vmin0
+         write(99,*)' close app. at t=',tcl0
+         write(99,*)' distance=',dmin0,' velocity=',vmin0
       ELSE
-         WRITE(0,*)' fclan: option iclan=',iclan,' not available'
+         write(99,*)' fclan: option iclan=',iclan,' not available'
          RETURN
       ENDIF
 c =============================================================
@@ -201,7 +201,7 @@ c iclan 2,4 means Opik target plane
 c        CALL opclan(batchcl,iun20,iclan,tc,eqc,gc,tcl0,xc0,vc0,
 c    +        tpc,dtpdet,vt3,sig,axes,tcl,eq1,de1de0)
 c     ELSE
-c        WRITE(0,*)' fclan: option iclan=',iclan,' not available'
+c        write(99,*)' fclan: option iclan=',iclan,' not available'
 c        RETURN
 c     ENDIF     
 c =====================================================================
@@ -227,7 +227,7 @@ c exit, disconnecting mtp search routine
 c disconnected... this does not work! The changes to intiial conditions have
 c to be applied at the original epoch, not at the intermediate one! Although
 c the linear analysis is good, all the semilinear and newton fails
-c           WRITE(0,*)' go on with search for close app.? 1=yes 0=no'
+c           write(99,*)' go on with search for close app.? 1=yes 0=no'
 c           READ(*,*)icont
 c           IF(icont.eq.1)THEN
 c              tc=tcl
@@ -277,7 +277,7 @@ c one newton's method iteration
      +     iun20,error,dminew,tpr)
 c iteration step acceptable?
          IF(error)THEN
-            write(0,*)' Newton failed at iteration ',itnew
+            write(99,*)' Newton failed at iteration ',itnew
             write(iun20,*)' Newton failed at iteration ',itnew
             IF(batchcl) THEN
                 ok=.false.
@@ -298,7 +298,7 @@ c no, only one requested; go back to fclan menu
 c convergence control
             IF(abs(dminew-tpr).lt.newcont)THEN
 c convergence already achieved
-               write(0,*)' newton converged'
+               write(99,*)' newton converged'
                astna0='virimp'
                CALL wromlr (iun20,astna0,eq0,'EQU',t0,gc,.true.,
      +                  cc,.true.,hmag,gmag,0.d0)
@@ -310,7 +310,7 @@ c virtual impactor found
                   RETURN
                ELSE
 c ephemerides requred?
-                  write(0,*)' ephemeris of virtual impactor? 1=yes 0=no'
+                 write(99,*)' ephemeris of virtual impactor? 1=yes 0=no'
                   read(*,*)ikey
                   IF(ikey.eq.1)THEN
                      CALL virimp(tpc,dtpdet,axes,sig,ceicel,b,v,
@@ -326,7 +326,7 @@ c next iteration
                   GOTO 59
                ELSE
 c too many iterations
-                  write(0,*)' Newton failed to converge'
+                  write(99,*)' Newton failed to converge'
                   write(iun20,*)' Newton failed to converge'
                   IF(batchcl)THEN
                      ok=.false.

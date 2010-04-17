@@ -151,7 +151,7 @@
               head2(lh+1:)='    Longitude      Latitude  '
           ELSE
               lf=lench(frameo)
-              WRITE(0,331) frameo(1:lf)
+              write(99,331) frameo(1:lf)
               STOP '**** ephemc: Abnormal end ****'
           END IF
           head3(lh+1:)='    h  m  s        d  ''  "   '
@@ -224,7 +224,7 @@
           IF(fail) THEN
               la=lench(amuni)
               lad=lench(amunid)
-              WRITE(0,320) amuni(1:la),amunid(1:lad)
+              write(99,320) amuni(1:la),amunid(1:lad)
               amuni=amunid
               CALL angvcf(amuni,cvf,fail)
               IF(fail) STOP '**** ephemc: internal error (01) ****'
@@ -278,7 +278,7 @@
           outmot=.true.
       ELSE
           lf=lench(field(i))
-          WRITE(0,330) field(i)(1:lf)
+          write(99,330) field(i)(1:lf)
           STOP '**** ephemc: abnormal end ****'
       END IF
       IF(lh.GT.lrx) STOP '**** ephemc: lh > lrx ****'
@@ -407,7 +407,7 @@
           END IF
       ELSE
           lf=lench(field(i))
-          WRITE(0,340) field(i)(1:lf)
+          write(99,340) field(i)(1:lf)
           STOP '**** ephemc: internal error (04) ****'
       END IF
  6    CONTINUE

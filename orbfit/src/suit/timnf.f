@@ -47,7 +47,7 @@
  1        CONTINUE
           nit=nit+1
           IF(nit.GT.nitutc) THEN
-              WRITE(0,100) mjd1,sec1,scale
+              write(99,100) mjd1,sec1,scale
               STOP' **** timnf: abnormal END ****'
           END IF
           IF(sec.LT.0.d0) THEN
@@ -85,7 +85,7 @@
           nit=0
  3        nit=nit+1
           IF(nit.GT.nitmax) THEN
-              WRITE(0,100) mjd1,sec1,scale
+              write(99,100) mjd1,sec1,scale
               STOP' **** timnf: abnormal END ****'
           END IF
           k=sec/86400.d0

@@ -70,7 +70,7 @@ c alpha is actually r, delta is rdot
          smag(nobs)='      '
          if(error) then
             l=lench(file)
-            write(0,102) file(1:l),nobs
+            write(99,102) file(1:l),nobs
  102        format(' **** mpcin: input conversion error ****'/
      .           ' **** file = "',a,'", line',i5,' ****')
             nobs=0
@@ -85,10 +85,10 @@ c regular ending
       call filclo(unit,' ')
       IF(nobs.eq.0)THEN
          obs=.false.
-         write(0,*) 'Warning: Found ',nobs,' obs in ',file
+         write(99,*) 'Warning: Found ',nobs,' obs in ',file
       ELSE
          obs=.true.
-         write(0,*) 'Found ',nobs,' obs in ',file
+         write(99,*) 'Found ',nobs,' obs in ',file
       ENDIF
       return
       end

@@ -95,7 +95,7 @@ c ok, go on with arc
          ELSEIF(iarc.eq.0)THEN
             CONTINUE
          ELSE
-            WRITE(0,*)'FDIFCO: this should not happen, iarc=',iarc
+            write(99,*)'FDIFCO: this should not happen, iarc=',iarc
          ENDIF
       ENDIF
 c =====================================================================
@@ -153,7 +153,7 @@ c estimate magnitude here
       IF(succ)THEN
          CALL magest(smag,rmsmag,sel,m,h0,resmag,rmsh)
       ELSE
-         WRITE(0,*)' magnitude cannot be estimated w/o new orbit'
+         write(99,*)' magnitude cannot be estimated w/o new orbit'
          rmsh=-1.d0
          DO i=1,m
             resmag(i)=1.d9
@@ -212,10 +212,10 @@ c Manually discard big residuals
 c++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
          IF(.not.autrej .and. .not.batch)THEN
          rms=csino0
-         WRITE(0,*)' RMS of weighed residuals is ',rms
-         WRITE(0,*)' Discard residuals bigger than sigma*rms'
-         WRITE(0,*)' give sigma; sigma.le.0 not to discard'
-         WRITE(0,*)
+         write(99,*)' RMS of weighed residuals is ',rms
+         write(99,*)' Discard residuals bigger than sigma*rms'
+         write(99,*)' give sigma; sigma.le.0 not to discard'
+         write(99,*)
          READ(*,*)sigma
          IF(sigma.gt.0.d0)THEN
             recov=sigma*rms*ratio
@@ -227,7 +227,7 @@ c++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                IF(ra.gt.disca.or.rd.gt.disca)THEN
 c discard observation
                   IF(sel(i).ne.0)THEN
-                     WRITE(0,330)tau(i),idsta(i),resa(i)*secrad,
+                     write(99,330)tau(i),idsta(i),resa(i)*secrad,
      +                    resd(i)*secrad,sel(i)
                      disc=.true.
                   ENDIF
@@ -239,7 +239,7 @@ c discard observation
                ELSEIF(ra.lt.recov.and.rd.lt.recov)THEN
 c recover previously discarded observation
                   IF(sel(i).eq.0)THEN
-                     WRITE(0,340)tau(i),idsta(i),resa(i)*secrad,
+                     write(99,340)tau(i),idsta(i),resa(i)*secrad,
      +                    resd(i)*secrad,sel(i)
                      WRITE(iun20,340)tau(i),idsta(i),resa(i)*secrad,
      +                    resd(i)*secrad,sel(i)
@@ -251,14 +251,14 @@ c recover previously discarded observation
                ENDIF
             ENDDO
             IF(.not.disc)THEN
-               WRITE(0,*)'NOTHING TO BE DISCARDED/RECOVERED'
-               WRITE(0,*)' at sigma level=',sigma
+               write(99,*)'NOTHING TO BE DISCARDED/RECOVERED'
+               write(99,*)' at sigma level=',sigma
             ENDIF
             nobnew=0
             DO i=1,m
                IF(sel(i).gt.0)nobnew=nobnew+1
             ENDDO
-            WRITE(0,*)'OBSERVATIONS USED=',nobs,' TO BE USED=',nobnew
+            write(99,*)'OBSERVATIONS USED=',nobs,' TO BE USED=',nobnew
          ENDIF
          ENDIF
 c++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -343,7 +343,7 @@ c write residual in range rate
       ENDIF
       IF(radrate)THEN
          IF(iunrad.gt.0)THEN
-         WRITE(0,457)
+         write(99,457)
      +           'range rate RMS   =',sqrt(rrsum/rrwsum)*au,' km/day',
      +           'range rate wt=',sqrt(1d0/rrwsum*rrcnt)*au,' km/day'
          ENDIF

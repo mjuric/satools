@@ -6,8 +6,8 @@ c computation of a bilinear form
       double precision v1(nv),v2(nv),w(nx,n)
       integer i,j
 c  control on dimensions
-      if(nv.ne.n)write(0,*)' dimension quadr, nv=',nv,' ne n=',n
-      if(n.gt.nx)write(0,*)' dimension quadr, n=',n,' gt nx=',nx
+      if(nv.ne.n)write(99,*)' dimension quadr, nv=',nv,' ne n=',n
+      if(n.gt.nx)write(99,*)' dimension quadr, n=',n,' gt nx=',nx
       bilin=0.d0
       do 10 i=1,n
       do 10 j=1,n

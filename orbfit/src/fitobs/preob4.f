@@ -136,7 +136,7 @@ c linear map from ellipse
 c apparent magnitude is the one of the nominal orbit
            hmagv(n)=hmagn
         ELSEIF(inl.eq.2)THEN
-           write(0,*)' inl=2 is forbidden'
+           write(99,*)' inl=2 is forbidden'
            npo1=0
            RETURN
         ELSEIF(inl.eq.3)THEN
@@ -146,7 +146,7 @@ c full n-body propagation from ellipse
      +          dummy,dummy,0,twobo,ddade,dddde)
            al(n)=al(n)-alpha
            de(n)=de(n)-delta
-c          write(0,*)n,al(n),de(n)
+c          write(99,*)n,al(n),de(n)
 c other prediction data stored in common
            phav(n)=pha
            disv(n)=dis
@@ -158,7 +158,7 @@ c other prediction data stored in common
 c compute apparent magnitude at time of observation
            hmagv(n)=appmag(h,g,dsun,dis,pha)
         ELSE
-           WRITE(0,*)' preobn: this we have not invented yet ', inl
+           write(99,*)' preobn: this we have not invented yet ', inl
            RETURN           
         ENDIF
 c keep count of lost revolutions
@@ -168,7 +168,7 @@ c keep count of lost revolutions
            CALL angupd(al(n),al(n-1),ng)
         ENDIF
 c temporary output
-c       write(0,*)'Solution ',n,', RA/DEC (deg)',
+c       write(99,*)'Solution ',n,', RA/DEC (deg)',
 c    +       al(n)*degrad,de(n)*degrad,ng
  7    continue
 c =====================================================================
@@ -176,7 +176,7 @@ c ensure that LOV is consistent with nominal point
 c first find midpoint of LOV, assume npo is even
       if(ibv.eq.2)then
          nrev=nint((al(npo/2)+al(npo/2+1))/2.d0/dpig)
-c        write(0,*)'debug: nrev:',nrev
+c        write(99,*)'debug: nrev:',nrev
          if(nrev.ne.0)then
             do n=1,npo1
                al(n)=al(n)-nrev*dpig

@@ -159,7 +159,7 @@ c ===========units for err,pro,clo files ========
       INCLUDE 'proout.h'
 c =====================================================================
 c Run name
-      WRITE(0,*) 'Run name ='
+      write(99,*) 'Run name ='
       READ(*,100) run
  100  FORMAT(a)
       IF(run.eq.'')stop 'No run specified.'
@@ -256,7 +256,7 @@ c ================MENU 1: INPUT OBS============================
             ifobs=3
             GOTO 61
          ENDIF
-         WRITE(0,*)' INPUT OF OBSERVATIONAL DATA'
+         write(99,*)' INPUT OF OBSERVATIONAL DATA'
  51      menunam='inputobs'
          CALL menu(ifobs,menunam,5,' which data to input?=',
      +      'first arc=','second arc=','both=',
@@ -338,7 +338,7 @@ c input orbital elements
             iele=3
             GOTO 62
          ENDIF
-         WRITE(0,*)' INPUT OF ORBITAL ELEMENTS'
+         write(99,*)' INPUT OF ORBITAL ELEMENTS'
 c ================MENU 2: INPUT ELEMENTS======================
  52      menunam='inputele'
          CALL menu(iele,menunam,8,
@@ -376,7 +376,7 @@ c initial conditions for arc 2
 c ===================================================================
 c use Gauss/Vaisala method for preliminary orbit, arc 1
             IF(.not.obs0)THEN
-               WRITE(0,*)'missing observations for arc 1'
+               write(99,*)'missing observations for arc 1'
                GOTO 52
             ENDIF
             menunam='prelimet'
@@ -400,7 +400,7 @@ c use Gauss/Vaisala method for preliminary orbit, arc 1
 c =====================================================================
 c use Gauss/Vaisala method for preliminary orbit, arc 2
             IF(.not.obsp)THEN
-               WRITE(0,*)'missing observations for arc 2'
+               write(99,*)'missing observations for arc 2'
                GOTO 52
             ENDIF
             menunam='inputmeth'
@@ -433,14 +433,14 @@ c copy elements of arc 1 into elements of arc 2
 c covariance is not copied
                covp=.false.
             ELSE
-               WRITE(0,*)' initial conditions for arc 1 not available'
+               write(99,*)' initial conditions for arc 1 not available'
             ENDIF
          ENDIF
          IF(iele.eq.8)THEN
 c =====================================================================
 c  First guess from identif
             IF(iope.eq.0)THEN
-               WRITE(0,*)' THIS FUNCTION IS NOT READY'
+               write(99,*)' THIS FUNCTION IS NOT READY'
                GOTO 50
             ENDIF
             CALL tee(iun20,' INPUT PROPOSED IDENTIFICATION=')
@@ -480,10 +480,10 @@ c output new elements
                CALL wromlr (iunel0,astna0,eq0,'EQU',t0,g0,.true.,
      +                  c0,.true.,h0,gma0,0.d0)
                CALL nomoid(t0,eq0,moid,iconv,dnp,dnm)
-               write(0,199)moid,iconv,dnp,dnm
+               write(99,199)moid,iconv,dnp,dnm
  199           format('orb.dist.      dist.n+  dist.n-'/ 
      +              f8.5,1x,i4,1x,f8.5,1x,f8.5)
-               write(0,*)
+               write(99,*)
                write(iunel0,198)moid,iconv,dnp,dnm
  198           format('!MOID ',f8.5,1x,i4/'!NODES ',f8.5,1x,f8.5)
             ENDIF
@@ -507,8 +507,8 @@ c output new elements
                CALL wromlr (iunelp,astnap,eqp,'EQU',tp,gp,.true.,
      +                  cp,.true.,hp,gmap,0.d0)
                CALL nomoid(tp,eqp,moid,iconv,dnp,dnm)
-               write(0,199)moid,iconv,dnp,dnm
-               write(0,*)
+               write(99,199)moid,iconv,dnp,dnm
+               write(99,*)
                write(iunelp,198)moid,iconv,dnp,dnm
             ENDIF
          ENDIF
@@ -530,8 +530,8 @@ c output new elements: problem of the name (used arc 1, but...)
                CALL wromlr (iunelt,astna0,eq,'EQU',tm,g,.true.,
      +                  c,.true.,hm,gmam,0.d0)
                CALL nomoid(tm,eq,moid,iconv,dnp,dnm)
-               write(0,199)moid,iconv,dnp,dnm
-               write(0,*)
+               write(99,199)moid,iconv,dnp,dnm
+               write(99,*)
                write(iunelt,198)moid,iconv,dnp,dnm
             ENDIF
 c =====================================================================
@@ -570,12 +570,12 @@ c can be done
 c =====================================================================
 c epoch time in the middle, unless they are too close
             IF(abs(t0-tp).lt.1.d0)THEN
-               WRITE(0,*)' initial times ',t0,tp,' too close'
+               write(99,*)' initial times ',t0,tp,' too close'
                GOTO 54
             ENDIF
             tm=(t0+tp)/2.d0
             WRITE(iun20,123) tm
-            WRITE(0,123) tm
+            write(99,123) tm
  123        FORMAT(1x,'tm =',f8.1)
             WRITE(iun20,*)
 c =====================================================================
@@ -592,7 +592,7 @@ c allowing to combine two arcs
             CALL start(eq0,eqp,t0,tp,gms,1,ng,enm,eq(1),eq(6))
             initwo=.true.
             CALL wriequ(iun20,astna0,tm,eq)
-            WRITE(0,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
+            write(99,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
 c =====================================================================
          ELSEIF(igue.eq.2)THEN
 c =====================================================================
@@ -603,7 +603,7 @@ c can be done
             tm=t0
             CALL vcopy(6,eq0,eq)
             initwo=.true.
-            WRITE(0,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
+            write(99,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
 c =====================================================================
 c magnitude is first arc
             hm=h0
@@ -618,7 +618,7 @@ c can be done
             tm=tp
             CALL vcopy(6,eqp,eq)
             initwo=.true.
-            WRITE(0,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
+            write(99,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
 c =====================================================================
 c magnitude is second arc
             hm=hp
@@ -630,7 +630,7 @@ c use first guess as computed from identif for an arc including
 c both sets of observations
 c =====================================================================
             IF(iope.eq.0)THEN
-               WRITE(0,*)' THIS FUNCTION IS NOT READY'
+               write(99,*)' THIS FUNCTION IS NOT READY'
                GOTO 54
             ENDIF
 c check availability of observations and initial condition
@@ -646,7 +646,7 @@ c =====================================================================
             tm=tide
             CALL vcopy(6,eqide,eq)
             initwo=.true.
-            WRITE(0,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
+            write(99,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
 c =====================================================================
 c magnitude is mean (not knowing any better)
             hm=(h0+hp)/2.d0
@@ -662,7 +662,7 @@ c =====================================================================
                CALL vcopy(6,eqf,eq)
                tm=tid
                initwo=.true.
-               WRITE(0,*)' INITIAL COND. AVAILABLE, NOW USE DIFF. CORR.'
+               write(99,*)' INITIAL COND. AVAILABLE,NOW USE DIFF. CORR.'
             ELSE
                GOTO 54
             ENDIF
@@ -711,14 +711,14 @@ c =====================================================================
          ELSEIF(iprop.eq.5)THEN
             tr= meanti(tau(m+1),rmsa(m+1),rmsd(m+1),mp)
          ELSEIF(iprop.ge.6.and. iprop.le.8)THEN
-            WRITE(0,*)' Current time is : ',t0,'(MJD).'
-            WRITE(0,*)' begin ephemerides from epoch (MJD)?   '
+            write(99,*)' Current time is : ',t0,'(MJD).'
+            write(99,*)' begin ephemerides from epoch (MJD)?   '
             READ(*,*)tr
-            WRITE(0,*)' end ephemerides from epoch (MJD)?   '
+            write(99,*)' end ephemerides from epoch (MJD)?   '
             READ(*,*)tf
-            WRITE(0,*)' time step in days?'
+            write(99,*)' time step in days?'
             READ(*,*)step
-            WRITE(0,*) 'Is data correct? (y/n)'
+            write(99,*) 'Is data correct? (y/n)'
             READ(*,*)ans
             IF(ans(1:1).eq.'n' .or. ans(1:1).eq.'N') GOTO 55 
 c           determine number of steps before t0
@@ -748,7 +748,7 @@ c determine type of elements output
             endif
 c warning: funny result if mp=0; check obsp?
          ELSE
-            WRITE(0,*)' propagate to epoch (MJD)?   '
+            write(99,*)' propagate to epoch (MJD)?   '
             READ(*,*)tr
          ENDIF
 c =====================================================================
@@ -764,7 +764,7 @@ c =====================================================================
                   CALL wromlr (iunel0,astna0,eq0,'EQU',t0,g0,cov0,
      +                  c0,cov0,h0,gma0,0.d0)
                   CALL nomoid(t0,eq0,moid,iconv,dnp,dnm)
-                  write(0,199)moid,iconv,dnp,dnm
+                  write(99,199)moid,iconv,dnp,dnm
                   write(iunel0,198)moid,iconv,dnp,dnm
                ENDIF
             ENDIF
@@ -778,7 +778,7 @@ c =====================================================================
                   CALL wromlr (iunelp,astnap,eqp,'EQU',tp,gp,covp,
      +                  cp,covp,hp,gmap,0.d0)
                   CALL nomoid(tp,eqp,moid,iconv,dnp,dnm)
-                  write(0,199)moid,iconv,dnp,dnm
+                  write(99,199)moid,iconv,dnp,dnm
                   write(iunelt,198)moid,iconv,dnp,dnm
                ENDIF
             ENDIF
@@ -794,7 +794,7 @@ c problem with name for identification; used arc 1, but...
                   CALL wromlr (iunelt,astna0,eq,'EQU',tm,g,covtwo,
      +                 c,covtwo,hm,gmam,0.d0)
                   CALL nomoid(tm,eq,moid,iconv,dnp,dnm)
-                  write(0,199)moid,iconv,dnp,dnm
+                  write(99,199)moid,iconv,dnp,dnm
                   write(iunelt,198)moid,iconv,dnp,dnm
                ENDIF
             ENDIF
@@ -1013,14 +1013,14 @@ c ======================================================
          ELSEIF(ifff.eq.3)THEN
 c ======================================================
 c adopt alternate solution
-            WRITE(0,*)' which one to keep? 0=none'
+            write(99,*)' which one to keep? 0=none'
             READ(*,*) imi
             IF(imi.ge.imim.and.imi.le.imip)THEN
                CALL tee(iun20,'ALTERNATE SOLUTION ADOPTED=')
-               WRITE(0,*)' NUMBER ',imi
+               write(99,*)' NUMBER ',imi
                WRITE(iun20,*)' NUMBER ',imi
                WRITE(iun20,*)
-               WRITE(0,144)imi,(eqm(j,imi),j=1,6),csinom(imi)
+               write(99,144)imi,(eqm(j,imi),j=1,6),csinom(imi)
  144           FORMAT(i3,6f12.8,1p,e13.5,e12.3)
 c copy state vector and matrices, norms
                icop=2
@@ -1043,7 +1043,7 @@ c copy state vector and matrices, norms
      +               csinom(imi),delnom(imi))
                      hm=hmu(imi)
                ELSEIF(iarc.eq.4)THEN
-                  WRITE(0,*)' for which arc?'
+                  write(99,*)' for which arc?'
                   READ(*,*)iarm
                   IF(iarm.eq.1)THEN
                      t0=tcmult
@@ -1064,7 +1064,7 @@ c copy state vector and matrices, norms
      +                    csinom(imi),delnom(imi))
                      hm=hmu(imi)
                    ELSE
-                      WRITE(0,*)' iarm=',iarm,' not understood'
+                      write(99,*)' iarm=',iarm,' not understood'
                       GOTO 145
                    ENDIF
                ENDIF
@@ -1076,13 +1076,13 @@ c copy state vector and matrices, norms
 c =====================================================================
 c select propagation time
             CALL tee(iun20,'MULTIPLE PROPAGATION=')
-            WRITE(0,*)' Current time is : ',tcmult,'(MJD).'
-            WRITE(0,*)' propagate to epoch (MJD)?   '
+            write(99,*)' Current time is : ',tcmult,'(MJD).'
+            write(99,*)' propagate to epoch (MJD)?   '
             READ(*,*)trmult
 c check availability of JPL ephemerides
             IF(trmult.lt.tejpl1.or.trmult.gt.tejpl2)THEN
-               WRITE(0,*)' JPL ephemerides not available for tr=',trmult
-               WRITE(0,*)' but only for interval ',tejpl1,' ',tejpl2
+               write(99,*)' JPL ephems. not available for tr=',trmult
+               write(99,*)' but only for interval ',tejpl1,' ',tejpl2
                GOTO 145
             ENDIF
 c propagation
@@ -1150,56 +1150,56 @@ c =====================================================================
       ELSEIF(ifun.eq.9)THEN
 c =====================================================================
 c show all the status flags
-         WRITE(0,180)obs0,obsp,ini0,inip,inide,initwo,
+         write(99,180)obs0,obsp,ini0,inip,inide,initwo,
      +         cov0,covp,covtwo
  180  FORMAT('   obs0',' obsp ',' ini0 ',' inip ','inide ','initwo',
      +       ' cov0 ',' covp ','covtwo'
      +           /10L6)
 c give the epoch times for all the elements
-         WRITE(0,181)t0,tp,tm,tide,tau(1),tau(m),tau(m+1),tau(mall)
+         write(99,181)t0,tp,tm,tide,tau(1),tau(m),tau(m+1),tau(mall)
  181     FORMAT('   t0   ','   tp   ','   tm   ','  tide  ',
      +          '  tin0  ','  tfi0  ','  tinp  ','  tfip  '/
      +          8f8.1)
 c observational data available
          IF(obs0)THEN
-            WRITE(0,*)' no obs =',m,' of asteroid ',astna0
-            WRITE(0,*)'      observations used in fit=',iob0
+            write(99,*)' no obs =',m,' of asteroid ',astna0
+            write(99,*)'      observations used in fit=',iob0
          ENDIF 
          IF(obsp)THEN
-            WRITE(0,*)' no obs =',mp,' of asteroid ',astnap
-            WRITE(0,*)'      observations used in fit=',iobp
+            write(99,*)' no obs =',mp,' of asteroid ',astnap
+            write(99,*)'      observations used in fit=',iobp
          ENDIF
          IF(obs0.and.obsp)THEN
-            WRITE(0,*)' no obs =',mall,' of both asteroids '
-            WRITE(0,*)'      observations used in fit=',iobm
+            write(99,*)' no obs =',mall,' of both asteroids '
+            write(99,*)'      observations used in fit=',iobm
          ENDIF 
 c =====================================================================
       ELSEIF(ifun.eq.10)THEN
 c =====================================================================
 c calendar to MJD conversion
-         WRITE(0,*)'calendar date, year, month, day, hour?'
+         write(99,*)'calendar date, year, month, day, hour?'
          READ(*,*)iy,imo,iday,ihr
          sec=0.d0
          imin=0
          CALL julian(iy,imo,iday,ihr,imin,sec,jd)
-         WRITE(0,777)jd-2400000.5d0
+         write(99,777)jd-2400000.5d0
  777     FORMAT('MJD=',f13.6)
 c =====================================================================
       ELSEIF(ifun.eq.11)THEN
 c =====================================================================
          IF(iope.eq.0)THEN
-            WRITE(0,*)' THIS FUNCTION IS NOT READY'
+            write(99,*)' THIS FUNCTION IS NOT READY'
             GOTO 50
          ENDIF
 c Check first and possibly second derivatives at the starting points
-         WRITE(0,*)' test derivatives of order (1,2)?'
+         write(99,*)' test derivatives of order (1,2)?'
          READ(*,*) ider2
 c        CALL twotes(m,t0,tau,idsta,eq0,ider2)
 c =====================================================================
       ELSE 
 c =====================================================================
 c non existing option   
-         WRITE(0,*)' This I cannot do'
+         write(99,*)' This I cannot do'
       ENDIF
       IF(init)THEN
          init=.false.

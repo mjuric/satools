@@ -78,7 +78,7 @@
       END IF
       CALL rmsp(name,ln)
       IF(ln.LE.0) THEN
-          WRITE(0,200) filnam(1:lf),nr
+          write(99,200) filnam(1:lf),nr
           GOTO 1
       END IF
  200  FORMAT('ERROR in reading file "',A,'": no object name at record',

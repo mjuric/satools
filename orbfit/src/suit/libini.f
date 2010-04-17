@@ -18,12 +18,27 @@
 
 * Common blocks to be initialized:
       INCLUDE 'comlib.h'
+      INCLUDE 'proout.h'
 
       LOGICAL found
       INTEGER unit
 
       INTEGER lench
       EXTERNAL lench
+
+* majuric: store all orbfit-originating output to $ORBFIT_LOG file,
+* or redirect it to /dev/null if ORBFIT_LOG environment variable
+* is not set.
+      character(len=200) orbfitlog
+      call getenv("ORBFIT_LOG", orbfitlog)
+      if(orbfitlog.ne.'') then
+      	  open(unit=99, file=orbfitlog, status='replace')
+      else
+          open(unit=99, file='/dev/null', status='old')
+      end if
+      iuncla = 99
+      ipirip = 99
+      ierrou = 99
 
 * The file 'libdir.dat' can be used to modify the path of the
 * library directory (with respect to the built-in value contained

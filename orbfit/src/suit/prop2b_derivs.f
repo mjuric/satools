@@ -48,7 +48,7 @@ c  Absolute peri-planet longitude POL at epoch T0
       if(ecc2.lt.eps)then
          pol=0.d0
       elseif(ecc2.ge.1.d0)then
-         write(0,*)' dcc.ge.1, ecc**2=',ecc2
+         write(99,*)' dcc.ge.1, ecc**2=',ecc2
          stop
       else
          pol=atan2(e(2),e(3))
@@ -73,8 +73,8 @@ c  search for F for a given lambda within [POL, POL + 2PIGR]
              el = el + del
              if (abs(del).lt.eps) goto 100
  70   continue
-      write(0,*)' Too many iter. in newton, iter=',iter,' del=',del
-      write(0,*) ' eq,eps ',e, eps
+      write(99,*)' Too many iter. in newton, iter=',iter,' del=',del
+      write(99,*) ' eq,eps ',e, eps
       stop
 c  Computation of position and velocity on the orbit plane
 c  in equinoctal cartesian coordinates (f,g,w)

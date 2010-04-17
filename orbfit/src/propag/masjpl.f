@@ -132,7 +132,7 @@ c       inquire(file=filbec,opened=openfl)
 c       if(.not.openfl) then
 c        IF(first) THEN
 c            call filopn(iabe,filbec,'old')
-c            write(0,*) 'opening filbec'
+c            write(99,*) 'opening filbec'
 c            first=.false.
 c        endif
         read(iabe,*)
@@ -146,9 +146,9 @@ c            astid(ia)=ia
 c        iatrue=iast
         goto 203
  201    FORMAT(1P,E18.10,1X,A)
- 202    WRITE(0,*)'masjpl: too many asteroids requested, iast=',iast
+ 202    write(99,*)'masjpl: too many asteroids requested, iast=',iast
         iast=ia-1
-        WRITE(0,*)'masjpl: asteroids available ',iast
+        write(99,*)'masjpl: asteroids available ',iast
 c203    close(iabe)
  203    call filclo(iabe,' ')
 c  asteroid close approach distance

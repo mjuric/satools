@@ -46,12 +46,12 @@
 
       CALL chkref(rsys1,epoch1,error)
       IF(error) THEN
-          WRITE(0,110) ' starting',rsys1,epoch1
+          write(99,110) ' starting',rsys1,epoch1
           STOP '**** rotpn: abnormal end ****'
       END IF
       CALL chkref(rsys2,epoch2,error)
       IF(error) THEN
-          WRITE(0,110) ' final',rsys1,epoch1
+          write(99,110) ' final',rsys1,epoch1
           STOP '**** rotpn: abnormal end ****'
       END IF
  110  FORMAT(' ERROR: unsupported ',A,' reference system:'/

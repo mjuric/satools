@@ -62,7 +62,7 @@
       lk=lench(key1)
       DO 4 i=1,nfne
       IF(key1(1:lk).EQ.keysf(i)) THEN
-          WRITE(0,210) key1(1:lk),file(1:lf),krcfnm(i),nr
+          write(99,210) key1(1:lk),file(1:lf),krcfnm(i),nr
           STOP '**** rdfnam: abnormal end ****'
       END IF
  4    CONTINUE
@@ -83,7 +83,7 @@
  11   CONTINUE
 
 * Abort when no "END_OF_HEADER" record is found
-*     WRITE(0,200)'end',file(1:lf),nr
+*     write(99,200)'end',file(1:lf),nr
 *     STOP '**** rdfnam: abnormal end ****'
 *200  FORMAT(' rdfnam: cannot find namelist ',a,':'/
 *    +       '         unexpected END of file "',a,'" after record',i6)

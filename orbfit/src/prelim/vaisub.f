@@ -42,7 +42,7 @@ c direction cosines
         eta(j)=sin(alpha(j))*cos(delta(j))
         zeta(j)=sin(delta(j))
         if(abs(xi(j)**2+eta(j)**2+zeta(j)**2-1.d0).gt.1.d-7)then
-          write(0,*)'VAISUB: Observations too near to great circle.'
+          write(99,*)'VAISUB: Observations too near to great circle.'
           fail=.true.
           return
         endif
@@ -82,9 +82,9 @@ c check for the root in the initial interval; if not ...
         if(d(2)*d(1).gt.0.d0)then
 c ... find where is it
           if(abs(d(2)).lt.abs(d(1)))then
-             write(0,*) 'VAISUB: Object geocen. dist. > ', rho2(2),' AU'
+             write(99,*) 'VAISUB: Object geocen. dist. > ',rho2(2),' AU'
              if(ifo.eq.1)then  
-               write(0,*) 'Do you want me to continue (y/n)? '
+               write(99,*) 'Do you want me to continue (y/n)? '
                read(*,*) ans
                if(ans.eq.'y')then
 c extend the initial interval by 5 AU, and try again
@@ -100,16 +100,16 @@ c extend the initial interval by 5 AU, and try again
              endif
           else
              if(ifo.eq.1)then
-             write(0,*) 'VAISUB: Object geocen. dist. < ', rho2(1),' AU'
-             write(0,*) 'INSIDE THE SPHERE OF INFLUENCE OF THE EARTH'
-               write(0,*) 'Do you want me to continue (y/n)? '
+             write(99,*) 'VAISUB: Object geocen. dist. < ',rho2(1),' AU'
+             write(99,*) 'INSIDE THE SPHERE OF INFLUENCE OF THE EARTH'
+               write(99,*) 'Do you want me to continue (y/n)? '
                read(*,*) ans
                if(ans.eq.'y')then
 c extend the initial interval by 0.0005 AU, and try again
                  rho2(1)=rho2(1)-5.d-4
                  if(rho2(1).le.2.d-4)then
-                   write(0,*)'OBJECT ALREADY HITTED THE EARTH!!'
-                   write(0,*)'Check the input data, and try again'
+                   write(99,*)'OBJECT ALREADY HITTED THE EARTH!!'
+                   write(99,*)'Check the input data, and try again'
                    fail=.true.
                    return
                  endif

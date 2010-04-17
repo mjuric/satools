@@ -92,7 +92,7 @@ c close approach taking place
 c    control of inconsistences
          IF(idc.ne.0)THEN
             IF(idc.ne.ic.or.idc.gt.nmass.or.idc.lt.0)THEN
-               WRITE(0,*)' closap: this should not happen',idc,ic
+               write(99,*)' closap: this should not happen',idc,ic
             ENDIF
 c relative position and velocity
             DO  i=1,3
@@ -118,7 +118,7 @@ c   close approach ended; reset flags etc.
             jt=0
 c           write(iuncla,*)' closap7: approach ended to planet ',iplam
 c           write(iuncla,*)
-!           write(0,*)
+!           write(99,*)
          ENDIF
       ENDIF
 c =================================================

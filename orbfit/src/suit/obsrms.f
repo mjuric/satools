@@ -61,7 +61,7 @@ c            rmsa(i)=acca(i)
 c            rmsd(i)=accd(i)
             rmsmag(i)=-1.d0
          ELSE
-            WRITE(0,*)'obsrms: obs. type not known ', 
+            write(99,*)'obsrms: obs. type not known ', 
      +           tdt(i),' ',iobs(i),' ',i
             STOP
         ENDIF 

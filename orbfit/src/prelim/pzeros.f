@@ -154,11 +154,11 @@
       LOGICAL ERR(N+1)
 C Check consistency of data
       IF (ABS(POLY(N+1)) .EQ. 0.0D0)THEN
-        WRITE(0,*)'Inconsistent data: the leading coefficient is zero'
+        write(99,*)'Inconsistent data: the leading coefficient is zero'
         STOP
       ENDIF
       IF (ABS(POLY(1)) .EQ. 0.0D0)THEN
-        WRITE(0,*)'The constant term is zero: deflate the polynomial'
+        write(99,*)'The constant term is zero: deflate the polynomial'
         STOP
       ENDIF
 C Compute the moduli of the coefficients
@@ -169,7 +169,7 @@ C Compute the moduli of the coefficients
         APOLYR(I)=APOLY(I)
 10    CONTINUE
       IF((AMAX).GE.(BIG/(N+1)))THEN
-        WRITE(0,*)'WARNING: COEFFICIENTS TOO BIG, OVERFLOW IS LIKELY'
+        write(99,*)'WARNING: COEFFICIENTS TOO BIG, OVERFLOW IS LIKELY'
         WRITE(2,*)'WARNING: COEFFICIENTS TOO BIG, OVERFLOW IS LIKELY'
       ENDIF
 C Initialize
@@ -185,8 +185,8 @@ C Compute the coefficients of the backward-error polynomial
         APOLY(I)=EPS*APOLY(I)*(3.8*(I-1)+1)
 30    CONTINUE
       IF((APOLY(1).EQ.0).OR.(APOLY(N+1).EQ.0))THEN
-        WRITE(0,*)'WARNING: THE COMPUTATION OF SOME INCLUSION RADIUS'
-        WRITE(0,*)'MAY FAIL. THIS IS REPORTED BY RADIUS=0'
+        write(99,*)'WARNING: THE COMPUTATION OF SOME INCLUSION RADIUS'
+        write(99,*)'MAY FAIL. THIS IS REPORTED BY RADIUS=0'
         WRITE(2,*)'WARNING: THE COMPUTATION OF SOME INCLUSION RADIUS'
         WRITE(2,*)'MAY FAIL. THIS IS REPORTED BY RADIUS=0'
       ENDIF
@@ -388,10 +388,10 @@ C of the starting approximations by means of Rouche's theorem
           TEMP=(A(IOLD)-A(I))/NZEROS
 C Check if the modulus is too small
           IF((TEMP.LT.-XBIG).AND.(TEMP.GE.XSMALL))THEN
-            WRITE(0,*)'WARNING:',NZEROS,' ZERO(S) ARE TOO SMALL TO'
-            WRITE(0,*)'REPRESENT THEIR INVERSES AS COMPLEX*16, THEY'
-            WRITE(0,*)'ARE REPLACED BY SMALL NUMBERS, THE CORRESPONDING'
-            WRITE(0,*)'RADII ARE SET TO -1'
+            write(99,*)'WARNING:',NZEROS,' ZERO(S) ARE TOO SMALL TO'
+            write(99,*)'REPRESENT THEIR INVERSES AS COMPLEX*16, THEY'
+            write(99,*)'ARE REPLACED BY SMALL NUMBERS,THE CORRESPONDING'
+            write(99,*)'RADII ARE SET TO -1'
             WRITE(2,*)'WARNING:',NZEROS,' ZERO(S) ARE TOO SMALL TO '
             WRITE(2,*)'REPRESENT THEIR INVERSES AS COMPLEX*16, THEY'
             WRITE(2,*)'ARE REPLACED BY SMALL NUMBERS, THE CORRESPONDING'
@@ -401,9 +401,9 @@ C Check if the modulus is too small
           ENDIF
           IF(TEMP.LT.XSMALL)THEN
             NZ=NZ+NZEROS
-            WRITE(0,*)'WARNING: ',NZEROS,' ZERO(S) ARE TOO SMALL TO BE'
-            WRITE(0,*)'REPRESENTED AS COMPLEX*16, THEY ARE SET TO 0'
-            WRITE(0,*)'THE CORRESPONDING RADII ARE SET TO -1'
+            write(99,*)'WARNING: ',NZEROS,' ZERO(S) ARE TOO SMALL TO BE'
+            write(99,*)'REPRESENTED AS COMPLEX*16, THEY ARE SET TO 0'
+            write(99,*)'THE CORRESPONDING RADII ARE SET TO -1'
             WRITE(2,*)'WARNING: ',NZEROS,' ZERO(S) ARE TOO SMALL TO BE'
             WRITE(2,*)'REPRESENTED AS COMPLEX*16, THEY ARE SET 0'
             WRITE(2,*)'THE CORRESPONDING RADII ARE SET TO -1'
@@ -412,9 +412,9 @@ C Check if the modulus is too big
           IF(TEMP.GT.XBIG)THEN
             R=BIG
             NZ=NZ+NZEROS
-            WRITE(0,*)'WARNING: ',NZEROS,' ZEROS(S) ARE TOO BIG TO BE'
-            WRITE(0,*)'REPRESENTED AS COMPLEX*16,'
-            WRITE(0,*)'THE CORRESPONDING RADII ARE SET TO -1'
+            write(99,*)'WARNING: ',NZEROS,' ZEROS(S) ARE TOO BIG TO BE'
+            write(99,*)'REPRESENTED AS COMPLEX*16,'
+            write(99,*)'THE CORRESPONDING RADII ARE SET TO -1'
             WRITE(2,*)'WARNING: ',NZEROS,' ZERO(S) ARE TOO BIG TO BE'
             WRITE(2,*)'REPRESENTED AS COMPLEX*16,'
             WRITE(2,*)'THE CORRESPONDING RADII ARE SET TO -1'

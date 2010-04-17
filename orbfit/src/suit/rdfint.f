@@ -60,7 +60,7 @@
           lk=lench(key)
           lz=lench(vartyp)
           lf=lench(nmif)
-          WRITE(0,100) key(1:lk),vartyp(1:lz),nmif(1:lf)
+          write(99,100) key(1:lk),vartyp(1:lz),nmif(1:lf)
           STOP '**** rdfint: abnormal end ****'
       END IF
  100  FORMAT(' ERROR: missing definition of keyword "',a,'" (type: ',
@@ -73,7 +73,7 @@
       lk=lench(key)
       lz=lench(vartyp)
       lf=lench(nmif)
-      WRITE(0,101) key(1:lk),vartyp(1:lz),krcfnm(i),nmif(1:lf)
+      write(99,101) key(1:lk),vartyp(1:lz),krcfnm(i),nmif(1:lf)
  101  FORMAT(' ERROR in reading value for keyword "',a,'" (type: ',
      +       a,')'/7x,'at record',i4,' in file "',a,'"')
       STOP '**** rdfint: abnormal end ****'

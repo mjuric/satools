@@ -46,12 +46,12 @@ c read records in an infinite loop (it's F(UGLY)77)
 c              found object in file
                if(diam.gt.0d0)then
                   radius=diam/2d0/1.4998d8
-                  write(0,102)'RADAR: Using radius = ',
+                  write(99,102)'RADAR: Using radius = ',
      +                 radius*1.4998d8,' km from IRAS diameter.'
                else
                   exponent=0.5d0*(6.3d0-log10(0.2d0)-0.4d0*hmag)
                   radius=10**exponent/2d0/1.4998d8
-                  write(0,102)'RADAR: Using radius = ',
+                  write(99,102)'RADAR: Using radius = ',
      +                 radius*1.4998d8,' km from absolute magnitude.'
                endif
 c exit infinite loop
@@ -59,9 +59,9 @@ c exit infinite loop
             endif
          goto 1
       endif
-      write(0,*)'*** astrad warning: ',name,' not found in astorb.dat.'
+      write(99,*)'*** astrad warning: ',name,' not found in astorb.dat.'
       radius=1d0/1.4998d8
-      write(0,*)'RADAR: Using radius = ',radius*1.4998d8,' km.'
+      write(99,*)'RADAR: Using radius = ',radius*1.4998d8,' km.'
  109  call filclo(unit,' ')
       return
 

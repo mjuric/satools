@@ -99,7 +99,7 @@
 * Check on MJD value
       mjdc=NINT(tjm1(day,month,year,0.D0))
       IF(mjdc.NE.mjd) THEN
-          WRITE(0,203) mjdc,mjd
+          write(99,203) mjdc,mjd
           GOTO 30
       END IF
  203  FORMAT('ERROR: inconsistent MJD:',2I8)
@@ -112,12 +112,12 @@
           IF(mjd.EQ.mjd2+2) THEN
               fill=.true.
           ELSEIF(mjd.NE.mjd2+1) THEN
-              WRITE(0,204) file(1:lf),mjd,mjd2
+              write(99,204) file(1:lf),mjd,mjd2
           END IF
       ELSE
 * Check time consistency
           IF(mjd-mjdp.NE.1) THEN
-              WRITE(0,205) mjd,mjdp
+              write(99,205) mjd,mjdp
               GOTO 30
           END IF
       END IF
@@ -179,7 +179,7 @@
       GOTO 4
 
  10   CONTINUE
-      WRITE(0,206) n,mjd1,mjd2
+      write(99,206) n,mjd1,mjd2
  206  FORMAT('    Bulletin A data:',I6,' points (from MJD=',
      +       I5,' to MJD=',I5,')')
       CALL filclo(unit,' ')
@@ -187,14 +187,14 @@
       RETURN
 
  20   CONTINUE
-      WRITE(0,200) file(1:lf)
+      write(99,200) file(1:lf)
  200  FORMAT('ERROR: sorry, unexpected format of file "',A,'"'/
      +       '       try running the program with ',
      +       '"IERS.eopc04.bulA.use = .false."')
       STOP '**** rdbula: abnormal end ****'
 
  30   CONTINUE
-      WRITE(0,201) file(1:lf),nr
+      write(99,201) file(1:lf),nr
  201  FORMAT('ERROR in reading file "',A,'" at record ',I5)
 
       END

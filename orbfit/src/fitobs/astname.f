@@ -32,7 +32,7 @@ c  (to be used only for unnumbered asteroids)
 c  split double designators
       n=index(stri,' ')
       if(n.eq.0)then
-         write(0,*)' no blank in ',stri
+         write(99,*)' no blank in ',stri
          nam=stri(1:6)
          lnam=18
          return
@@ -99,11 +99,11 @@ c  survey case;
          elseif(cd.eq.'T3')then
             icode=10000*inum+4
          else
-            write(0,*)' unknown survey ',nam
+            write(99,*)' unknown survey ',nam
          endif
       endif
       return
- 99   write(0,*)' encoding error ',nam
+ 99   write(99,*)' encoding error ',nam
       icode=0
       end
 c =======================================================
@@ -130,7 +130,7 @@ c  survey names
          elseif(ix.eq.4)then
             cd='T3'
          else
-            write(0,*)' unknown survey ',icod
+            write(99,*)' unknown survey ',icod
          endif
          write(nam,100)inum,cd
  100     format(i4,a2)
@@ -150,7 +150,7 @@ c  names with year
             write(nam,103)iy,a,b,ix
  103        format(i2,a1,a1,i2)
          else
-            write(0,*)' problems with identifyer ', icode
+            write(99,*)' problems with identifyer ', icode
          endif
 c          if(iy.ge.0.and.iy.le.9)then
 c             write(nam,106)iy
@@ -159,7 +159,7 @@ c          elseif(iy.ge.10.and.iy.le.99)then
 c            write(nam,107)iy
 c 107        format(i2)
 c         else
-c            write(0,*)' problems with year in ',icode
+c            write(99,*)' problems with year in ',icode
 c         endif
       endif
       return

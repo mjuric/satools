@@ -47,7 +47,7 @@
       CALL filopl(unit,file)
       READ(unit,*) ivers
       IF(ivers.NE.1) THEN
-          WRITE(0,201) file(1:lf)
+          write(99,201) file(1:lf)
           STOP '**** Abnormal end ****'
       END IF
  201  FORMAT('ERROR(rdcorm): unsupported version of file "',A,'"')
@@ -111,7 +111,7 @@
 
 * Error termination
  20   CONTINUE
-      WRITE(0,200) file(1:lf),line
+      write(99,200) file(1:lf),line
  200  FORMAT('rdcorm: INPUT ERROR from file "',A,'" at record',I5)
       STOP '**** rdcorm: abnormal end ****'
 

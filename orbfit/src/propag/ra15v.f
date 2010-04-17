@@ -151,7 +151,7 @@ c ===============================================================
         tp=xldir
       ELSE
          IF(nes)then
-            write(0,*)' ra15v: fixed stepsize xl=0; ll=',ll
+            write(99,*)' ra15v: fixed stepsize xl=0; ll=',ll
             stop
          ELSE
             tp=0.1d0*dir
@@ -241,8 +241,8 @@ c bad convergence of iterations
  997  format('ra15v: bad convergence iter ',i3,' eprk=',d10.2,
      +    ' controls:'/(5d12.4/))   
       IF(nes)then
-         write(0,*)tm,ep
-         write(0,*)' ra15v: non convergence with fixed step ',t 
+         write(99,*)tm,ep
+         write(99,*)' ra15v: non convergence with fixed step ',t 
 c         stop
       ELSE
          tp=.8d0*tp
@@ -289,10 +289,10 @@ c =====================================================
       CALL rapred(ncl,x,v,t,t2,f1,b,nv)
       DO k=1,nv
         IF(abs(x(k)).gt.1.d15)THEN
-            WRITE(0,*)' rapred ',k,x(k),v(k),f1(k)
+            write(99,*)' rapred ',k,x(k),v(k),f1(k)
         ENDIF
         IF(abs(v(k)).gt.1.d15)THEN
-            WRITE(0,*)' rapred ',k,x(k),v(k),f1(k)
+            write(99,*)' rapred ',k,x(k),v(k),f1(k)
         ENDIF
       ENDDO
 c =====================================================
@@ -331,7 +331,7 @@ c check if the integration required is finished
       ELSE
          tp=dir*(ss/hv)**pw
          IF(tp/t.gt.1.4d0) tp=t*1.4d0
-c         WRITE(0,*)' next step ',tp
+c         write(99,*)' next step ',tp
          IF(iusci.gt.100)write(ipirip,*)'step=',tp
       ENDIF
       IF(dir*(tm+tp).gt.dir*tf-1.d-8)THEN

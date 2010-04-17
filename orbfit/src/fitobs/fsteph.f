@@ -66,17 +66,17 @@ c moid
 c =====================================================================
 c check dimensions
       IF(numsav.gt.numsavx)THEN
-         WRITE(0,*)'fsteph: numsav=',numsav,' is > numsavx=', numsavx
+         write(99,*)'fsteph: numsav=',numsav,' is > numsavx=', numsavx
          RETURN
       ENDIF
 c check availability of required data
       ok=.true.
       IF (.not.defele)THEN
-         WRITE(0,*) 'Sorry: You must provide an orbit first.'
+         write(99,*) 'Sorry: You must provide an orbit first.'
          ok = .false.
       ENDIF
       IF (tr .ge. tf)THEN
-         WRITE(0,*) 'Sorry: Initial time must be before final time.'
+         write(99,*) 'Sorry: Initial time must be before final time.'
          ok = .false.
       ENDIF
       IF(.not.ok)RETURN
@@ -214,8 +214,8 @@ c        Get last point
 c =====================================================================
       if(ephefl) call filclo(unit,' ')
       if(moidfl) call filclo(munit,' ')
-      if(ephefl) write(0,*)'Ephemeris file generated:',file(1:ln)
-      if(moidfl) write(0,*)'Moid file generated:',filem(1:lnm)
+      if(ephefl) write(99,*)'Ephemeris file generated:',file(1:ln)
+      if(moidfl) write(99,*)'Moid file generated:',filem(1:lnm)
 
       RETURN
       END

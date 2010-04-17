@@ -18,7 +18,7 @@ c=======================================================
 c  test on inclination
       tgi2=sqrt(eq(4)**2+eq(5)**2)
       if(tgi2.lt.eps)then
-         write(0,*)' inclination zero cannot be handled in eqp'
+         write(99,*)' inclination zero cannot be handled in eqp'
          stop
       else
          omnod=atan2(eq(4),eq(5))

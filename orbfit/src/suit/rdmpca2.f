@@ -63,7 +63,7 @@
 c name conversion
          CALL iaucod2(nmpc1,objnam(k),error)
          IF(error) THEN
-            WRITE(0,112) nr,filnam(1:lf)
+            write(99,112) nr,filnam(1:lf)
  112        FORMAT('INPUT ERROR: illegal name code at record',I6,
      +       ' of file "',A,'"')
             STOP '**** rdmpca2: name conversion error ****'
@@ -72,7 +72,7 @@ c name conversion
          eltype(k)='KEP'
          CALL mpcdat(ep5,telem(k),error)
          IF(error) THEN
-            WRITE(0,111) nr,filnam(1:lf)
+            write(99,111) nr,filnam(1:lf)
  111        FORMAT('INPUT ERROR: illegal date code at record',I6,
      +       ' of file "',A,'"')
             STOP '**** rdmpca2: date conversion error ****'
@@ -101,7 +101,7 @@ c name conversion
          comele(k)='read from file "'//filnam(1:lf)//
      +              '" at record '//krc(1:lc)
  3    ENDDO
-      WRITE(0,*)' file not completely read, record ',nr
+      write(99,*)' file not completely read, record ',nr
  2    CONTINUE
       RETURN
       END

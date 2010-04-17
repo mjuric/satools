@@ -63,7 +63,7 @@ c ================reference time============================
       CALL rmsp(prognp,le)
       CALL rdnrea(prognp,'tref',tref,ireq,
      +            found,fail1,fail)
-      WRITE(0,*)  'reference time ', tref
+      write(99,*)  'reference time ', tref
       WRITE(iun20,*) 'reference time ', tref
 c ====================================================
 c read the name of the elements file, inquire
@@ -73,15 +73,15 @@ c read the name of the elements file, inquire
       CALL rmsp(catnam0,l0)
       INQUIRE(file=catnam0(1:l0),exist=ex)
       IF(.not.found.or.fail.or..not.ex)THEN
-         write(0,*) found,fail,ex
-         write(0,*) 'catalog not found:',catnam0(1:l0)
+         write(99,*) found,fail,ex
+         write(99,*) 'catalog not found:',catnam0(1:l0)
          STOP
       ENDIF
       CALL rdncha(prognp,'catnam1',catnam1,ireq,found,
      +     fail1,fail)
       CALL rmsp(catnam1,l1)
       IF(.not.found.or.fail)THEN
-         write(0,*) 'catalog name not found:',catnam1(1:l1)
+         write(99,*) 'catalog name not found:',catnam1(1:l1)
          STOP
       ENDIF
 c ================generate catalog with covariances=============
@@ -89,10 +89,10 @@ c ================generate catalog with covariances=============
       CALL rdnlog(prognp,'covpro',covpro,ireq,
      +            found,fail1,fail)
       IF(fail)THEN
-         WRITE(0,*)' cinopt: generate covariance logical required'
+         write(99,*)' cinopt: generate covariance logical required'
          STOP
       ENDIF
-      WRITE(0,*)  ' generate catalog with covariances is ',covpro
+      write(99,*)  ' generate catalog with covariances is ',covpro
       WRITE(iun20,*)' generate catalog with covariances is ',covpro
 c ====================================================
       RETURN

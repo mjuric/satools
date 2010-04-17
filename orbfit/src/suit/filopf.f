@@ -63,7 +63,7 @@
 
  3    CONTINUE
       ll=lench(tname)
-      WRITE(0,101) tname(1:ll)
+      write(99,101) tname(1:ll)
  101  FORMAT(' **** filopf: cannot OPEN file "',a,'" (STATUS=old) ****')
       STOP '**** filopf: abnormal end ****'
       END

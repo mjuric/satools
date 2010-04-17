@@ -75,7 +75,7 @@ C
                                                                                 
 C      Write a fingerprint to the screen.                                       
                                                                                 
-       WRITE(0,*) ' JPL ASCII-TO-DIRECT-I/O program. ' //                       
+       write(99,*) ' JPL ASCII-TO-DIRECT-I/O program. ' //                       
      .            ' Last modified 31-Mar-1993.'                                 
                                                                                 
                                                                                 
@@ -99,7 +99,7 @@ C
        ENDIF                                                                    
                                                                                 
        READ (*,'(14A6)')    TTL                                                 
-       WRITE(0,'(/(14A6))') TTL                                                 
+       write(99,'(/(14A6))') TTL                                                 
                                                                                 
                                                                                 
 C                                                                               
@@ -160,7 +160,7 @@ C
        ENDIF                                                                    
                                                                                 
        READ (*,'(13I6)')   ((IPT(I,J),J=1,12),LPT(I),I=1,3)                     
-       WRITE(0,'(/(3I5))') IPT, LPT                                             
+       write(99,'(/(3I5))') IPT, LPT                                             
                                                                                 
                                                                                 
 C                                                                               

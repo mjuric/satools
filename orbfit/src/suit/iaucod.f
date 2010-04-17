@@ -87,7 +87,7 @@ c           1999AA123
          iaudes=head//desfield(2:3)//desfield(4:4)//desfield(7:7)//tail
       else
 c Unknown type
-         write(0,*)'cannot understand MPC designation: ',mpccod
+         write(99,*)'cannot understand MPC designation: ',mpccod
          goto 10
       endif
       return
