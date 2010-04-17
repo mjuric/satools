@@ -54,17 +54,17 @@ inline void propagateAsteroid(Asteroid &obj, MJD t1)
 
 char repl_wspc(const char c) { return c == ' ' ? '_' : c; }
 
-void print_observation(const Observation &o, int numeration = -1)
+void print_observation(const Observation &o, const Asteroid &a, const std::string &extra = "")
 {
 	Radians vlambda, vbeta;
 	Coordinates::rot_vel(0, -23.439291*ctn::d2r, o.ra, o.dec, o.dra, o.ddec, vlambda, vbeta);
-	
+
 	std::string name(o.name);
 	transform(name.begin(), name.end(), name.begin(), repl_wspc);
 
 	std::cout << setiosflags(ios::fixed)
 		<< name << "\t"
-		<< numeration << "\t"
+		<< a.numeration << "\t"
 		<< std::setprecision(6) << o.t0 << "\t"
 		<< setprecision(6)
 		<< o.ra / ctn::d2r << "\t"
@@ -77,7 +77,9 @@ void print_observation(const Observation &o, int numeration = -1)
 		<< vlambda / ctn::d2r << "\t"
 		<< vbeta / ctn::d2r << "\t"
 		<< setprecision(2)		// 0.4 arcsec precision
-		<< o.R << "\t" << o.dist;
+		<< o.R << "\t" << o.dist << "\t"
+		<< a.arc << "\t"
+		<< extra;
 }
 
 ////////////////////////////
@@ -129,6 +131,17 @@ struct filterspec
 {
 	Radians ra, dec;
 	Radians r;
+	
+	std::string userdata;
+
+	filterspec() { ra = dec = r = 0.; }
+	filterspec(const filterspec &a) { *this = a; }
+	filterspec &operator =(const filterspec &a)
+	{
+		ra = a.ra; dec = a.dec; r = a.r;
+		userdata = a.userdata;
+		return *this;
+	}
 
 	bool operator <(const filterspec &fs) const { return false; }	// all are equal
 	
@@ -165,7 +178,7 @@ void calculate_positions_for_epochs(const std::set<std::pair<MJD, filterspec> > 
 			if(obs.t0 == 0) { continue; } // calculate_positions_and_propagate() has failed to compute ephemeris of this asteroid
 			if(i->second.test(obs))
 			{
-				print_observation(obs, asts[j].numeration);
+				print_observation(obs, asts[j], i->second.userdata);
 				std::cout << "\n";
 			}
 		}
@@ -279,7 +292,7 @@ void calculate_positions_in_runs(const std::set<int> &runs, std::vector<std::str
 			if(in_run_only && !within_tolerance) { continue; }
 
 			std::cout << geoms[i].run << "\t";
-			print_observation(obsv[i], ast.numeration);
+			print_observation(obsv[i], ast);
 			std::cout << "\t" << within_bounds << "\t" << within_tolerance;
 			std::cout << "\n";
 		}
@@ -317,7 +330,7 @@ void calculate_position(double mjd, const std::string &desig)
 		<< setprecision(7) << dist(o1.dec, o.dec) / vdt / ctn::d2r << "\n"
 		;
 #else
-	print_observation(o, ast.numeration);
+	print_observation(o, ast);
 	std::cout << "\n";
 #endif
 }
@@ -475,6 +488,9 @@ main(int argc, char **argv)
 					f.ra = rad(f.ra);
 					f.dec = rad(f.dec);
 					f.r = rad(f.r);
+
+					getline(ss, f.userdata);
+					f.userdata = Util::trim(f.userdata);
 				}
 
 				epochs.insert(make_pair(mjd, f));
