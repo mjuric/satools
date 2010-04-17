@@ -80,6 +80,100 @@ void print_observation(const Observation &o, int numeration = -1)
 		<< o.R << "\t" << o.dist;
 }
 
+////////////////////////////
+
+void calculate_positions_and_propagate(std::vector<Observation> &obsvs, std::vector<Asteroid> &asts, MJD epoch)
+{
+	// propagate orbits & calculate positions at a given epoch
+	static ObservationCalculator oc;
+
+	obsvs.resize(asts.size());
+	
+	char strepoch[100];
+	sprintf(strepoch, "%12.5f", epoch);
+	std::cerr << strepoch << " .. ";
+
+	FOR(0, asts.size())
+	{
+		Asteroid &ast = asts[i];
+		Observation &obs = obsvs[i];
+		
+		double dt = fabs(epoch-ast.t0);
+//		std::cerr << ast.t0 << " -> " << epoch << " (" << fabs(epoch-ast.t0) << " days)\n";
+
+		Asteroid prev(ast);
+		if(dt > 15)	// assume two-body integration is OK if the observation time is within 15 days of orbital elements epoch
+		{
+			propagateAsteroid(ast, epoch);
+		}
+
+		if(ast.elements[1] >= 1.)
+		{
+			std::cerr << "Object " << ast.name << " became parabolic/hyperbolic while propagating to epoch MJD=" << epoch << ". Skipping.\n";
+			ast = prev;
+			obs.t0 = 0;	// signal an error
+		}
+		else
+		{
+//			oc.calculateObservationTDI(obsv[i], ast, geom, ObsFlags::pos | ObsFlags::vel);
+//			oc.calculateObservationTDI(obs, ast, geom, ObsFlags::pos | ObsFlags::vel, CalcFlags::twoBody);
+			oc.calculateObservation(obs, epoch, ast, ObsFlags::pos | ObsFlags::vel, CalcFlags::twoBody);
+		}
+		if((i+1) % 10000 == 0) { std::cerr << "#"; }
+		if((i+1) % 100000 == 0) { std::cerr << "-"; }
+	}
+	std::cerr << "#\n";
+}
+
+struct filterspec
+{
+	Radians ra, dec;
+	Radians r;
+
+	bool operator <(const filterspec &fs) const { return false; }	// all are equal
+	
+	bool test(const Observation &obs) const
+	{
+		Radians d = peyton::coordinates::distance(ra, dec, obs.ra, obs.dec);
+		return d < r;
+	}
+};
+
+void calculate_positions_for_epochs(const std::set<std::pair<MJD, filterspec> > &epoch, int ast_begin = 0, int ast_end = 0)
+{
+	std::vector<Asteroid> asts;
+
+	// load asteroids from catalog
+	ast_end = ast_begin == ast_end ? cat->recordCount() : min(cat->recordCount(), ast_end);
+	ast_begin = max(ast_begin, 0);
+	ASSERT(ast_end > ast_begin);
+	if(cat->read(asts, ast_begin, ast_end) != ast_end - ast_begin)
+	{
+		std::cerr << "Error reading records " << ast_begin << " to " << ast_end << " from input catalog.";
+		exit(-1);
+	}
+
+	// propagate, calculate position, and output for each epoch
+	std::vector<Observation> obsvs;
+	REVEACH(epoch) // go backwards (guessing the user will use this for historical data)
+	{
+		calculate_positions_and_propagate(obsvs, asts, i->first);
+
+		for(int j = 0; j != obsvs.size(); j++)
+		{
+			Observation &obs = obsvs[j];
+			if(obs.t0 == 0) { continue; } // calculate_positions_and_propagate() has failed to compute ephemeris of this asteroid
+			if(i->second.test(obs))
+			{
+				print_observation(obs, asts[j].numeration);
+				std::cout << "\n";
+			}
+		}
+	}
+}
+
+////////////////////////////
+
 bool geom_epoch_sort(const RunGeometry &a, const RunGeometry &b)
 {
 	return a.tstart > b.tstart;
@@ -233,22 +327,25 @@ main(int argc, char **argv)
 	PRINT_VERSION_IF_ASKED(argc, argv);
 
 	try {
-		if(argc != 3 && argc < 5) {
+		if(argc != 3 && argc != 4 && argc < 5) {
 			cout << "Usage 1: " << argv[0] << " <mjd> <desig> <catalog> <ASTORB2|NATIVE|COMET>\n";
 			cout << "Usage 2: " << argv[0] << " <catalog> <ASTORB2|NATIVE|COMET>\n";
-			cout << "Usage 3: " << argv[0] << " -runs [-desig=<desig|->] [-in_run_only] <catalog> <ASTORB2|NATIVE|COMET> <run1> [run2 [...]]";
+			cout << "Usage 3: " << argv[0] << " -runs [-desig=<desig|->] [-in_run_only] <catalog> <ASTORB2|NATIVE|COMET> <run1> [run2 [...]]\n";
+			cout << "Usage 4: " << argv[0] << " <epochs.txt> <latest> <ASTORB2|NATIVE|COMET> [ast_first ast_last]\n";
 			cout << "  Calculates the (ra, dec) of an asteroid, given time, designation and orbit catalog.\n";
 			cout << "  If used in second form, desig and mjd are read from stdin.\n";
 			cout << "  Third form calculates the positions of objects in a given SDSS run (takes scanning into account).\n";
+			cout << "  Fourth form computes the positions of all objects in the catalog given a list of MJDs in file <epochs.txt>. [ast_first, ast_last] is the (0-based) range of asteroids to process, and can be given as percentages of the records in the file (e.g., 10% 20%).\n";
 			return -1;
 		}
 
 		const char *ws = System::workspace();
 		char scat[1000];
 		
-		std::string catname, cattype, desig; double mjd = 0;
+		std::string catname, cattype, desig, epochfn; double mjd = 0;
 		std::set<int> runs;
 		std::vector<std::string> desigs;
+		double ast_begin = 0, ast_end = 0; bool pct = false;
 
 		if(argc >= 5 && strcmp(argv[1], "-runs") == 0)
 		{
@@ -295,6 +392,21 @@ main(int argc, char **argv)
 			}
 //			std::cerr << catname << " " << cattype << "\n";
 		}
+		else if(argc == 4 || argc == 6)
+		{
+			epochfn = argv[1];
+			catname = argv[2];
+			cattype = argv[3];
+			if(argc == 6)
+			{
+				char *c;
+				if(c = strchr(argv[4], '%')) { *c = '\0'; pct = true; }
+				if(c = strchr(argv[5], '%')) { *c = '\0'; pct = true; }
+
+				ast_begin = atof(argv[4]);
+				ast_end = atof(argv[5]);
+			}
+		}
 		else if(argc == 3)
 		{
 			catname = argv[1];
@@ -335,6 +447,58 @@ main(int argc, char **argv)
 		else if(!desig.empty())
 		{
 			calculate_position(mjd, desig);
+		}
+		else if(!epochfn.empty())
+		{
+			std::set<std::pair<MJD, filterspec> > epochs;
+			ifstream ein(epochfn.c_str());
+			istream &in = epochfn == "-" ? std::cin : ein;
+			if(!in)
+			{
+				cerr << "Error opening epochs file '" << epochfn << "'\n";
+				return -1;
+			}
+
+			std::string line;
+			while(getline(in, line))
+			{
+				std::istringstream ss(line);
+				ss >> mjd;
+				
+				filterspec f;
+				if(!(ss >> f.ra >> f.dec >> f.r))
+				{
+					f.r = -1;
+				}
+				else
+				{
+					f.ra = rad(f.ra);
+					f.dec = rad(f.dec);
+					f.r = rad(f.r);
+				}
+
+				epochs.insert(make_pair(mjd, f));
+			}
+
+			if(epochs.empty())
+			{
+				cerr << "Error: No MJDs loaded from input file.\n";
+				return -1;
+			}
+			cerr << "Time range : [" << epochs.begin()->first << " - " << (--epochs.end())->first << "], " << epochs.size() << " epochs.\n";
+
+			if(pct)
+			{
+				ast_begin *= cat->recordCount() / 100.;
+				ast_end *= cat->recordCount() / 100.;
+			}
+			else
+			{
+				ast_end++;	// The user inputs these as [first, last], but we need it as [begin, end)
+			}
+			cerr << "Object range : [" << (int)ast_begin << " - " << (int)ast_end - 1 << "] out of " << cat->recordCount() << ".\n";
+
+			calculate_positions_for_epochs(epochs, (int)ast_begin, (int)ast_end);
 		}
 		else
 		{
