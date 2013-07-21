@@ -32,11 +32,27 @@ Preferences pref;
 
 inline void propagateAsteroid(Asteroid &obj, MJD t1)
 {
+//	std::cerr << "INPUT ELEMENTS: t1=" << t1 << " " << obj.elements[0] << " " << obj.elements[1] << " " << obj.elements[2] << "'\n";
+
 	double ele[6];
 	proele_("KEP", obj.t0, obj.elements, t1, ele, 3);
 
 	memcpy(obj.elements, ele, sizeof(double)*6);
 	obj.t0 = t1;
+
+	if(obj.elements[0] < 0)
+	{
+		// A hack for objects that go hyperbolic, since the current version of 'equcar'
+		// routine can't handle hyperbolic orbits
+		
+		cout << "WARNING: Object " << obj.name << " has gone hyperbolic. Effectively removing it by setting a = 0.1.\n";
+
+		obj.elements[0] = 0.1;
+		obj.elements[1] = 0.;
+		obj.elements[2] = 0.;
+	}
+
+//	std::cerr << "OUTPUT ELEMENTS: t1=" << t1 << " " << obj.elements[0] << " " << obj.elements[1] << " " << obj.elements[2] << "'\n";
 }
 
 template<typename T>
