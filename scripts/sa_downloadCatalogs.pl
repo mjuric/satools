@@ -25,8 +25,8 @@ print "ASTORB downloaded\n";
 #############
 
 print "Downloading AstDys proper elements ...\n";
-`wget http://hamilton.dm.unipi.it/~astdys/catalogs/ufitobs.pro -O ufitobs.pro.$id && ln -sf ufitobs.pro.$id ufitobs.pro.latest`;
-`wget http://hamilton.dm.unipi.it/~astdys/catalogs/allnum.pro  -O allnum.pro.$id  && ln -sf allnum.pro.$id allnum.pro.latest`;
+`wget http://hamilton.dm.unipi.it/~astdys2/catalogs/ufitobs.pro -O ufitobs.pro.$id && ln -sf ufitobs.pro.$id ufitobs.pro.latest`;
+`wget http://hamilton.dm.unipi.it/~astdys2/catalogs/allnum.pro  -O allnum.pro.$id  && ln -sf allnum.pro.$id allnum.pro.latest`;
 
 print "Proper elements downloaded.\n";
 
