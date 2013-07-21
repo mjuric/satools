@@ -6,6 +6,9 @@ if(!defined($ENV{SDSSAST_WORKSPACE})) {
 }
 $ws = $ENV{SDSSAST_WORKSPACE};
 
+# Find the number of cores in this machine (note: assuming we're running on Linux)
+$MAX_PARALLEL=`grep "^processor" /proc/cpuinfo | wc -l` + 0;
+
 use Fcntl;
 use IO::Handle;
 STDOUT->autoflush(1);
@@ -44,8 +47,8 @@ if($#ARGV != -1) {
 			do {
 				$nrunning = `/sbin/pidof createcache.x | wc | awk '{print \$2}'`;
 				#print "Number of instances running: $nrunning\n";
-				if($nrunning >= 4) { sleep 1; }
-			} while($nrunning >= 4);
+				if($nrunning >= $MAX_PARALLEL) { sleep 1; }
+			} while($nrunning >= $MAX_PARALLEL);
 			createCache $run;
 		}
 	}
