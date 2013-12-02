@@ -196,6 +196,8 @@ protected:
 		Data() : started(0) {}
 	};
 	#define DATA (*((Data *)((*cli)->userData())))
+
+	auto_ptr<Catalog> cat;
 public:
 	virtual void callbackInitializeSpawnedInstance(RemoteInstance *ri) { ri -> userData() = new Data; }
 
@@ -224,7 +226,7 @@ public:
 
 		char buf[1000];
 		sprintf(buf, "%s/catalogs/astorb.dat.%s", ws, astorb);
-		auto_ptr<Catalog> cat(Catalog::open(buf, "ASTORB2"));
+		cat.reset(Catalog::open(buf, "ASTORB2"));
 
 		//
 		// open and load epochs file
@@ -340,8 +342,21 @@ public:
 				e.print();
 				cout << "[ " << time(NULL) - t0 << " sec ] " << (*cli)->host << " died.";
 				if(DATA.started) {
-					todo.push(DATA.s);
+					slice s1, s2;
+					s1.range[0] = DATA.s.range[0];
+					s1.range[1] = (DATA.s.range[0] + DATA.s.range[1]) >> 1;
+					s2.range[0] = s1.range[1];
+					s2.range[1] = DATA.s.range[1];
+					todo.push(s1);
+					todo.push(s2);
+
 					cout << " Returning slice [" << DATA.s.range[0] << " - " << DATA.s.range[1] << "]";
+
+					std::vector<Asteroid> objects;
+					cat->read(objects, DATA.s.range[0], DATA.s.range[1]);
+					cout << " (" << objects.front().name << " - " << objects.back().name << ")";
+
+					cout << " split as [" << s1.range[0] << " - " << s1.range[1] << ", " << s2.range[0] << " - " << s2.range[1] << "]";
 				}
 				cout << "\n";
 				delete *cli;
